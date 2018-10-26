@@ -18,6 +18,7 @@ function love.update()
     if manyLogsOn then
         for i = 1, manyLogsIncrement do
             manyLogsCounter = manyLogsCounter + 1
+            print('many ' .. manyLogsCounter)
         end
     end
 end
