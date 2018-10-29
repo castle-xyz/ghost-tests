@@ -13,6 +13,10 @@ function love.draw()
     press K to try to require from a non-existent path
 
     press E to try to require a module that throws an error on loading
+
+    press N to try to require a non-existent module
+
+    press Q to try to load a non-existent resource
     ]], 20, 20)
 end
 
@@ -44,5 +48,13 @@ function love.keypressed(k)
 
     if k == 'e' then
         local k = require 'loadError'
+    end
+
+    if k == 'n' then
+        local k = require 'nonExistent'
+    end
+
+    if k == 'q' then
+        local f = love.graphics.newFont('nonExistent.ttf', 32)
     end
 end
