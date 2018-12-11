@@ -12,7 +12,7 @@ function love.textinput(t)
 end
 
 function love.keypressed(key)
-    if key == "backspace" then
+    if key == 'backspace' then
         local byteoffset = utf8.offset(text, -1)
         if byteoffset then
             text = string.sub(text, 1, byteoffset - 1)
