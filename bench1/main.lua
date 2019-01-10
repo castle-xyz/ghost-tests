@@ -1,8 +1,23 @@
+local function fib(n)
+    if n <= 1 then
+        return 1
+    else
+        return fib(n - 1) + fib(n - 2)
+    end
+end
+
 local N = 30000
 
 local rects
 
+local elapsed, res
+
 function love.load()
+    local start = love.timer.getTime()
+    res = fib(40)
+    elapsed = love.timer.getTime() - start
+    print(elapsed, '-', res)
+
     rects = {}
     for i = 1, N do
         rects[i] = {
@@ -33,5 +48,7 @@ function love.draw()
 
     love.graphics.setColor(1, 1, 1)
     love.graphics.print('fps: ' .. love.timer.getFPS(), 20, 20)
+
+    love.graphics.print('\nfib: ' .. elapsed .. ' - ' .. res, 20, 20)
 end
 
