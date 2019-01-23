@@ -11,7 +11,8 @@ function love.draw()
 
     press N to log an ASCII art 'N' immediately
         to test the responsiveness of logging
-    ]], 20, 20)
+
+    fps: ]] .. love.timer.getFPS(), 20, 20)
 end
 
 function love.update()
