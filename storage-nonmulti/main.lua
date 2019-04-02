@@ -16,7 +16,7 @@ end
 function love.keypressed(key)
     if key == 'g' then
         network.async(function()
-            local value = castle.storage.getGlobal{ key = selectedKeyName } 
+            local value = castle.storage.getGlobal { key = selectedKeyName } 
             local desc = (value == nil) and '`nil`' or "'" .. value .. "'"
             print("got '" .. selectedKeyName .. "' as " .. desc)
         end)
@@ -25,7 +25,7 @@ function love.keypressed(key)
     if key == 'q' or key == 'w' or key == 'e' or key == 'd' then
         network.async(function()
             local value = (key ~= 'd') and key or nil
-            castle.storage.setGlobal{ key = selectedKeyName, value = key }
+            castle.storage.setGlobal { key = selectedKeyName, value = value }
             local desc = (value == nil) and '`nil`' or "'" .. value .. "'"
             print("set '" .. selectedKeyName .. "' to " .. desc)
         end)
