@@ -9,7 +9,7 @@ function love.draw()
     press D to set the value to `nil`
 
     press 1, 2 or 3 to change the selected key to 'key1', 'key2' or 'key3' respectively
-    the currently selected key is ']] .. selectedKeyName .. [[''
+    the currently selected key is ']] .. selectedKeyName .. [['
     ]], 20, 20)
 end
 
