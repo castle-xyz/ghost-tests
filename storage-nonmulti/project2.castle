@@ -1,4 +1,0 @@
-main: main.lua
-name: Test: Non-multiplayer storage
-owner: nikki
-description: Testing `castle.storage.` APIs in non-multiplayer mode.
