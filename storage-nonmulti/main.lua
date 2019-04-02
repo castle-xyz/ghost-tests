@@ -22,7 +22,7 @@ function love.keypressed(key)
         end)
     end
 
-    if key == 'q' or key == 'w' or key == 'e' then
+    if key == 'q' or key == 'w' or key == 'e' or key == 'd' then
         network.async(function()
             local value = (key ~= 'd') and key or nil
             castle.storage.setGlobal{ key = selectedKeyName, value = key }
