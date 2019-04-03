@@ -40,4 +40,8 @@ function love.keypressed(key)
     if key == '1' or key == '2' or key == '3' then
         selectedKeyName = 'key' .. key
     end
+
+    if key == 'tab' then
+        mode = mode == 'GLOBAL' and 'USER' or 'GLOBAL'
+    end
 end
