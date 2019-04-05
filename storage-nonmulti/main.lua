@@ -21,9 +21,12 @@ function love.keypressed(key)
     if key == 'g' then
         network.async(function()
             local funcName = mode == 'GLOBAL' and 'getGlobal' or 'get'
+            local startTime = love.timer.getTime()
             local value = castle.storage[funcName](selectedKeyName)
+            local endTime = love.timer.getTime()
             local desc = (value == nil) and '`nil`' or "'" .. value .. "'"
             print("got '" .. selectedKeyName .. "' as " .. desc)
+            print('took ' .. (endTime - startTime) .. 'sec')
         end)
     end
 
@@ -31,9 +34,12 @@ function love.keypressed(key)
         network.async(function()
             local funcName = mode == 'GLOBAL' and 'setGlobal' or 'set'
             local value = (key ~= 'd') and key or nil
+            local startTime = love.timer.getTime()
             castle.storage[funcName](selectedKeyName, value)
+            local endTime = love.timer.getTime()
             local desc = (value == nil) and '`nil`' or "'" .. value .. "'"
             print("set '" .. selectedKeyName .. "' to " .. desc)
+            print('took ' .. (endTime - startTime) .. 'sec')
         end)
     end
 
