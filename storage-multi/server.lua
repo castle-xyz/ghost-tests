@@ -1,3 +1,14 @@
+do
+    local cjson = require 'cjson'
+    if CASTLE_GAME_INFO then
+        decodedGameInfo = cjson.decode(CASTLE_GAME_INFO)
+        if decodedGameInfo.storageId then
+            STORAGE_ID = decodedGameInfo.storageId
+        end
+    end
+end
+
+
 require 'common'
 
 
@@ -39,5 +50,5 @@ end
 -- CONNECT
 
 function server.connect(clientId)
-    server.send(clientId, 'CASTLE_GAME_INFO', 0, CASTLE_GAME_INFO)
+    server.send(clientId, 'CASTLE_GAME_INFO', 0, )
 end
