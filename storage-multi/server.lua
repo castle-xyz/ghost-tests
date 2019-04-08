@@ -50,5 +50,5 @@ end
 -- CONNECT
 
 function server.connect(clientId)
-    server.send(clientId, 'CASTLE_GAME_INFO', 0, )
+    server.send(clientId, 'CASTLE_GAME_INFO', 0, STORAGE_ID)
 end
