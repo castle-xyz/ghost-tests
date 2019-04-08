@@ -39,5 +39,5 @@ end
 -- CONNECT
 
 function server.connect(clientId)
-    server.send(clientId, 'CASTLE_GAME_INFO', nil, CASTLE_GAME_INFO)
+    server.send(clientId, 'CASTLE_GAME_INFO', 0, CASTLE_GAME_INFO)
 end
