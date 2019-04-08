@@ -1,4 +1,3 @@
---
 main: main_remote.lua
 title: Test multiplayer storage
 owner: nikki
