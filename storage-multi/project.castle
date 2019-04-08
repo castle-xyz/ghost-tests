@@ -1,0 +1,5 @@
+--
+main: main_remote.lua
+title: Test multiplayer storage
+owner: nikki
+description: Testing `castle.storage.` APIs in multiplayer mode.
