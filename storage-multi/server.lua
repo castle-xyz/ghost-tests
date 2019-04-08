@@ -16,7 +16,7 @@ local share = server.share
 local homes = server.homes
 
 
--- RECEIVE
+--- RECEIVE
 
 function server.receive(clientId, msg, startTime, ...)
     if msg == 'GET_GLOBAL_REQUEST' then
@@ -33,4 +33,11 @@ function server.receive(clientId, msg, startTime, ...)
             server.send(clientId, 'SET_GLOBAL_RESPONSE', startTime, key, value)
         end)
     end
+end
+
+
+-- CONNECT
+
+function server.connect(clientId)
+    server.send(clientId, 'CASTLE_GAME_INFO', nil, CASTLE_GAME_INFO)
 end

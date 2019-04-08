@@ -16,12 +16,12 @@ local share = client.share
 local home = client.home
 
 
--- LOCALS
+--- LOCALS
 
 local selectedKeyName = 'key1'
 
 
--- RECEIVE
+--- RECEIVE
 
 function client.receive(msg, startTime, ...)
     local tookTime = love.timer.getTime() - startTime
@@ -37,10 +37,14 @@ function client.receive(msg, startTime, ...)
         print("set '" .. key .. "' to " .. desc)
         print('took ' .. tookTime .. 'sec')
     end
+    if msg == 'CASTLE_GAME_INFO' then
+        local info = ...
+        print('got `CASTLE_GAME_INFO`: ' .. info)
+    end
 end
 
 
--- DRAW
+--- DRAW
 
 function client.draw()
     love.graphics.print([[
@@ -56,7 +60,7 @@ function client.draw()
 end
 
 
--- KEYPRESSED
+--- KEYPRESSED
 
 function client.keypressed(key)
     if key == 'g' then
