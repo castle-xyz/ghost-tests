@@ -13,7 +13,7 @@ function love.draw()
 end
 
 function love.keypressed(key)
-    if key == 'enter' then
+    if key == 'return' then
         network.async(function()
             castle.post.create {
                 message = 'hello, world!',
