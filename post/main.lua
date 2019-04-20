@@ -1,7 +1,7 @@
 local text = ''
 
-function castle.postopened(data)
-    text = data.text
+function castle.postopened(post)
+    text = post.data.text
 end
 
 function love.draw()
