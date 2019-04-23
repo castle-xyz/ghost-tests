@@ -9,6 +9,7 @@ function love.draw()
     press ENTER to make a post
 
     the text so far is: []] .. text .. [[]
+    the time is: ]] .. love.timer.getTime() .. [[
     ]], 20, 20)
 end
 
