@@ -6,4 +6,10 @@ function love.draw()
     love.graphics.setColor(0, 1, 0)
     love.graphics.rectangle('line', 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
     love.graphics.pop()
+
+    love.graphics.push('all')
+    love.graphics.setColor(0, 0, 0)
+    local w, h = love.graphics.getDimensions()
+    love.graphics.print(w .. 'x' .. h, 40, 40)
+    love.graphics.pop()
 end
