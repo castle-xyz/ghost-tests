@@ -1,6 +1,7 @@
 love.graphics.setBackgroundColor(1, 0, 0)
 
 local spriteSheet = love.graphics.newImage('spritesheet.png')
+spriteSheet:setFilter('nearest', 'nearest')
 
 function love.draw()
     local w, h = love.graphics.getDimensions()
