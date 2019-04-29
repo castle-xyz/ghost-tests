@@ -36,6 +36,12 @@ function love.draw()
 	text = text .. 'Joysticks connected: ' .. love.joystick.getJoystickCount() .. '\n\n'
 
 	joystick = joysticks[currentJoystick]
+	if not joystick then
+		text = text .. "`love.joystickadded` didn't work"
+		love.graphics.print(text, 10, 10)
+		return
+	end
+
 	text = text .. 'Joystick ' .. currentJoystick .. ' - ' .. joystick.name .. ':\n'
 
 	if not joystick.obj:isConnected() then
