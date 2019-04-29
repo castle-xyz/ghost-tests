@@ -7,6 +7,11 @@ function love.draw()
     local w, h = love.graphics.getDimensions()
 
     love.graphics.push('all')
+    love.graphics.setColor(0.5, 0.5, 0.5)
+    love.graphics.rectangle('fill', 0.5 * (w - 800), 0.5 * (h - 450), 800, 450)
+    love.graphics.pop()
+
+    love.graphics.push('all')
     love.graphics.setColor(1, 1, 0)
     for x = 0, w, 32 do
         love.graphics.line(x, 0, x, h)
