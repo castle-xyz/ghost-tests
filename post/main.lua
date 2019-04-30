@@ -1,6 +1,8 @@
 local text = ''
+local creator
 
 function castle.postopened(post)
+    creator = post.creator
     text = post.data.text
 end
 
@@ -10,6 +12,8 @@ function love.draw()
 
     the text so far is: []] .. text .. [[]
     the time is: ]] .. love.timer.getTime() .. [[
+
+    creator was: ]] .. (creator and creator.username or 'no one') .. [[
     ]], 20, 20)
 end
 
