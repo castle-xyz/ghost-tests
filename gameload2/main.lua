@@ -8,6 +8,7 @@ end
 function love.keypressed(key)
     if key == 'l' then
         network.async(function()
+            -- Refer by URL here, other game uses `gameId`
             castle.game.load(
                 'https://raw.githubusercontent.com/castle-games/ghost-tests/master/gameload1/project.castle', {
                     msg = 'from game 2',
