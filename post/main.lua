@@ -1,5 +1,6 @@
 local text = ''
 local creator
+local initialPost = castle.post.getInitialPost()
 
 function castle.postopened(post)
     creator = post.creator
@@ -14,6 +15,7 @@ function love.draw()
     the time is: ]] .. love.timer.getTime() .. [[
 
     creator was: ]] .. (creator and creator.username or 'no one') .. [[
+    initial post had text: ]] .. (initialPost and initialPost.data.text or 'jk nothing') .. [[
     ]], 20, 20)
 end
 
