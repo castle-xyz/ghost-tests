@@ -4,6 +4,6 @@ end
 
 function love.keypressed(k)
     if key == 'l' then
-        castle.game.load('*', { msg = 'from game 1' })
+        castle.game.load('https://raw.githubusercontent.com/castle-games/ghost-tests/master/gameload2/project.castle', { msg = 'from game 1' })
     end
 end
