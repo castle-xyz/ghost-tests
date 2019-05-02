@@ -1,8 +1,18 @@
 local initialParams = castle.game.getInitialParams()
 local msg = initialParams and initialParams.msg or '<no msg>'
 
+local referrer = castle.game.getReferrer()
+local referrerTitle = referrer and referrer.title or '<no referrer>'
+
 function love.draw()
-    love.graphics.print('game 2\npress L to load other game\n\nmsg we got was: ' .. msg, 20, 20);
+    love.graphics.print([[
+    game 2
+    press L to load other game
+
+    msg we got was: ]] .. msg .. [[
+
+    referrer we got was: ]] .. referrerTitle .. [[
+    ]], 20, 20)
 end
 
 function love.keypressed(key)
