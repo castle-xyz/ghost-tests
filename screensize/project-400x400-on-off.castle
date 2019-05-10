@@ -1,0 +1,7 @@
+title: Screen size test (400x400, up on, down off)
+owner: nikki
+main: main.lua
+description: Screen size testing!
+dimensions: 400x400
+upscaling: on
+downscaling: off

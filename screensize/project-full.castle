@@ -1,0 +1,5 @@
+title: Screen size test (full)
+owner: nikki
+main: main.lua
+description: Screen size testing!
+dimensions: full
