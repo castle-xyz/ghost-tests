@@ -4,7 +4,7 @@ function love.draw()
     if castle.user.isLoggedIn == true then
         local me = castle.user.getMe()
         if me then
-            love.graphics.print('userId: ' .. me.userId, 20, 20)
+            love.graphics.print('update!!! userId: ' .. me.userId, 20, 20)
             love.graphics.print('\nusername: ' .. me.username, 20, 20)
             love.graphics.print('\n\nname: ' .. me.name, 20, 20)
             love.graphics.print('\n\n\nphotoUrl: ' .. me.photoUrl, 20, 20)
