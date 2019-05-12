@@ -12,6 +12,7 @@ function love.draw()
     love.graphics.pop()
 
     love.graphics.push('all')
+    love.graphics.setLineStyle('rough')
     love.graphics.setColor(1, 1, 0)
     for x = 0, w, 32 do
         love.graphics.line(x, 0, x, h)
