@@ -23,6 +23,7 @@ function love.draw()
     love.graphics.pop()
 
     love.graphics.push('all')
+    love.graphics.setLineStyle('rough')
     love.graphics.setLineWidth(10)
     love.graphics.setColor(0, 1, 0)
     love.graphics.rectangle('line', 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
