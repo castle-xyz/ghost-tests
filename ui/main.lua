@@ -22,6 +22,9 @@ root.panes.DEFAULT = {
 
 
 local function hash(s)
+    if #s <= 22 then
+        return s
+    end
     return love.data.encode('string', 'base64', love.data.hash('md5', s))
 end
 
@@ -36,12 +39,11 @@ local function push(element)
 end
 
 local function addChild(id)
-    id = tostring(id)
-
     local top = stack[#stack]
     top.newChildren.count = top.newChildren.count + 1
 
-    -- Form dedup'ing id if exists in new
+    -- Canonicalize id, dedup'ing if exists in new
+    id = hash(((type(id) == 'string' and id) or (type(id) == 'number' and tostring(id))) or '')
     if top.newChildren[id] then
         id = hash(id .. top.newChildren.count)
     end
@@ -62,6 +64,18 @@ local function pop()
     top.element.children = top.newChildren
 end
 
+local function enter(element, func)
+    if type(func) ~= 'function' then
+        return
+    end
+    push(element)
+    local succeeded, err = pcall(func)
+    pop()
+    if not succeeded then
+        error(err, 0)
+    end
+end
+
 
 local function mergeTable(t, u, ...)
     if u == nil then
@@ -77,26 +91,36 @@ local function mergeTable(t, u, ...)
     return mergeTable(r, ...)
 end
 
+
+function ui.box(id, props, func)
+    local c = addChild(id)
+    c.type = 'box'
+    c.props = ((type(id) == 'table' and id) or (type(props) == 'table' and props)) or nil
+    enter(c, ((type(id) == 'function' and id) or (type(props) == 'function' and props)
+        or (type(func) == 'function' and func)) or nil)
+end
+
+
 function ui.heading(text, props)
-    local c = addChild(hash(text))
+    local c = addChild(text)
     c.type = 'heading'
     c.props = type(text) == 'table' and text or mergeTable({ text = text }, props)
 end
 
 function ui.markdown(text, props)
-    local c = addChild(hash(text))
+    local c = addChild(text)
     c.type = 'markdown'
     c.props = type(text) == 'table' and text or mergeTable({ text = text }, props)
 end
 
 function ui.paragraph(text, props)
-    local c = addChild(hash(text))
+    local c = addChild(text)
     c.type = 'paragraph'
     c.props = type(text) == 'table' and text or mergeTable({ text = text }, props)
 end
 
 function ui.text(text, props)
-    local c = addChild(hash(text))
+    local c = addChild(text)
     c.type = 'text'
     c.props = type(text) == 'table' and text or mergeTable({ text = text }, props)
 end
@@ -133,11 +157,24 @@ function castle.uiupdate()
 
 This is **cool**! Right? [Google](https://www.google.com)...
     ]])
-    for _, key in ipairs(keys) do
-        ui.text(key, {
-            color = 'status-critical',
-        })
-    end
+
+    ui.box({ pad = 'medium', border = { color = 'brand', size = 'large' } }, function()
+        for _, key in ipairs(keys) do
+            ui.text(key, {
+                color = 'status-critical',
+            })
+        end
+    end)
+
+    ui.box({
+        direction = 'row',
+        border = { color = 'brand', size = 'large' },
+        pad = 'medium',
+        flex = 'grow',
+    }, function()
+        ui.box({ pad = 'small', background = 'dark-3', flex = 'grow' })
+        ui.box({ pad = 'medium', background = 'light-3', flex = 'grow' })
+    end)
 end
 
 function love.update()
