@@ -21,9 +21,6 @@ jsEvents.listen('CASTLE_TOOL_EVENT', function(params)
     table.insert(pendingEvents[params.pathId], params.event)
 end)
 
-local lastPendingEventIds = {}
-local pathIdsVisitedThisFrame = {}
-
 
 root.panes = {}
 
@@ -67,7 +64,7 @@ local function addChild(id, needsPathId)
     -- Reuse old child if exists, add to new, return
     local oldChild
     if top.element.children and top.element.children[id] then
-        child = top.element.children[id]
+        oldChild = top.element.children[id]
     end
     local child = oldChild or {}
     top.newChildren[id] = child
@@ -77,18 +74,17 @@ local function addChild(id, needsPathId)
     if needsPathId then
         local pathId = hash(top.pathId .. id)
         child.pathId = pathId
-        if lastPendingEventIds[pathId] then
-            child.lastReportedEventId = lastPendingEventIds[pathId]
+        if child.lastPendingEventId then
+            child.lastReportedEventId = child.lastPendingEventId
         end
         local es = pendingEvents[pathId]
         if es then
             for _, e in ipairs(es) do
-                if not lastPendingEventIds[pathId] or lastPendingEventIds[pathId] <= e.eventId then
-                    lastPendingEventIds[pathId] = e.eventId
+                if not child.lastPendingEventId or child.lastPendingEventId <= e.eventId then
+                    child.lastPendingEventId = e.eventId
                 end
             end
         end
-        pathIdsVisitedThisFrame[pathId] = true
     end
 
     return child, id
@@ -202,14 +198,7 @@ function ui.update()
     push(root.panes.DEFAULT, 'DEFAULT')
     castle.uiupdate()
     pop()
-
     pendingEvents = {}
-    for pathId in pairs(lastPendingEventIds) do
-        if not pathIdsVisitedThisFrame[pathId] then
-            lastPendingEventIds[pathId] = nil
-        end
-    end
-    pathIdsVisitedThisFrame = {}
 
     local diff = root:__diff(0)
     if diff ~= nil then
