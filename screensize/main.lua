@@ -36,3 +36,7 @@ function love.draw()
 
     love.graphics.draw(spriteSheet, 32, 64)
 end
+
+function love.resize(w, h)
+    print('resize', w, h)
+end
