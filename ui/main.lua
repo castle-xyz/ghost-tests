@@ -13,6 +13,15 @@ local root = state.new()
 root:__autoSync(true)
 
 
+local pendingEvents = {}
+jsEvents.listen('CASTLE_TOOL_EVENT', function(params)
+    if not pendingEvents[params.pathId] then
+        pendingEvents[params.pathId] = {}
+    end
+    table.insert(pendingEvents[params.pathId], params.event)
+end)
+
+
 root.panes = {}
 
 root.panes.DEFAULT = {
@@ -31,14 +40,16 @@ end
 
 local stack = {}
 
-local function push(element)
+local function push(element, id)
+    local top = stack[#stack]
     table.insert(stack, {
         element = element,
         newChildren = { count = 0 },
+        pathId = hash((top and top.pathId or '') .. id)
     })
 end
 
-local function addChild(id)
+local function addChild(id, needsPathId)
     local top = stack[#stack]
     top.newChildren.count = top.newChildren.count + 1
 
@@ -56,7 +67,13 @@ local function addChild(id)
     local child = oldChild or {}
     top.newChildren[id] = child
     child.order = top.newChildren.count
-    return child
+
+    -- Add path id if needed
+    if needsPathId then
+        child.pathId = hash(top.pathId .. id)
+    end
+
+    return child, id
 end
 
 local function pop()
@@ -64,11 +81,11 @@ local function pop()
     top.element.children = top.newChildren
 end
 
-local function enter(element, func)
+local function enter(element, id, func)
     if type(func) ~= 'function' then
         return
     end
-    push(element)
+    push(element, id)
     local succeeded, err = pcall(func)
     pop()
     if not succeeded then
@@ -93,10 +110,10 @@ end
 
 
 function ui.box(id, props, func)
-    local c = addChild(id)
+    local c, newId = addChild(id)
     c.type = 'box'
     c.props = ((type(id) == 'table' and id) or (type(props) == 'table' and props)) or nil
-    enter(c, ((type(id) == 'function' and id) or (type(props) == 'function' and props)
+    enter(c, newId, ((type(id) == 'function' and id) or (type(props) == 'function' and props)
         or (type(func) == 'function' and func)) or nil)
 end
 
@@ -126,10 +143,27 @@ function ui.text(text, props)
 end
 
 
+function ui.button(label)
+    local c = addChild(label, true)
+    c.type = 'button'
+    c.props = type(label) == 'table' and label or mergeTable({ label = label }, props)
+    local es = pendingEvents[c.pathId]
+    if es then
+        for _, e in ipairs(es) do
+            if e.type == 'click' then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+
 function ui.update()
-    push(root.panes.DEFAULT)
+    push(root.panes.DEFAULT, 'DEFAULT')
     castle.uiupdate()
     pop()
+    pendingEvents = {}
 
     local diff = root:__diff(0)
     if diff ~= nil then
@@ -163,6 +197,17 @@ This is **cool**! Right? [Google](https://www.google.com)...
             ui.text(key, {
                 color = 'status-critical',
             })
+        end
+    end)
+
+    ui.box({
+        direction = 'row',
+    }, function()
+        if ui.button('Woah') then
+            print('Woah!!')
+        end
+        if ui.button('Whee') then
+            print('Whee!!')
         end
     end)
 
