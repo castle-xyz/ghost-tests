@@ -72,12 +72,11 @@ local function addChild(id, needsPathId)
 
     -- Add path id if needed
     if needsPathId then
-        local pathId = hash(top.pathId .. id)
-        child.pathId = pathId
+        child.pathId = hash(top.pathId .. id)
         if child.lastPendingEventId then
             child.lastReportedEventId = child.lastPendingEventId
         end
-        local es = pendingEvents[pathId]
+        local es = pendingEvents[child.pathId]
         if es then
             for _, e in ipairs(es) do
                 if not child.lastPendingEventId or child.lastPendingEventId <= e.eventId then
