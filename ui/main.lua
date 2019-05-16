@@ -26,7 +26,9 @@ root.panes = {}
 
 root.panes.DEFAULT = {
     type = 'pane',
-    props = {},
+    props = {
+        name = 'DEFAULT',
+    },
 }
 
 
@@ -150,12 +152,33 @@ function ui.button(label)
     local es = pendingEvents[c.pathId]
     if es then
         for _, e in ipairs(es) do
-            if e.type == 'click' then
+            if e.type == 'onClick' then
                 return true
             end
         end
     end
     return false
+end
+
+
+function ui.textInput(label, value, props)
+    assert(type(label) == 'string' or type(label) == nil, '`ui.textinput` needs a string or `nil` `label`')
+    assert(type(value) == 'string', '`ui.textinput` needs a string `value`')
+
+    local c = addChild(label, true)
+    c.type = 'textInput'
+    c.props = mergeTable({ label = label, value = value}, props)
+
+    local newValue, changed = value, false
+    local es = pendingEvents[c.pathId]
+    if es then
+        for _, e in ipairs(es) do
+            if e.type == 'onChange' then
+                newValue, changed = e.value, true
+            end
+        end
+    end
+    return newValue, changed
 end
 
 
@@ -181,7 +204,7 @@ ui.update()
 
 --- MAIN
 
-local val = 42
+local val = 'hai'
 
 local keys = {}
 
@@ -199,6 +222,8 @@ This is **cool**! Right? [Google](https://www.google.com)...
             })
         end
     end)
+
+    val = ui.textInput('Value', val)
 
     ui.box({
         direction = 'row',
