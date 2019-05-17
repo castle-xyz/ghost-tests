@@ -306,16 +306,6 @@ This is **cool**! Right? [Google](https://www.google.com)...
             print('Whee!!')
         end
     end)
-
-    ui.box({
-        direction = 'row',
-        border = { color = 'brand', size = 'large' },
-        pad = 'medium',
-        flex = 'grow',
-    }, function()
-        ui.box({ pad = 'small', background = 'dark-3', flex = 'grow' })
-        ui.box({ pad = 'medium', background = 'light-3', flex = 'grow' })
-    end)
 end
 
 function love.update()
