@@ -196,7 +196,11 @@ function ui.section(label, props, func)
     end
     store[c].active = active
 
-    if active then
+    if c.props.active == nil then
+        c.props.active = active
+    end
+
+    if c.props.active then
         enter(c, newId, func)
     end
 
