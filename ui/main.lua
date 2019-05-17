@@ -115,18 +115,31 @@ local function enter(element, id, func)
 end
 
 
-local function mergeTable(t, u, ...)
+local function merge(t, u, ...)
     if u == nil then
         return t
     end
     local r = {}
-    for k in pairs(t) do
-        r[k] = t[k]
+    for k, v in pairs(t) do
+        r[k] = v
     end
-    for k in pairs(u) do
-        r[k] = u[k]
+    for k, v in pairs(u) do
+        r[k] = v
     end
-    return mergeTable(r, ...)
+    return merge(r, ...)
+end
+
+local function without(t, w, ...)
+    if w == nil then
+        return t
+    end
+    local r = {}
+    for k, v in pairs(t) do
+        if k ~= w then
+            r[k] = v
+        end
+    end
+    return without(r, ...)
 end
 
 
@@ -145,7 +158,7 @@ function ui.heading(text, props)
     text = tostring((type(text) ~= 'table' and text) or (type(props) == 'table' and props.text))
     local c = addChild(text)
     c.type = 'heading'
-    c.props = mergeTable({ text = text }, props)
+    c.props = merge({ text = text }, props)
 end
 
 function ui.markdown(text, props)
@@ -154,7 +167,7 @@ function ui.markdown(text, props)
 
     local c = addChild(text)
     c.type = 'markdown'
-    c.props = mergeTable({ text = text }, props)
+    c.props = merge({ text = text }, props)
 end
 
 function ui.paragraph(text, props)
@@ -163,7 +176,7 @@ function ui.paragraph(text, props)
 
     local c = addChild(text)
     c.type = 'paragraph'
-    c.props = mergeTable({ text = text }, props)
+    c.props = merge({ text = text }, props)
 end
 
 function ui.text(text, props)
@@ -172,7 +185,7 @@ function ui.text(text, props)
 
     local c = addChild(text)
     c.type = 'text'
-    c.props = mergeTable({ text = text }, props)
+    c.props = merge({ text = text }, props)
 end
 
 
@@ -183,7 +196,7 @@ function ui.section(label, props, func)
 
     local c, newId = addChild(label, true)
     c.type = 'section'
-    c.props = mergeTable({ label = label }, props)
+    c.props = merge({ label = label }, props)
 
     local active = store[c].active == true
     local es = pendingEvents[c.pathId]
@@ -213,17 +226,21 @@ function ui.button(label, props)
 
     local c = addChild(label, true)
     c.type = 'button'
-    c.props = mergeTable({ label = label }, props)
+    c.props = without(merge({ label = label }, props), 'onClick')
 
+    local clicked = false
     local es = pendingEvents[c.pathId]
     if es then
         for _, e in ipairs(es) do
             if e.type == 'onClick' then
-                return true
+                if props and props.onClick then
+                    props.onClick()
+                end
+                clicked = true
             end
         end
     end
-    return false
+    return clicked
 end
 
 function ui.tabs(id, props, func)
@@ -242,7 +259,7 @@ function ui.tab(title, props, func)
 
     local c, newId = addChild(title, true)
     c.type = 'tab'
-    c.props = mergeTable({ title = title }, props)
+    c.props = merge({ title = title }, props)
 
     local active = store[c].active == true
     local es = pendingEvents[c.pathId]
@@ -255,33 +272,46 @@ function ui.tab(title, props, func)
     end
     store[c].active = active
 
-    -- NOTE: Not doing `if active` for tabs because causes rendering jank
-    -- if active then
-        enter(c, newId, func)
-    -- end
+    enter(c, newId, func)
 
     return active
 end
 
 
-function ui.textInput(label, value, props)
-    assert(type(label) == 'string' or type(label) == nil, '`ui.textinput` needs a string or `nil` `label`')
-    assert(type(value) == 'string', '`ui.textinput` needs a string `value`')
+function ui.textInput(...)
+    local label, value, props
+    local nArgs = select('#', ...)
+    if nArgs == 3 then
+        label, value, props = ...
+    elseif nArgs == 2 then
+        local arg1, arg2 = ...
+        if type(arg2) == 'table' then
+            value, props = arg1, arg2
+        else
+            label, value = arg1, arg2
+        end
+    elseif nArgs == 1 then
+        props = ...
+    end
 
     local c = addChild(label, true)
     c.type = 'textInput'
-    c.props = mergeTable({ label = label, value = value}, props)
+    c.props = without(merge({ label = label, value = value}, props), 'onChange')
 
-    local newValue, changed = value, false
+    local newValue = value
     local es = pendingEvents[c.pathId]
     if es then
         for _, e in ipairs(es) do
             if e.type == 'onChange' then
-                newValue, changed = e.value, true
+                if props and props.onChange then
+                    newValue = props.onChange(e.value) or e.value
+                else
+                    newValue = e.value
+                end
             end
         end
     end
-    return newValue, changed
+    return newValue
 end
 
 
@@ -357,9 +387,11 @@ This is tab 2. It should be nice in here *too*.
     ui.box({
         direction = 'row',
     }, function()
-        if ui.button('Woah') then
-            print('Woah!!')
-        end
+        ui.button('Woah', {
+            onClick = function()
+                print('Woah!!')
+            end
+        })
         if ui.button('Whee') then
             print('Whee!!')
         end
