@@ -21,7 +21,7 @@ jsEvents.listen('CASTLE_TOOL_EVENT', function(params)
     table.insert(pendingEvents[params.pathId], params.event)
 end)
 
-local lastPendingEventIds = setmetatable({}, { __mode = 'k' })
+local lastPendingEventIds = setmetatable({}, { __mode = 'k' }) -- TODO: Move this to `store`
 
 local store = setmetatable({}, {
     __mode = 'k',
@@ -224,6 +224,43 @@ function ui.button(label, props)
     return false
 end
 
+function ui.tabs(id, props, func)
+    local c, newId = addChild(id)
+    c.type = 'tabs'
+    c.props = ((type(id) == 'table' and id) or (type(props) == 'table' and props)) or nil
+
+    enter(c, newId, ((type(id) == 'function' and id) or (type(props) == 'function' and props)
+        or (type(func) == 'function' and func)) or nil)
+end
+
+function ui.tab(title, props, func)
+    func = (type(func) == 'function' and func) or (type(props) == 'function' and props) or nil
+    props = ((type(title) == 'table' and title) or (type(props) == 'table' and props)) or nil
+    title = tostring((type(title) ~= 'table' and title) or (type(props) == 'table' and props.title))
+
+    local c, newId = addChild(title, true)
+    c.type = 'tab'
+    c.props = mergeTable({ title = title }, props)
+
+    local active = store[c].active == true
+    local es = pendingEvents[c.pathId]
+    if es then
+        for _, e in ipairs(es) do
+            if e.type == 'onActive' then
+                active = e.value
+            end
+        end
+    end
+    store[c].active = active
+
+    -- NOTE: Not doing `if active` for tabs because causes rendering jank
+    -- if active then
+        enter(c, newId, func)
+    -- end
+
+    return active
+end
+
 
 function ui.textInput(label, value, props)
     assert(type(label) == 'string' or type(label) == nil, '`ui.textinput` needs a string or `nil` `label`')
@@ -293,6 +330,25 @@ This is **cool**! Right? [Google](https://www.google.com)...
     end)
     ui.text('Section active: ' .. tostring(active))
     ui.text('Blah: ' .. tostring(blah))
+
+    local tab1Active, tab2Active = false, false
+    ui.tabs(function()
+        tab1Active = ui.tab('Tab 1', function()
+            ui.markdown([[
+## Welcome to Tab 1
+
+This is tab 1. Hope you like it here. :)
+            ]])
+        end)
+        tab2Active = ui.tab('Tab 2', function()
+            ui.markdown([[
+## Welcome to Tab 2
+
+This is tab 2. It should be nice in here *too*.
+            ]])
+        end)
+    end)
+    ui.text('Tab actives: ' .. tostring(tab1Active) .. ', ' .. tostring(tab2Active))
 
     val = ui.textInput('Value', val)
 
