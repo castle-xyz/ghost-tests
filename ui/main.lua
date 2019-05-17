@@ -21,6 +21,8 @@ jsEvents.listen('CASTLE_TOOL_EVENT', function(params)
     table.insert(pendingEvents[params.pathId], params.event)
 end)
 
+local lastPendingEventIds = setmetatable({}, { __mode = 'k' })
+
 
 root.panes = {}
 
@@ -76,16 +78,12 @@ local function addChild(id, needsPathId)
     -- Add path id if needed
     if needsPathId then
         child.pathId = hash(top.pathId .. id)
-        if child.lastPendingEventId then
-            child.lastReportedEventId = child.lastPendingEventId
+        if lastPendingEventIds[child] then
+            child.lastReportedEventId = lastPendingEventIds[child]
         end
         local es = pendingEvents[child.pathId]
         if es then
-            for _, e in ipairs(es) do
-                if not child.lastPendingEventId or child.lastPendingEventId <= e.eventId then
-                    child.lastPendingEventId = e.eventId
-                end
-            end
+            lastPendingEventIds[child] = es[#es].eventId
         end
     end
 
@@ -206,7 +204,9 @@ function ui.update()
     if diff ~= nil then
         local diffJson = cjson.encode(diff)
         jsEvents.send('CASTLE_TOOLS_UPDATE', diffJson)
-        print('update size ' .. #diffJson)
+        -- print('update: ' .. diffJson)
+        -- print('update size: ' .. #diffJson)
+        -- io.flush()
     end
     root:__flush()
 end
