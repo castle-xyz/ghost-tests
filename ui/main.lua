@@ -102,12 +102,12 @@ local function pop()
     top.element.children = top.newChildren
 end
 
-local function enter(element, id, func)
-    if type(func) ~= 'function' then
+local function enter(element, id, inner)
+    if type(inner) ~= 'function' then
         return
     end
     push(element, id)
-    local succeeded, err = pcall(func)
+    local succeeded, err = pcall(inner)
     pop()
     if not succeeded then
         error(err, 0)
@@ -143,16 +143,37 @@ local function without(t, w, ...)
 end
 
 
-function ui.box(id, props, func)
+-- ui.box(inner)
+-- ui.box(props)
+-- ui.box(props, inner)
+-- ui.box(id, props, inner)
+function ui.box(...)
+    local id, props, inner
+    local nArgs = select('#', ...)
+    if nArgs == 1 then
+        local arg = ...
+        if type(arg) == 'function' then
+            inner = arg
+        else
+            props = arg
+        end
+    elseif nArgs == 2 then
+        props, inner = ...
+    elseif nArgs == 3 then
+        id, props, inner = ...
+    end
+
     local c, newId = addChild(id)
     c.type = 'box'
-    c.props = ((type(id) == 'table' and id) or (type(props) == 'table' and props)) or nil
+    c.props = props
 
-    enter(c, newId, ((type(id) == 'function' and id) or (type(props) == 'function' and props)
-        or (type(func) == 'function' and func)) or nil)
+    enter(c, newId, inner)
 end
 
 
+-- ui.heading(text)
+-- ui.heading(props)
+-- ui.heading(text, props)
 function ui.heading(text, props)
     props = ((type(text) == 'table' and text) or props) or nil
     text = tostring((type(text) ~= 'table' and text) or (type(props) == 'table' and props.text))
@@ -161,6 +182,9 @@ function ui.heading(text, props)
     c.props = merge({ text = text }, props)
 end
 
+-- ui.markdown(text)
+-- ui.markdown(props)
+-- ui.markdown(text, props)
 function ui.markdown(text, props)
     props = ((type(text) == 'table' and text) or props) or nil
     text = tostring((type(text) ~= 'table' and text) or (type(props) == 'table' and props.text))
@@ -170,6 +194,9 @@ function ui.markdown(text, props)
     c.props = merge({ text = text }, props)
 end
 
+-- ui.paragraph(text)
+-- ui.paragraph(props)
+-- ui.paragraph(text, props)
 function ui.paragraph(text, props)
     props = ((type(text) == 'table' and text) or props) or nil
     text = tostring((type(text) ~= 'table' and text) or (type(props) == 'table' and props.text))
@@ -179,6 +206,9 @@ function ui.paragraph(text, props)
     c.props = merge({ text = text }, props)
 end
 
+-- ui.text(text)
+-- ui.text(props)
+-- ui.text(text, props)
 function ui.text(text, props)
     props = ((type(text) == 'table' and text) or props) or nil
     text = tostring((type(text) ~= 'table' and text) or (type(props) == 'table' and props.text))
@@ -189,10 +219,16 @@ function ui.text(text, props)
 end
 
 
-function ui.section(label, props, func)
-    func = (type(func) == 'function' and func) or (type(props) == 'function' and props) or nil
-    props = ((type(label) == 'table' and label) or (type(props) == 'table' and props)) or nil
-    label = tostring((type(label) ~= 'table' and label) or (type(props) == 'table' and props.label))
+-- ui.section(label, inner)
+-- ui.section(label, props, inner)
+function ui.section(...)
+    local label, props, inner
+    local nArgs = select('#', ...)
+    if nArgs == 2 then
+        label, inner = ...
+    elseif nArgs == 3 then
+        label, props, inner = ...
+    end
 
     local c, newId = addChild(label, true)
     c.type = 'section'
@@ -214,12 +250,14 @@ function ui.section(label, props, func)
     end
 
     if c.props.active then
-        enter(c, newId, func)
+        enter(c, newId, inner)
     end
 
     return active
 end
 
+-- ui.button(label)
+-- ui.button(label, props)
 function ui.button(label, props)
     props = ((type(label) == 'table' and label) or props) or nil
     label = tostring((type(label) ~= 'table' and label) or (type(props) == 'table' and props.label))
@@ -243,19 +281,37 @@ function ui.button(label, props)
     return clicked
 end
 
-function ui.tabs(id, props, func)
+-- ui.tabs(inner)
+-- ui.tabs(props, inner)
+-- ui.tabs(id, props, inner)
+function ui.tabs(...)
+    local id, props, inner
+    local nArgs = select('#', ...)
+    if nArgs == 1 then
+        inner = ...
+    elseif nArgs == 2 then
+        props, inner = ...
+    elseif nArgs == 3 then
+        id, props, inner = ...
+    end
+
     local c, newId = addChild(id)
     c.type = 'tabs'
-    c.props = ((type(id) == 'table' and id) or (type(props) == 'table' and props)) or nil
+    c.props = props
 
-    enter(c, newId, ((type(id) == 'function' and id) or (type(props) == 'function' and props)
-        or (type(func) == 'function' and func)) or nil)
+    enter(c, newId, inner)
 end
 
-function ui.tab(title, props, func)
-    func = (type(func) == 'function' and func) or (type(props) == 'function' and props) or nil
-    props = ((type(title) == 'table' and title) or (type(props) == 'table' and props)) or nil
-    title = tostring((type(title) ~= 'table' and title) or (type(props) == 'table' and props.title))
+-- ui.tab(label, inner)
+-- ui.tab(label, props, inner)
+function ui.tab(...)
+    local label, props, inner
+    local nArgs = select('#', ...)
+    if nArgs == 2 then
+        label, inner = ...
+    elseif nArgs == 3 then
+        label, props, inner = ...
+    end
 
     local c, newId = addChild(title, true)
     c.type = 'tab'
@@ -272,12 +328,16 @@ function ui.tab(title, props, func)
     end
     store[c].active = active
 
-    enter(c, newId, func)
+    enter(c, newId, inner)
 
     return active
 end
 
 
+-- ui.textInput(label, value, props)
+-- ui.textInput(value, props)
+-- ui.textInput(label, value)
+-- ui.textInput(props)
 function ui.textInput(...)
     local label, value, props
     local nArgs = select('#', ...)
@@ -395,6 +455,15 @@ This is tab 2. It should be nice in here *too*.
         if ui.button('Whee') then
             print('Whee!!')
         end
+    end)
+
+    ui.box({
+        direction = 'row',
+        border = { color = 'brand', size = 'large' },
+        pad = 'medium',
+    }, function()
+        ui.box({ pad = 'small', background = 'dark-3' })
+        ui.box({ pad = 'medium', background = 'light-3' })
     end)
 end
 
