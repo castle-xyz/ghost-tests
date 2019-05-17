@@ -3,7 +3,7 @@
 local ui = {}
 
 
-local state = require 'https://raw.githubusercontent.com/castle-games/share.lua/b94c77cacc9e842877e7d8dd71c17792bd8cbc32/state.lua'
+local state = require 'https://raw.githubusercontent.com/castle-games/share.lua/0862dd46ad68fbd53b6c2d09c65f44444cc295a5/state.lua'
 local cjson = (require 'cjson').new()
 cjson.encode_sparse_array(true, 1, 0)
 local jsEvents = require 'jsEvents'
@@ -46,7 +46,7 @@ local function push(element, id)
     local top = stack[#stack]
     table.insert(stack, {
         element = element,
-        newChildren = { count = 0 },
+        newChildren = { lastId = nil, count = 0 },
         pathId = hash((top and top.pathId or '') .. id)
     })
 end
@@ -68,7 +68,10 @@ local function addChild(id, needsPathId)
     end
     local child = oldChild or {}
     top.newChildren[id] = child
-    child.order = top.newChildren.count
+
+    -- Update linked list
+    child.prevId = top.newChildren.lastId
+    top.newChildren.lastId = id
 
     -- Add path id if needed
     if needsPathId then
@@ -203,6 +206,7 @@ function ui.update()
     if diff ~= nil then
         local diffJson = cjson.encode(diff)
         jsEvents.send('CASTLE_TOOLS_UPDATE', diffJson)
+        print('update size ' .. #diffJson)
     end
     root:__flush()
 end
@@ -275,6 +279,6 @@ function love.keypressed(key)
     elseif key == 'c' then
         val = val .. 'c'
     else
-        table.insert(keys, key)
+        table.insert(keys, math.max(1, #keys / 2), love.timer.getTime())
     end
 end
