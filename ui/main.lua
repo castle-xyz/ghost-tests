@@ -12,14 +12,14 @@ local jsEvents = require 'jsEvents'
 local root = state.new()
 root:__autoSync(true)
 
+root.panes = {}
 
-local pendingEvents = {}
-jsEvents.listen('CASTLE_TOOL_EVENT', function(params)
-    if not pendingEvents[params.pathId] then
-        pendingEvents[params.pathId] = {}
-    end
-    table.insert(pendingEvents[params.pathId], params.event)
-end)
+root.panes.DEFAULT = {
+    type = 'pane',
+    props = {
+        name = 'DEFAULT',
+    },
+}
 
 
 local store = setmetatable({}, {
@@ -32,14 +32,13 @@ local store = setmetatable({}, {
 })
 
 
-root.panes = {}
-
-root.panes.DEFAULT = {
-    type = 'pane',
-    props = {
-        name = 'DEFAULT',
-    },
-}
+local pendingEvents = {}
+jsEvents.listen('CASTLE_TOOL_EVENT', function(params)
+    if not pendingEvents[params.pathId] then
+        pendingEvents[params.pathId] = {}
+    end
+    table.insert(pendingEvents[params.pathId], params.event)
+end)
 
 
 local function hash(s)
