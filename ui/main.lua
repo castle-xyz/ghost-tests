@@ -23,6 +23,15 @@ end)
 
 local lastPendingEventIds = setmetatable({}, { __mode = 'k' })
 
+local store = setmetatable({}, {
+    __mode = 'k',
+    __index = function(t, k)
+        local v = {}
+        t[k] = v
+        return v
+    end,
+})
+
 
 root.panes = {}
 
@@ -127,40 +136,83 @@ function ui.box(id, props, func)
     local c, newId = addChild(id)
     c.type = 'box'
     c.props = ((type(id) == 'table' and id) or (type(props) == 'table' and props)) or nil
+
     enter(c, newId, ((type(id) == 'function' and id) or (type(props) == 'function' and props)
         or (type(func) == 'function' and func)) or nil)
 end
 
 
 function ui.heading(text, props)
+    props = ((type(text) == 'table' and text) or props) or nil
+    text = tostring((type(text) ~= 'table' and text) or (type(props) == 'table' and props.text))
     local c = addChild(text)
     c.type = 'heading'
-    c.props = type(text) == 'table' and text or mergeTable({ text = text }, props)
+    c.props = mergeTable({ text = text }, props)
 end
 
 function ui.markdown(text, props)
+    props = ((type(text) == 'table' and text) or props) or nil
+    text = tostring((type(text) ~= 'table' and text) or (type(props) == 'table' and props.text))
+
     local c = addChild(text)
     c.type = 'markdown'
-    c.props = type(text) == 'table' and text or mergeTable({ text = text }, props)
+    c.props = mergeTable({ text = text }, props)
 end
 
 function ui.paragraph(text, props)
+    props = ((type(text) == 'table' and text) or props) or nil
+    text = tostring((type(text) ~= 'table' and text) or (type(props) == 'table' and props.text))
+
     local c = addChild(text)
     c.type = 'paragraph'
-    c.props = type(text) == 'table' and text or mergeTable({ text = text }, props)
+    c.props = mergeTable({ text = text }, props)
 end
 
 function ui.text(text, props)
+    props = ((type(text) == 'table' and text) or props) or nil
+    text = tostring((type(text) ~= 'table' and text) or (type(props) == 'table' and props.text))
+
     local c = addChild(text)
     c.type = 'text'
-    c.props = type(text) == 'table' and text or mergeTable({ text = text }, props)
+    c.props = mergeTable({ text = text }, props)
 end
 
 
-function ui.button(label)
+function ui.section(label, props, func)
+    func = (type(func) == 'function' and func) or (type(props) == 'function' and props) or nil
+    props = ((type(label) == 'table' and label) or (type(props) == 'table' and props)) or nil
+    label = tostring((type(label) ~= 'table' and label) or (type(props) == 'table' and props.label))
+
+    local c, newId = addChild(label, true)
+    c.type = 'section'
+    c.props = mergeTable({ label = label }, props)
+
+    local active = store[c].active == true
+    local es = pendingEvents[c.pathId]
+    if es then
+        for _, e in ipairs(es) do
+            if e.type == 'onActive' then
+                active = e.value
+            end
+        end
+    end
+    store[c].active = active
+
+    if active then
+        enter(c, newId, func)
+    end
+
+    return active
+end
+
+function ui.button(label, props)
+    props = ((type(label) == 'table' and label) or props) or nil
+    label = tostring((type(label) ~= 'table' and label) or (type(props) == 'table' and props.label))
+
     local c = addChild(label, true)
     c.type = 'button'
-    c.props = type(label) == 'table' and label or mergeTable({ label = label }, props)
+    c.props = mergeTable({ label = label }, props)
+
     local es = pendingEvents[c.pathId]
     if es then
         for _, e in ipairs(es) do
@@ -230,13 +282,17 @@ function castle.uiupdate()
 This is **cool**! Right? [Google](https://www.google.com)...
     ]])
 
-    ui.box({ pad = 'medium', border = { color = 'brand', size = 'large' } }, function()
+    local blah = false
+    local active = ui.section('Keys pressed', function()
+        blah = true
         for _, key in ipairs(keys) do
             ui.text(key, {
                 color = 'status-critical',
             })
         end
     end)
+    ui.text('Section active: ' .. tostring(active))
+    ui.text('Blah: ' .. tostring(blah))
 
     val = ui.textInput('Value', val)
 
