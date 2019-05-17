@@ -60,12 +60,13 @@ local function push(element, id)
     })
 end
 
-local function addChild(id, needsPathId)
+local function addChild(typ, id, props, needsPathId)
     local top = stack[#stack]
     top.newChildren.count = top.newChildren.count + 1
 
     -- Canonicalize id, dedup'ing if exists in new
-    id = hash(((type(id) == 'string' and id) or (type(id) == 'number' and tostring(id))) or '')
+    id = id or (props and props.id)
+    id = hash(typ .. (((type(id) == 'string' and id) or (type(id) == 'number' and tostring(id))) or ''))
     if top.newChildren[id] then
         id = hash(id .. top.newChildren.count)
     end
@@ -77,6 +78,8 @@ local function addChild(id, needsPathId)
     end
     local child = oldChild or {}
     top.newChildren[id] = child
+    child.type = typ
+    child.props = props
 
     -- Update linked list
     child.prevId = top.newChildren.lastId
@@ -163,9 +166,7 @@ function ui.box(...)
         id, props, inner = ...
     end
 
-    local c, newId = addChild(id)
-    c.type = 'box'
-    c.props = props
+    local c, newId = addChild('box', id, props)
 
     enter(c, newId, inner)
 end
@@ -177,9 +178,7 @@ end
 function ui.heading(text, props)
     props = ((type(text) == 'table' and text) or props) or nil
     text = tostring((type(text) ~= 'table' and text) or (type(props) == 'table' and props.text))
-    local c = addChild(text)
-    c.type = 'heading'
-    c.props = merge({ text = text }, props)
+    local c = addChild('heading', text, merge({ text = text }, props))
 end
 
 -- ui.markdown(text)
@@ -189,9 +188,7 @@ function ui.markdown(text, props)
     props = ((type(text) == 'table' and text) or props) or nil
     text = tostring((type(text) ~= 'table' and text) or (type(props) == 'table' and props.text))
 
-    local c = addChild(text)
-    c.type = 'markdown'
-    c.props = merge({ text = text }, props)
+    local c = addChild('markdown', text, merge({ text = text }, props))
 end
 
 -- ui.paragraph(text)
@@ -201,9 +198,7 @@ function ui.paragraph(text, props)
     props = ((type(text) == 'table' and text) or props) or nil
     text = tostring((type(text) ~= 'table' and text) or (type(props) == 'table' and props.text))
 
-    local c = addChild(text)
-    c.type = 'paragraph'
-    c.props = merge({ text = text }, props)
+    local c = addChild('paragraph', text, merge({ text = text }, props))
 end
 
 -- ui.text(text)
@@ -213,9 +208,7 @@ function ui.text(text, props)
     props = ((type(text) == 'table' and text) or props) or nil
     text = tostring((type(text) ~= 'table' and text) or (type(props) == 'table' and props.text))
 
-    local c = addChild(text)
-    c.type = 'text'
-    c.props = merge({ text = text }, props)
+    local c = addChild('text', text, merge({ text = text }, props))
 end
 
 
@@ -230,9 +223,7 @@ function ui.section(...)
         label, props, inner = ...
     end
 
-    local c, newId = addChild(label, true)
-    c.type = 'section'
-    c.props = merge({ label = label }, props)
+    local c, newId = addChild('section', label, merge({ label = label }, props), true)
 
     local active = store[c].active == true
     local es = pendingEvents[c.pathId]
@@ -262,9 +253,7 @@ function ui.button(label, props)
     props = ((type(label) == 'table' and label) or props) or nil
     label = tostring((type(label) ~= 'table' and label) or (type(props) == 'table' and props.label))
 
-    local c = addChild(label, true)
-    c.type = 'button'
-    c.props = without(merge({ label = label }, props), 'onClick')
+    local c = addChild('button', label, without(merge({ label = label }, props), 'onClick'), true)
 
     local clicked = false
     local es = pendingEvents[c.pathId]
@@ -295,9 +284,7 @@ function ui.tabs(...)
         id, props, inner = ...
     end
 
-    local c, newId = addChild(id)
-    c.type = 'tabs'
-    c.props = props
+    local c, newId = addChild('tabs', id, props)
 
     enter(c, newId, inner)
 end
@@ -313,9 +300,7 @@ function ui.tab(...)
         label, props, inner = ...
     end
 
-    local c, newId = addChild(title, true)
-    c.type = 'tab'
-    c.props = merge({ title = title }, props)
+    local c, newId = addChild('tab', title, merge({ title = title }, props), true)
 
     local active = store[c].active == true
     local es = pendingEvents[c.pathId]
@@ -354,9 +339,7 @@ function ui.textInput(...)
         props = ...
     end
 
-    local c = addChild(label, true)
-    c.type = 'textInput'
-    c.props = without(merge({ label = label, value = value}, props), 'onChange')
+    local c = addChild('textInput', label, without(merge({ label = label, value = value}, props), 'onChange'), true)
 
     local newValue = value
     local es = pendingEvents[c.pathId]
