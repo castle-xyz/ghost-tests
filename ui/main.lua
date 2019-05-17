@@ -21,7 +21,6 @@ jsEvents.listen('CASTLE_TOOL_EVENT', function(params)
     table.insert(pendingEvents[params.pathId], params.event)
 end)
 
-local lastPendingEventIds = setmetatable({}, { __mode = 'k' }) -- TODO: Move this to `store`
 
 local store = setmetatable({}, {
     __mode = 'k',
@@ -87,12 +86,12 @@ local function addChild(id, needsPathId)
     -- Add path id if needed
     if needsPathId then
         child.pathId = hash(top.pathId .. id)
-        if lastPendingEventIds[child] then
-            child.lastReportedEventId = lastPendingEventIds[child]
+        if store[child].lastPendingEventId then
+            child.lastReportedEventId = store[child].lastPendingEventId
         end
         local es = pendingEvents[child.pathId]
         if es then
-            lastPendingEventIds[child] = es[#es].eventId
+            store[child].lastPendingEventId = es[#es].eventId
         end
     end
 
