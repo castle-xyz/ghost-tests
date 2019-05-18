@@ -324,6 +324,44 @@ function ui.tab(...)
 end
 
 
+-- ui.checkBox(label, checked, props)
+-- ui.checkBox(checked, props)
+-- ui.checkBox(label, checked)
+-- ui.checkBox(props)
+function ui.checkBox(...)
+    local label, checked, props
+    local nArgs = select('#', ...)
+    if nArgs == 3 then
+        label, checked, props = ...
+    elseif nArgs == 2 then
+        local arg1, arg2 = ...
+        if type(arg2) == 'table' then
+            checked, props = arg1, arg2
+        else
+            label, checked = arg1, arg2
+        end
+    elseif nArgs == 1 then
+        props = ...
+    end
+
+    local c = addChild('checkBox', label, without(merge({ label = label, checked = checked}, props), 'onChange'), true)
+
+    local newChecked = checked
+    local es = pendingEvents[c.pathId]
+    if es then
+        for _, e in ipairs(es) do
+            if e.type == 'onChange' then
+                if props and props.onChange then
+                    newChecked = props.onChange(e.checked) or e.checked
+                else
+                    newChecked = e.checked
+                end
+            end
+        end
+    end
+    return newChecked
+end
+
 -- ui.textInput(label, value, props)
 -- ui.textInput(value, props)
 -- ui.textInput(label, value)
@@ -394,7 +432,8 @@ ui.update()
 
 --- MAIN
 
-local val = 'hai'
+local stringVal = 'hai'
+local boolVal = false
 
 local keys = {}
 
@@ -436,7 +475,8 @@ This is tab 2. It should be nice in here *too*.
     end)
     ui.text('Tab actives: ' .. tostring(tab1Active) .. ', ' .. tostring(tab2Active))
 
-    val = ui.textInput('Value', val)
+    stringVal = ui.textInput('stringVal', stringVal)
+    boolVal = ui.checkBox('boolVal', boolVal)
 
     ui.box({
         direction = 'row',
@@ -481,7 +521,8 @@ end
 
 function love.draw()
     love.graphics.print('fps: ' .. love.timer.getFPS(), 20, 20)
-    love.graphics.print('\n\nval is: ' .. val, 20, 20)
+    love.graphics.print('\n\nstringVal: ' .. stringVal, 20, 20)
+    love.graphics.print('\n\n\nboolVal: ' .. tostring(boolVal), 20, 20)
 end
 
 function love.keypressed(key)
@@ -489,8 +530,10 @@ function love.keypressed(key)
         keys = {}
     elseif key == 'backspace' then
         keys[#keys] = nil
-    elseif key == 'c' then
-        val = val .. 'c'
+    elseif key == '=' then
+        boolVal = not boolVal
+    elseif key == '-' then
+        stringVal = stringVal .. '-'
     else
         table.insert(keys, math.max(1, #keys / 2), love.timer.getTime())
     end
