@@ -291,15 +291,15 @@ function ui.tabs(...)
     enter(c, newId, inner)
 end
 
--- ui.tab(label, inner)
--- ui.tab(label, props, inner)
+-- ui.tab(title, inner)
+-- ui.tab(title, props, inner)
 function ui.tab(...)
-    local label, props, inner
+    local title, props, inner
     local nArgs = select('#', ...)
     if nArgs == 2 then
-        label, inner = ...
+        title, inner = ...
     elseif nArgs == 3 then
-        label, props, inner = ...
+        title, props, inner = ...
     end
 
     local c, newId = addChild('tab', title, merge({ title = title }, props), true)
