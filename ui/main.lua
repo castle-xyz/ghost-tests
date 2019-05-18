@@ -3,7 +3,7 @@
 local ui = {}
 
 
-local state = require 'https://raw.githubusercontent.com/castle-games/share.lua/0862dd46ad68fbd53b6c2d09c65f44444cc295a5/state.lua'
+local state = require 'https://raw.githubusercontent.com/castle-games/share.lua/09125a4c0ba5c0cbb61f51f518e64813ae773b3a/state.lua'
 local cjson = (require 'cjson').new()
 cjson.encode_sparse_array(true, 1, 0)
 local jsEvents = require 'jsEvents'
@@ -236,11 +236,13 @@ function ui.section(...)
     end
     store[c].active = active
 
-    if c.props.active == nil then
-        c.props.active = active
+    if c.props.active ~= nil then
+        c.active = c.props.active
+    else
+        c.active = active
     end
 
-    if c.props.active then
+    if c.active then
         enter(c, newId, inner)
     end
 
