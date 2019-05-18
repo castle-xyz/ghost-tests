@@ -9,6 +9,9 @@ cjson.encode_sparse_array(true, 1, 0)
 local jsEvents = require 'jsEvents'
 
 
+local UI_UPDATE_FREQUENCY = 20
+
+
 local root = state.new()
 root:__autoSync(true)
 
@@ -360,21 +363,27 @@ function ui.textInput(...)
 end
 
 
+local lastUpdateTime
 function ui.update()
-    push(root.panes.DEFAULT, 'DEFAULT')
-    castle.uiupdate()
-    pop()
-    pendingEvents = {}
+    local time = love.timer.getTime()
+    if not lastUpdateTime or time - lastUpdateTime > 1 / UI_UPDATE_FREQUENCY then
+        lastUpdateTime = time
 
-    local diff = root:__diff(0)
-    if diff ~= nil then
-        local diffJson = cjson.encode(diff)
-        jsEvents.send('CASTLE_TOOLS_UPDATE', diffJson)
-        -- print('update: ' .. diffJson)
-        -- print('update size: ' .. #diffJson)
-        -- io.flush()
+        push(root.panes.DEFAULT, 'DEFAULT')
+        castle.uiupdate()
+        pop()
+        pendingEvents = {}
+
+        local diff = root:__diff(0)
+        if diff ~= nil then
+            local diffJson = cjson.encode(diff)
+            jsEvents.send('CASTLE_TOOLS_UPDATE', diffJson)
+            -- print('update: ' .. diffJson)
+            -- print('update size: ' .. #diffJson)
+            -- io.flush()
+        end
+        root:__flush()
     end
-    root:__flush()
 end
 
 function castle.uiupdate()
@@ -389,7 +398,7 @@ local val = 'hai'
 
 local keys = {}
 
-function castle.uiupdate()
+local function allTest()
     ui.markdown([[
 ## Hi there!
 
@@ -450,6 +459,20 @@ This is tab 2. It should be nice in here *too*.
         ui.box({ pad = 'small', background = 'dark-3' })
         ui.box({ pad = 'medium', background = 'light-3' })
     end)
+end
+
+local function hugeTest()
+    for i = 1, 10 do
+        ui.box({
+            border = { color = 'brand', size = 'small' },
+        }, function()
+            ui.text(math.random())
+        end)
+    end
+end
+
+function castle.uiupdate()
+    allTest()
 end
 
 function love.update()
