@@ -362,6 +362,44 @@ function ui.checkBox(...)
     return newChecked
 end
 
+-- ui.maskedInput(label, value, props)
+-- ui.maskedInput(value, props)
+-- ui.maskedInput(label, value)
+-- ui.maskedInput(props)
+function ui.maskedInput(...)
+    local label, value, props
+    local nArgs = select('#', ...)
+    if nArgs == 3 then
+        label, value, props = ...
+    elseif nArgs == 2 then
+        local arg1, arg2 = ...
+        if type(arg2) == 'table' then
+            value, props = arg1, arg2
+        else
+            label, value = arg1, arg2
+        end
+    elseif nArgs == 1 then
+        props = ...
+    end
+
+    local c = addChild('maskedInput', label, without(merge({ label = label, value = value}, props), 'onChange'), true)
+
+    local newValue = value
+    local es = pendingEvents[c.pathId]
+    if es then
+        for _, e in ipairs(es) do
+            if e.type == 'onChange' then
+                if props and props.onChange then
+                    newValue = props.onChange(e.value) or e.value
+                else
+                    newValue = e.value
+                end
+            end
+        end
+    end
+    return newValue
+end
+
 -- ui.textInput(label, value, props)
 -- ui.textInput(value, props)
 -- ui.textInput(label, value)
@@ -434,6 +472,7 @@ ui.update()
 
 local stringVal = 'hai'
 local boolVal = false
+local maskedVal = ''
 
 local keys = {}
 
@@ -477,6 +516,30 @@ This is tab 2. It should be nice in here *too*.
 
     stringVal = ui.textInput('stringVal', stringVal)
     boolVal = ui.checkBox('boolVal', boolVal)
+    maskedVal = ui.maskedInput('maskedVal', maskedVal, {
+        mask = {
+            {
+                length = { 1, 2 },
+                options = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12' },
+                regexp = '^1[1-2]$|^[0-9]$',
+                placeholder = 'hh',
+            },
+            { fixed = ':' },
+            {
+                length = 2,
+                options = { '00', '15', '30', '45' },
+                regexp = '^[0-5][0-9]$|^[0-9]$',
+                placeholder = 'mm',
+            },
+            { fixed = ' ' },
+            {
+                length = 2,
+                options = { 'am', 'pm' },
+                regexp = '^[ap]m$|^[AP]M$|^[aApP]$',
+                placeholder = 'ap',
+            },
+        },
+    })
 
     ui.box({
         direction = 'row',
@@ -523,6 +586,7 @@ function love.draw()
     love.graphics.print('fps: ' .. love.timer.getFPS(), 20, 20)
     love.graphics.print('\n\nstringVal: ' .. stringVal, 20, 20)
     love.graphics.print('\n\n\nboolVal: ' .. tostring(boolVal), 20, 20)
+    love.graphics.print('\n\n\n\nmaskedVal: ' .. tostring(maskedVal), 20, 20)
 end
 
 function love.keypressed(key)
