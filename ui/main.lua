@@ -530,18 +530,30 @@ ui.update()
 
 --- MAIN
 
-local x, y, radius = 200, 200, 40
+local circles = {}
 
 function castle.uiupdate()
-    ui.section('Circle', function()
-        ui.text('x')
-        x = ui.rangeInput('x', x, 0, love.graphics.getWidth(), 1)
+    ui.box({ gap = 'small' }, function()
+        if ui.button('add circle') then
+            table.insert(circles, {
+                x = love.graphics.getWidth() * math.random(),
+                y = love.graphics.getHeight() * math.random(),
+                radius = 5 + 80 * math.random(),
+            })
+        end
 
-        ui.text('y')
-        y = ui.rangeInput('y', y, 0, love.graphics.getHeight(), 1)
+        for i, circle in ipairs(circles) do
+            ui.section('circle ' .. i, function()
+                ui.text('x')
+                circle.x = ui.rangeInput('x', circle.x, 0, love.graphics.getWidth(), 1)
 
-        ui.text('radius')
-        radius = ui.rangeInput('radius', radius, 5, 250, 1)
+                ui.text('y')
+                circle.y = ui.rangeInput('y', circle.y, 0, love.graphics.getHeight(), 1)
+
+                ui.text('radius')
+                circle.radius = ui.rangeInput('radius', circle.radius, 5, 85, 1)
+            end)
+        end
     end)
 end
 
@@ -552,7 +564,9 @@ end
 function love.draw()
     love.graphics.print('fps: ' .. love.timer.getFPS(), 20, 20)
 
-    love.graphics.circle('fill', x, y, radius)
+    for i, circle in ipairs(circles) do
+        love.graphics.circle('fill', circle.x, circle.y, circle.radius)
+    end
 end
 
 function love.keypressed(key)
