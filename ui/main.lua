@@ -530,132 +530,19 @@ ui.update()
 
 --- MAIN
 
-local stringVal = 'hai'
-local boolVal = false
-local maskedVal = ''
-local radioVal = 'banana'
-local rangeVal = 5
-
-local keys = {}
-
-local function allTest()
-    ui.markdown([[
-## Hi there!
-
-This is **cool**! Right? [Google](https://www.google.com)...
-    ]])
-
-    local blah = false
-    local active = ui.section('Keys pressed', function()
-        blah = true
-        for _, key in ipairs(keys) do
-            ui.text(key, {
-                color = 'status-critical',
-            })
-        end
-    end)
-    ui.text('Section active: ' .. tostring(active))
-    ui.text('Blah: ' .. tostring(blah))
-
-    local tab1Active, tab2Active = false, false
-    ui.tabs(function()
-        tab1Active = ui.tab('Tab 1', function()
-            ui.markdown([[
-## Welcome to Tab 1
-
-This is tab 1. Hope you like it here. :)
-            ]])
-        end)
-        tab2Active = ui.tab('Tab 2', function()
-            ui.markdown([[
-## Welcome to Tab 2
-
-This is tab 2. It should be nice in here *too*.
-            ]])
-        end)
-    end)
-    ui.text('Tab actives: ' .. tostring(tab1Active) .. ', ' .. tostring(tab2Active))
-
-    stringVal = ui.textInput('stringVal', stringVal)
-    boolVal = ui.checkBox('boolVal', boolVal)
-    maskedVal = ui.maskedInput('maskedVal', maskedVal, {
-        mask = {
-            {
-                length = { 1, 2 },
-                options = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12' },
-                regexp = '^1[1-2]$|^[0-9]$',
-                placeholder = 'hh',
-            },
-            { fixed = ':' },
-            {
-                length = 2,
-                options = { '00', '15', '30', '45' },
-                regexp = '^[0-5][0-9]$|^[0-9]$',
-                placeholder = 'mm',
-            },
-            { fixed = ' ' },
-            {
-                length = 2,
-                options = { 'am', 'pm' },
-                regexp = '^[ap]m$|^[AP]M$|^[aApP]$',
-                placeholder = 'ap',
-            },
-        },
-    })
-
-    ui.box({
-        direction = 'row',
-        padding = 'small',
-        border = { size = 'small', color = 'white' }
-    }, function()
-        radioVal = ui.radioButtonGroup('radioVal', radioVal, {
-            'banana', 'mushroom', 'orange' 
-        })
-    end)
-
-    ui.box({
-        direction = 'row',
-        padding = 'small',
-        border = { size = 'small', color = 'white' }
-    }, function()
-        rangeVal = ui.rangeInput('rangeVal', rangeVal, 0, 10, 0.01)
-    end)
-
-    ui.box({
-        direction = 'row',
-    }, function()
-        ui.button('Woah', {
-            onClick = function()
-                print('Woah!!')
-            end
-        })
-        if ui.button('Whee') then
-            print('Whee!!')
-        end
-    end)
-
-    ui.box({
-        direction = 'row',
-        border = { color = 'brand', size = 'large' },
-        pad = 'medium',
-    }, function()
-        ui.box({ pad = 'small', background = 'dark-3' })
-        ui.box({ pad = 'medium', background = 'light-3' })
-    end)
-end
-
-local function hugeTest()
-    for i = 1, 10 do
-        ui.box({
-            border = { color = 'brand', size = 'small' },
-        }, function()
-            ui.text(math.random())
-        end)
-    end
-end
+local x, y, radius = 200, 200, 40
 
 function castle.uiupdate()
-    allTest()
+    ui.section('Circle', function()
+        ui.text('x')
+        x = ui.rangeInput('x', x, 0, love.graphics.getWidth(), 1)
+
+        ui.text('y')
+        y = ui.rangeInput('y', y, 0, love.graphics.getHeight(), 1)
+
+        ui.text('radius')
+        radius = ui.rangeInput('radius', radius, 5, 250, 1)
+    end)
 end
 
 function love.update()
@@ -664,23 +551,9 @@ end
 
 function love.draw()
     love.graphics.print('fps: ' .. love.timer.getFPS(), 20, 20)
-    love.graphics.print('\n\nstringVal: ' .. stringVal, 20, 20)
-    love.graphics.print('\n\n\nboolVal: ' .. tostring(boolVal), 20, 20)
-    love.graphics.print('\n\n\n\nmaskedVal: ' .. tostring(maskedVal), 20, 20)
-    love.graphics.print('\n\n\n\n\nradioVal: ' .. tostring(radioVal), 20, 20)
-    love.graphics.print('\n\n\n\n\n\nrangeVal: ' .. tostring(rangeVal), 20, 20)
+
+    love.graphics.circle('fill', x, y, radius)
 end
 
 function love.keypressed(key)
-    if key == 'delete' then
-        keys = {}
-    elseif key == 'backspace' then
-        keys[#keys] = nil
-    elseif key == '=' then
-        boolVal = not boolVal
-    elseif key == '-' then
-        stringVal = stringVal .. '-'
-    else
-        table.insert(keys, math.max(1, #keys / 2), love.timer.getTime())
-    end
 end
