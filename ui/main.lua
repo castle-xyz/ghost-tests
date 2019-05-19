@@ -344,7 +344,7 @@ function ui.checkBox(...)
         props = ...
     end
 
-    local c = addChild('checkBox', label, without(merge({ label = label, checked = checked}, props), 'onChange'), true)
+    local c = addChild('checkBox', label, without(merge({ label = label, checked = checked }, props), 'onChange'), true)
 
     local newChecked = checked
     local es = pendingEvents[c.pathId]
@@ -382,7 +382,7 @@ function ui.maskedInput(...)
         props = ...
     end
 
-    local c = addChild('maskedInput', label, without(merge({ label = label, value = value}, props), 'onChange'), true)
+    local c = addChild('maskedInput', label, without(merge({ label = label, value = value }, props), 'onChange'), true)
 
     local newValue = value
     local es = pendingEvents[c.pathId]
@@ -400,18 +400,49 @@ function ui.maskedInput(...)
     return newValue
 end
 
+-- ui.radioButtonGroup(id, value, options)
 -- ui.radioButtonGroup(id, value, options, props)
 -- ui.radioButtonGroup(props)
 function ui.radioButtonGroup(...)
     local id, value, options, props
     local nArgs = select('#', ...)
-    if nArgs == 3 then
+    if nArgs >= 3 then
         id, value, options, props = ...
     elseif nArgs == 1 then
         props = ...
     end
 
     local c = addChild('radioButtonGroup', id, without(merge({ value = value, options = options }, props), 'onChange'), true)
+
+    local newValue = value
+    local es = pendingEvents[c.pathId]
+    if es then
+        for _, e in ipairs(es) do
+            if e.type == 'onChange' then
+                if props and props.onChange then
+                    newValue = props.onChange(e.value) or e.value
+                else
+                    newValue = e.value
+                end
+            end
+        end
+    end
+    return newValue
+end
+
+-- ui.rangeInput(id, value, min, max, step)
+-- ui.rangeInput(id, value, min, max, step, props)
+-- ui.rangeInput(props)
+function ui.rangeInput(...)
+    local id, value, min, max, step, props
+    local nArgs = select('#', ...)
+    if nArgs >= 5 then
+        id, value, min, max, step, props = ...
+    elseif nArgs == 1 then
+        props = ...
+    end
+
+    local c = addChild('rangeInput', label, without(merge({ value = value, min = min, max = max, step = step }, props), 'onChange'), true)
 
     local newValue = value
     local es = pendingEvents[c.pathId]
@@ -449,7 +480,7 @@ function ui.textInput(...)
         props = ...
     end
 
-    local c = addChild('textInput', label, without(merge({ label = label, value = value}, props), 'onChange'), true)
+    local c = addChild('textInput', label, without(merge({ label = label, value = value }, props), 'onChange'), true)
 
     local newValue = value
     local es = pendingEvents[c.pathId]
@@ -503,6 +534,7 @@ local stringVal = 'hai'
 local boolVal = false
 local maskedVal = ''
 local radioVal = 'banana'
+local rangeVal = 5
 
 local keys = {}
 
@@ -583,6 +615,14 @@ This is tab 2. It should be nice in here *too*.
 
     ui.box({
         direction = 'row',
+        padding = 'small',
+        border = { size = 'small', color = 'white' }
+    }, function()
+        rangeVal = ui.rangeInput('rangeVal', rangeVal, 0, 10, 0.01)
+    end)
+
+    ui.box({
+        direction = 'row',
     }, function()
         ui.button('Woah', {
             onClick = function()
@@ -628,6 +668,7 @@ function love.draw()
     love.graphics.print('\n\n\nboolVal: ' .. tostring(boolVal), 20, 20)
     love.graphics.print('\n\n\n\nmaskedVal: ' .. tostring(maskedVal), 20, 20)
     love.graphics.print('\n\n\n\n\nradioVal: ' .. tostring(radioVal), 20, 20)
+    love.graphics.print('\n\n\n\n\n\nrangeVal: ' .. tostring(rangeVal), 20, 20)
 end
 
 function love.keypressed(key)
