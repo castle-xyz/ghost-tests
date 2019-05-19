@@ -400,27 +400,18 @@ function ui.maskedInput(...)
     return newValue
 end
 
--- ui.radioButtonGroup(label, value, props)
--- ui.radioButtonGroup(value, props)
--- ui.radioButtonGroup(label, value)
+-- ui.radioButtonGroup(id, value, options, props)
 -- ui.radioButtonGroup(props)
 function ui.radioButtonGroup(...)
-    local label, value, props
+    local id, value, options, props
     local nArgs = select('#', ...)
     if nArgs == 3 then
-        label, value, props = ...
-    elseif nArgs == 2 then
-        local arg1, arg2 = ...
-        if type(arg2) == 'table' then
-            value, props = arg1, arg2
-        else
-            label, value = arg1, arg2
-        end
+        id, value, options, props = ...
     elseif nArgs == 1 then
         props = ...
     end
 
-    local c = addChild('radioButtonGroup', label, without(merge({ label = label, value = value}, props), 'onChange'), true)
+    local c = addChild('radioButtonGroup', id, without(merge({ value = value, options = options }, props), 'onChange'), true)
 
     local newValue = value
     local es = pendingEvents[c.pathId]
@@ -585,8 +576,8 @@ This is tab 2. It should be nice in here *too*.
         padding = 'small',
         border = { size = 'small', color = 'white' }
     }, function()
-        radioVal = ui.radioButtonGroup(radioVal, {
-            options = { 'banana', 'mushroom', 'orange' }
+        radioVal = ui.radioButtonGroup('radioVal', radioVal, {
+            'banana', 'mushroom', 'orange' 
         })
     end)
 
