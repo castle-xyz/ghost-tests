@@ -400,6 +400,44 @@ function ui.maskedInput(...)
     return newValue
 end
 
+-- ui.radioButtonGroup(label, value, props)
+-- ui.radioButtonGroup(value, props)
+-- ui.radioButtonGroup(label, value)
+-- ui.radioButtonGroup(props)
+function ui.radioButtonGroup(...)
+    local label, value, props
+    local nArgs = select('#', ...)
+    if nArgs == 3 then
+        label, value, props = ...
+    elseif nArgs == 2 then
+        local arg1, arg2 = ...
+        if type(arg2) == 'table' then
+            value, props = arg1, arg2
+        else
+            label, value = arg1, arg2
+        end
+    elseif nArgs == 1 then
+        props = ...
+    end
+
+    local c = addChild('radioButtonGroup', label, without(merge({ label = label, value = value}, props), 'onChange'), true)
+
+    local newValue = value
+    local es = pendingEvents[c.pathId]
+    if es then
+        for _, e in ipairs(es) do
+            if e.type == 'onChange' then
+                if props and props.onChange then
+                    newValue = props.onChange(e.value) or e.value
+                else
+                    newValue = e.value
+                end
+            end
+        end
+    end
+    return newValue
+end
+
 -- ui.textInput(label, value, props)
 -- ui.textInput(value, props)
 -- ui.textInput(label, value)
@@ -473,6 +511,7 @@ ui.update()
 local stringVal = 'hai'
 local boolVal = false
 local maskedVal = ''
+local radioVal = 'banana'
 
 local keys = {}
 
@@ -543,6 +582,16 @@ This is tab 2. It should be nice in here *too*.
 
     ui.box({
         direction = 'row',
+        padding = 'small',
+        border = { size = 'small', color = 'white' }
+    }, function()
+        radioVal = ui.radioButtonGroup(radioVal, {
+            options = { 'banana', 'mushroom', 'orange' }
+        })
+    end)
+
+    ui.box({
+        direction = 'row',
     }, function()
         ui.button('Woah', {
             onClick = function()
@@ -587,6 +636,7 @@ function love.draw()
     love.graphics.print('\n\nstringVal: ' .. stringVal, 20, 20)
     love.graphics.print('\n\n\nboolVal: ' .. tostring(boolVal), 20, 20)
     love.graphics.print('\n\n\n\nmaskedVal: ' .. tostring(maskedVal), 20, 20)
+    love.graphics.print('\n\n\n\n\nradioVal: ' .. tostring(radioVal), 20, 20)
 end
 
 function love.keypressed(key)
