@@ -54,6 +54,7 @@ function love.draw()
         love.graphics.print(label, circle.x - 0.5 * tw, circle.y - 0.5 * th)
     end
 
+    love.graphics.setColor(1, 1, 1)
     love.graphics.print('fps: ' .. love.timer.getFPS(), 20, 20)
 end
 
