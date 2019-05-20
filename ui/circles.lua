@@ -35,8 +35,6 @@ end
 local labelFont = love.graphics.newFont(28)
 
 function love.draw()
-    love.graphics.print('fps: ' .. love.timer.getFPS(), 20, 20)
-
     for i, circle in ipairs(circles) do
         -- Draw the circle
         if circle.color == 'red' then
@@ -54,5 +52,30 @@ function love.draw()
         local label = tostring(i)
         local tw, th = labelFont:getWidth(i), labelFont:getHeight()
         love.graphics.print(label, circle.x - 0.5 * tw, circle.y - 0.5 * th)
+    end
+
+    love.graphics.print('fps: ' .. love.timer.getFPS(), 20, 20)
+end
+
+local draggingCircle
+
+function love.mousepressed(x, y)
+    for i = #circles, 1, -1 do
+        local circle = circles[i]
+        local distX, distY = circle.x - x, circle.y - y
+        if distX * distX + distY * distY <= circle.radius * circle.radius then
+            draggingCircle = circle
+            break
+        end
+    end
+end
+
+function love.mousereleased()
+    draggingCircle = nil
+end
+
+function love.mousemoved(x, y, dx, dy)
+    if draggingCircle then
+        draggingCircle.x, draggingCircle.y = draggingCircle.x + dx, draggingCircle.y + dy
     end
 end
