@@ -35,6 +35,7 @@ end
 local labelFont = love.graphics.newFont(28)
 
 function love.draw()
+    love.graphics.push('all')
     for i, circle in ipairs(circles) do
         -- Draw the circle
         if circle.color == 'red' then
@@ -53,8 +54,8 @@ function love.draw()
         local tw, th = labelFont:getWidth(i), labelFont:getHeight()
         love.graphics.print(label, circle.x - 0.5 * tw, circle.y - 0.5 * th)
     end
+    love.graphics.pop()
 
-    love.graphics.setColor(1, 1, 1)
     love.graphics.print('fps: ' .. love.timer.getFPS(), 20, 20)
 end
 
