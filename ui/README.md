@@ -2,7 +2,7 @@
 
 ![Castle UI API](gif.gif)
 
-The Castle UI API allows you to add user interface elements that allow interaction with your game. Applications can range from simple debug user interface while developing games to user-facing level editors or text-based adventure games etc.
+The Castle UI API allows you to add user interface elements that allow interaction with your game. Castle manages the laying out of your UI relative to the rest of Castle's UI. Uses can range from simple debug tools while developing games to user-facing level editors or text-based adventure games etc.
 
 ## Tutorial
 
@@ -119,6 +119,8 @@ ui.markdown(text)
 ui.markdown(props)
 ui.markdown(text, props)
 ```
+
+Putting a 'castle://' link in markdown creates a link to a game!
 
 ### [Paragraph](https://v2.grommet.io/paragraph)
 
