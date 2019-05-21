@@ -2,6 +2,9 @@ local ui = castle.ui
 
 local circles = {}
 
+
+-- All the UI-related code is just in this function. Everything below it is normal game code!
+
 function castle.uiupdate()
     ui.box({ gap = 'small' }, function()
         -- Button for adding circles
@@ -17,6 +20,8 @@ function castle.uiupdate()
         -- Section per circle
         for i, circle in ipairs(circles) do
             ui.section('circle ' .. i, function()
+                -- ids of inputs (such as 'color', 'x', etc.) need to be unique only within each section
+
                 circle.color = ui.radioButtonGroup('color', circle.color, { 'red', 'blue', 'green' })
 
                 ui.text('x')
@@ -31,6 +36,9 @@ function castle.uiupdate()
         end
     end)
 end
+
+
+-- Normal game code from here on!
 
 local labelFont = love.graphics.newFont(28)
 
@@ -58,6 +66,9 @@ function love.draw()
 
     love.graphics.print('fps: ' .. love.timer.getFPS(), 20, 20)
 end
+
+
+-- To allow dragging cirlces with the mouse
 
 local draggingCircle
 
