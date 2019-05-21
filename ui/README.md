@@ -8,7 +8,7 @@ The Castle UI API allows you to add user interface elements that allow interacti
 
 To use the UI API, simply define the `castle.uiupdate` function and put your UI calls in it:
 
-```
+```lua
 function castle.uiupdate()
       castle.ui.text('Hello, world!')
 end
@@ -16,7 +16,7 @@ end
 
 Since using UI elements usually involves a lot of calls to functions in the `castle.ui` module, it helps to make a local variable referencing it:
 
-```
+```lua
 local ui = castle.ui
 
 function castle.uiupdate()
@@ -26,7 +26,7 @@ end
 
 Elements that work as inputs usually take an id string (to keep track of which element refers to which value) and the current value, then return the new value:
 
-```
+```lua
 local ui = castle.ui
 
 local myString = 'Edit me!'
@@ -43,7 +43,7 @@ end
 
 A 'range input' (shown as a slider) takes the minimum and maximum of the range along with a 'step' to slide the value by when dragging:
 
-```
+```lua
 local ui = castle.ui
 
 local myNumber = 20
@@ -65,7 +65,7 @@ end
 
 The components are implemented with [Grommet](https://v2.grommet.io/) and all 'props' are forwarded so you can do some interesting stuff. `inner` arguments are for nesting components -- you just pass a function that makes more UI calls. ids only need to be unique within the parent component. You can also use callbacks for certain events (more docs coming soon!):
 
-```
+```lua
 local ui = castle.ui
 
 function castle.uiupdate()
@@ -80,7 +80,7 @@ function castle.uiupdate()
             print('Button 1 pressed!')
         end
 
-        ui.button('Button 1', {
+        ui.button('Button 2', {
             onClick = function()
                 print('Button 2 pressed!')
             end
@@ -89,7 +89,7 @@ function castle.uiupdate()
 end
 ```
 
-See the ['Circles' demo](./circles.lua) for an example of showing UI for many game entities.
+See the [code for the 'Circles' demo](./circles.lua) for an example of showing UI for many game entities.
 
 ## Reference
 
