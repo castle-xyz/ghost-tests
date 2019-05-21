@@ -4,6 +4,30 @@
 
 The Castle UI API allows you to add user interface elements that allow interaction with your game. Castle manages the laying out of your UI relative to the rest of Castle's UI. Uses can range from simple debug tools while developing games to user-facing level editors or text-based adventure games etc.
 
+## Contents
+
+- [Tutorial](#tutorial)
+- [Reference](#reference)
+  * [Layout](#layout)
+    + [[Box](https://v2.grommet.io/box)](#-box--https---v2grommetio-box-)
+    + [Section](#section)
+    + [[Tabs](https://v2.grommet.io/tabs) and [Tab](https://v2.grommet.io/tab)](#-tabs--https---v2grommetio-tabs--and--tab--https---v2grommetio-tab-)
+  * [Text](#text)
+    + [[Heading](https://v2.grommet.io/heading)](#-heading--https---v2grommetio-heading-)
+    + [[Markdown](https://v2.grommet.io/markdown)](#-markdown--https---v2grommetio-markdown-)
+    + [[Paragraph](https://v2.grommet.io/paragraph)](#-paragraph--https---v2grommetio-paragraph-)
+    + [[Text](https://v2.grommet.io/text)](#-text--https---v2grommetio-text-)
+  * [Buttons](#buttons)
+    + [[Button](https://v2.grommet.io/button)](#-button--https---v2grommetio-button-)
+  * [Input](#input)
+    + [[CheckBox](https://v2.grommet.io/checkbox)](#-checkbox--https---v2grommetio-checkbox-)
+    + [[MaskedInput](https://v2.grommet.io/maskedinput)](#-maskedinput--https---v2grommetio-maskedinput-)
+    + [[RadioButtonGroup](https://v2.grommet.io/radiobuttongroup)](#-radiobuttongroup--https---v2grommetio-radiobuttongroup-)
+    + [[RangeInput](https://v2.grommet.io/rangeinput)](#-rangeinput--https---v2grommetio-rangeinput-)
+    + [[Select](https://v2.grommet.io/select)](#-select--https---v2grommetio-select-)
+    + [[TextInput](https://v2.grommet.io/textinput)](#-textinput--https---v2grommetio-textinput-)
+    + [[TextArea](https://v2.grommet.io/textarea)](#-textarea--https---v2grommetio-textarea-)
+
 ## Tutorial
 
 To use the UI API, simply define the `castle.uiupdate` function and put your UI calls in it:
