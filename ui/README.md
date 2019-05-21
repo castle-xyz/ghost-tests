@@ -95,7 +95,9 @@ See the [code for the 'Circles' demo](./circles.lua) for an example of showing U
 
 The headings here link to the Grommet component docs so you can read a description and see all the props available.
 
-### [Box](https://v2.grommet.io/box)
+### Layout
+
+#### [Box](https://v2.grommet.io/box)
 
 ```
 ui.box(inner)
@@ -104,41 +106,7 @@ ui.box(props, inner)
 ui.box(id, props, inner)
 ```
 
-### [Heading](https://v2.grommet.io/heading)
-
-```
-ui.heading(text)
-ui.heading(props)
-ui.heading(text, props)
-```
-
-### [Markdown](https://v2.grommet.io/markdown)
-
-```
-ui.markdown(text)
-ui.markdown(props)
-ui.markdown(text, props)
-```
-
-Putting a 'castle://' link in markdown creates a link to a game!
-
-### [Paragraph](https://v2.grommet.io/paragraph)
-
-```
-ui.paragraph(text)
-ui.paragraph(props)
-ui.paragraph(text, props)
-```
-
-### [Text](https://v2.grommet.io/text)
-
-```
-ui.text(text)
-ui.text(props)
-ui.text(text, props)
-```
-
-### Section
+#### Section
 
 ```
 active = ui.section(label, inner)
@@ -147,14 +115,7 @@ active = ui.section(label, props, inner)
 
 A single [accordion panel](https://v2.grommet.io/accordion). Decided to go with the name 'section' because I liked it more.
 
-### [Button](https://v2.grommet.io/button)
-
-```
-clicked = ui.button(label)
-clicked = ui.button(label, props)
-```
-
-### [Tabs](https://v2.grommet.io/tabs) and [Tab](https://v2.grommet.io/tab)
+#### [Tabs](https://v2.grommet.io/tabs) and [Tab](https://v2.grommet.io/tab)
 
 ```
 ui.tabs(inner)
@@ -180,64 +141,111 @@ ui.tabs(function()
 end)
 ```
 
-### [CheckBox](https://v2.grommet.io/checkbox)
+### Text
+
+#### [Heading](https://v2.grommet.io/heading)
+
+```
+ui.heading(text)
+ui.heading(props)
+ui.heading(text, props)
+```
+
+#### [Markdown](https://v2.grommet.io/markdown)
+
+```
+ui.markdown(text)
+ui.markdown(props)
+ui.markdown(text, props)
+```
+
+Putting a 'castle://' link in markdown creates a link to a game!
+
+#### [Paragraph](https://v2.grommet.io/paragraph)
+
+```
+ui.paragraph(text)
+ui.paragraph(props)
+ui.paragraph(text, props)
+```
+
+#### [Text](https://v2.grommet.io/text)
+
+```
+ui.text(text)
+ui.text(props)
+ui.text(text, props)
+```
+
+### Buttons
+
+#### [Button](https://v2.grommet.io/button)
+
+```
+clicked = ui.button(label)
+clicked = ui.button(label, props)
+```
+
+### Input
+
+#### [CheckBox](https://v2.grommet.io/checkbox)
 
 ```
 newChecked = ui.checkBox(label, checked, props)
 newChecked = ui.checkBox(checked, props)
 newChecked = ui.checkBox(label, checked)
-newChecked = ui.checkBox(props)
+newChecked = ui.checkBox(props) -- Known bug: this variant always returns `nil`, will fix.
 ```
 
-### [MaskedInput](https://v2.grommet.io/maskedinput)
+#### [MaskedInput](https://v2.grommet.io/maskedinput)
 
 ```
 newValue = ui.maskedInput(id, value, props)
 newValue = ui.maskedInput(value, props)
 newValue = ui.maskedInput(id, value)
-newValue = ui.maskedInput(props)
+newValue = ui.maskedInput(props) -- Known bug: this variant always returns `nil`, will fix.
 ```
 
-### [RadioButtonGroup](https://v2.grommet.io/radiobuttongroup)
+#### [RadioButtonGroup](https://v2.grommet.io/radiobuttongroup)
 
 ```
 newValue = ui.radioButtonGroup(id, value, options)
 newValue = ui.radioButtonGroup(id, value, options, props)
-newValue = ui.radioButtonGroup(props)
+newValue = ui.radioButtonGroup(props) -- Known bug: this variant always returns `nil`, will fix.
 ```
 
-### [RangeInput](https://v2.grommet.io/rangeinput)
+#### [RangeInput](https://v2.grommet.io/rangeinput)
 
 ```
 newValue = ui.rangeInput(id, value, min, max, step)
 newValue = ui.rangeInput(id, value, min, max, step, props)
-newValue = ui.rangeInput(props)
+newValue = ui.rangeInput(props) -- Known bug: this variant always returns `nil`, will fix.
 ```
 
-### [Select](https://v2.grommet.io/select)
+#### [Select](https://v2.grommet.io/select)
 
 ```
 newValue = ui.select(id, value, options)
 newValue = ui.select(id, value, options, props)
-newValue = ui.select(props)
+newValue = ui.select(props) -- Known bug: this variant always returns `nil`, will fix.
 ```
 
-### [TextInput](https://v2.grommet.io/textinput)
+#### [TextInput](https://v2.grommet.io/textinput)
 
 ```
 newValue = ui.textInput(id, value, props)
 newValue = ui.textInput(value, props)
 newValue = ui.textInput(id, value)
 newValue = ui.textInput(value)
-newValue = ui.textInput(props)
+newValue = ui.textInput(props) -- Known bug: this variant always returns `nil`, will fix.
 ```
 
-### [TextArea](https://v2.grommet.io/textarea)
+#### [TextArea](https://v2.grommet.io/textarea)
 
 ```
 newValue = ui.textArea(id, value, props)
 newValue = ui.textArea(value, props)
 newValue = ui.textArea(id, value)
 newValue = ui.textArea(value)
-newValue = ui.textArea(props)
+newValue = ui.textArea(props) -- Known bug: this variant always returns `nil`, will fix.
 ```
