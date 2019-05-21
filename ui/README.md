@@ -27,6 +27,7 @@ The Castle UI API allows you to add user interface elements that allow interacti
     + [Select](#select)
     + [TextInput](#textinput)
     + [TextArea](#textarea)
+    + [ColorPicker](#colorpicker)
 
 ## Tutorial
 
@@ -34,7 +35,7 @@ To use the UI API, simply define the `castle.uiupdate` function and put your UI 
 
 ```lua
 function castle.uiupdate()
-      castle.ui.text('Hello, world!')
+    castle.ui.text('Hello, world!')
 end
 ```
 
@@ -273,3 +274,7 @@ newValue = ui.textArea(id, value)
 newValue = ui.textArea(value)
 newValue = ui.textArea(props) -- Known bug: this variant always returns `nil`, will fix
 ```
+
+#### ColorPicker
+
+Coming soon... 😎
