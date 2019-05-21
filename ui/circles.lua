@@ -68,7 +68,7 @@ function love.draw()
 end
 
 
--- To allow dragging cirlces with the mouse
+-- To allow dragging circles with the mouse
 
 local draggingCircle
 
