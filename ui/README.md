@@ -88,6 +88,22 @@ function love.draw()
 end
 ```
 
+`castle.uiupdate`, like `love.draw`, is called repeatedly at a certain frequency. For the UI this is currently 20 times a second, which seems to make for reasonable responsiveness. On each update, you just need to describe the UI for the current state of your game, and don't have to worry about removing or updating the state of 'old' UI elements. Simply don't make a call to have something not be displayed. In this sense, UI calls are like LÖVE draw calls.
+
+```lua
+local ui = castle.ui
+
+local shouldShowText = true
+
+function castle.uiupdate()
+    shouldShowText = ui.checkBox('Show text', shouldShowText)
+    
+    if shouldShowText then
+        ui.text('The display of this text is toggled by the above checkbox!')
+    end
+end
+```
+
 The components are implemented with [Grommet](https://v2.grommet.io/) and all 'props' are forwarded so you can do some interesting stuff. `inner` arguments are for nesting components -- you just pass a function that makes more UI calls. ids only need to be unique within the parent component. You can also use callbacks for certain events (more docs coming soon!):
 
 ```lua
@@ -139,6 +155,8 @@ active = ui.section(label, props, inner)
 ```
 
 A single [accordion panel](https://v2.grommet.io/accordion). Decided to go with the name 'section' because I liked it more.
+
+As an optimization for when you have many sections, the `inner` function is not called when a section is not active. So if you perform any side effects in `inner`, you may notice that those stop happening when the section is collapsed.
 
 #### [Tabs](https://v2.grommet.io/tabs) and [Tab](https://v2.grommet.io/tab)
 
