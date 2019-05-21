@@ -194,7 +194,7 @@ clicked = ui.button(label, props)
 newChecked = ui.checkBox(label, checked, props)
 newChecked = ui.checkBox(checked, props)
 newChecked = ui.checkBox(label, checked)
-newChecked = ui.checkBox(props) -- Known bug: this variant always returns `nil`, will fix.
+newChecked = ui.checkBox(props) -- Known bug: this variant always returns `nil`, will fix
 ```
 
 #### [MaskedInput](https://v2.grommet.io/maskedinput)
@@ -203,7 +203,7 @@ newChecked = ui.checkBox(props) -- Known bug: this variant always returns `nil`,
 newValue = ui.maskedInput(id, value, props)
 newValue = ui.maskedInput(value, props)
 newValue = ui.maskedInput(id, value)
-newValue = ui.maskedInput(props) -- Known bug: this variant always returns `nil`, will fix.
+newValue = ui.maskedInput(props) -- Known bug: this variant always returns `nil`, will fix
 ```
 
 #### [RadioButtonGroup](https://v2.grommet.io/radiobuttongroup)
@@ -211,7 +211,7 @@ newValue = ui.maskedInput(props) -- Known bug: this variant always returns `nil`
 ```
 newValue = ui.radioButtonGroup(id, value, options)
 newValue = ui.radioButtonGroup(id, value, options, props)
-newValue = ui.radioButtonGroup(props) -- Known bug: this variant always returns `nil`, will fix.
+newValue = ui.radioButtonGroup(props) -- Known bug: this variant always returns `nil`, will fix
 ```
 
 #### [RangeInput](https://v2.grommet.io/rangeinput)
@@ -219,7 +219,7 @@ newValue = ui.radioButtonGroup(props) -- Known bug: this variant always returns 
 ```
 newValue = ui.rangeInput(id, value, min, max, step)
 newValue = ui.rangeInput(id, value, min, max, step, props)
-newValue = ui.rangeInput(props) -- Known bug: this variant always returns `nil`, will fix.
+newValue = ui.rangeInput(props) -- Known bug: this variant always returns `nil`, will fix
 ```
 
 #### [Select](https://v2.grommet.io/select)
@@ -227,7 +227,7 @@ newValue = ui.rangeInput(props) -- Known bug: this variant always returns `nil`,
 ```
 newValue = ui.select(id, value, options)
 newValue = ui.select(id, value, options, props)
-newValue = ui.select(props) -- Known bug: this variant always returns `nil`, will fix.
+newValue = ui.select(props) -- Known bug: this variant always returns `nil`, will fix
 ```
 
 #### [TextInput](https://v2.grommet.io/textinput)
@@ -237,7 +237,7 @@ newValue = ui.textInput(id, value, props)
 newValue = ui.textInput(value, props)
 newValue = ui.textInput(id, value)
 newValue = ui.textInput(value)
-newValue = ui.textInput(props) -- Known bug: this variant always returns `nil`, will fix.
+newValue = ui.textInput(props) -- Known bug: this variant always returns `nil`, will fix
 ```
 
 #### [TextArea](https://v2.grommet.io/textarea)
@@ -247,5 +247,5 @@ newValue = ui.textArea(id, value, props)
 newValue = ui.textArea(value, props)
 newValue = ui.textArea(id, value)
 newValue = ui.textArea(value)
-newValue = ui.textArea(props) -- Known bug: this variant always returns `nil`, will fix.
+newValue = ui.textArea(props) -- Known bug: this variant always returns `nil`, will fix
 ```
