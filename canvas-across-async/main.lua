@@ -14,11 +14,11 @@ end
 
 local savedCanvas
 
-function network.pause()
+function network.paused()
   savedCanvas = love.graphics.getCanvas()
   love.graphics.setCanvas()
 end
 
-function network.resume()
+function network.resumed()
   love.graphics.setCanvas(savedCanvas)
 end
