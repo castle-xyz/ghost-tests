@@ -3,10 +3,14 @@ local ui = castle.ui
 local str = 'hello, world'
 
 function castle.uiupdate()
-    str = ui.textInput {
-        labelText = 'str',
-        value = str,
-    }
+    str = ui.textInput('str', str)
+
+    if ui.button('Woah!', {
+        small = true,
+        kind = 'secondary',
+    }) then
+        print('Whoah!')
+    end
 end
 
 function love.draw()
