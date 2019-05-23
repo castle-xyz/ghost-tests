@@ -4,31 +4,6 @@
 
 The Castle UI API allows you to add user interface elements that allow interaction with your game. Castle manages the laying out of your UI relative to the rest of Castle's UI. Uses can range from simple debug tools while developing games to user-facing level editors or text-based adventure games etc.
 
-## Contents
-
-- [Tutorial](#tutorial)
-- [Reference](#reference)
-  * [Layout](#layout)
-    + [Box](#box)
-    + [Section](#section)
-    + [Tabs and Tab](#tabs-and-tab)
-  * [Text](#text)
-    + [Heading](#heading)
-    + [Markdown](#markdown)
-    + [Paragraph](#paragraph)
-    + [Text](#text)
-  * [Buttons](#buttons)
-    + [Button](#button)
-  * [Input](#input)
-    + [CheckBox](#checkbox)
-    + [MaskedInput](#maskedinput)
-    + [RadioButtonGroup](#radiobuttongroup)
-    + [RangeInput](#rangeinput)
-    + [Select](#select)
-    + [TextInput](#textinput)
-    + [TextArea](#textarea)
-    + [ColorPicker](#colorpicker)
-
 ## Tutorial
 
 To use the UI API, simply define the `castle.uiupdate` function and put your UI calls in it:
@@ -104,7 +79,7 @@ function castle.uiupdate()
 end
 ```
 
-The components are implemented with [Grommet](https://v2.grommet.io/) and all 'props' are forwarded so you can do some interesting stuff. `inner` arguments are for nesting components -- you just pass a function that makes more UI calls. ids only need to be unique within the parent component. You can also use callbacks for certain events (more docs coming soon!):
+`inner` arguments are for nesting components -- you just pass a function that makes more UI calls. ids only need to be unique within the parent component. You can also use callbacks for certain events (more docs coming soon!):
 
 ```lua
 local ui = castle.ui
@@ -134,165 +109,54 @@ See the [code for the 'Circles' demo](./circles.lua) for an example of showing U
 
 ## Reference
 
-The headings here link to the Grommet component docs so you can read a description and see all the props available.
+All parameters other than `props` are required. `props` is always optional and defaults to `{}`.
 
-### Layout
+Input components generally have required `labelText` and `value` parameters. The label is a string to show next to the input to describe its function, and is also used by the system to distinguish the inputs from each other. The `value` provides the current value of the input. Input components generally return the new value (which may be equal to `value` if no changes occured).
 
-#### [Box](https://v2.grommet.io/box)
+### Button
 
-```
-ui.box(inner)
-ui.box(props)
-ui.box(props, inner)
-ui.box(id, props, inner)
-```
-
-#### Section
+Allow the user to perform an action by clicking.
 
 ```
-active = ui.section(label, inner)
-active = ui.section(label, props, inner)
+clicked = ui.button(labelText, props)
 ```
 
-A single [accordion panel](https://v2.grommet.io/accordion). Decided to go with the name 'section' because I liked it more.
+Arguments:
 
-As an optimization for when you have many sections, the `inner` function is not called when a section is not active. So if you perform any side effects in `inner`, you may notice that those stop happening when the section is collapsed.
+- `labelText` (*string*, required): The label
+- `props` (*table*, optional): The table of props:
+    - `disabled` (*boolean*): Whether the button should be disabled
+    - `big` (*function*): Whether the button should be a bigger variant.
+    - `kind` (*string*): One of `'primary'`, `'secondary'`, `'danger'` or `'ghost'`. Is `'secondary'` by default. A 'primary' button is highlighted and meant for important actions. A 'danger' button is meant for dangerous actions (such as deleting something). A 'ghost' button has even less visual dominance than a secondary button.
+    - `onClick` (*function*): A function to call when the button is clicked. You can use this instead of using the return value directly if you prefer callbacks.
 
-#### [Tabs](https://v2.grommet.io/tabs) and [Tab](https://v2.grommet.io/tab)
+Returns:
 
-```
-ui.tabs(inner)
-ui.tabs(props, inner)
-ui.tabs(id, props, inner)
-```
+- `clicked` (*boolean*): Whether the button was clicked in this update.
 
-```
-active = ui.tab(title, inner)
-active = ui.tab(title, props, inner)
-```
+### Text input
 
-Use it as follows:
+Allows the user to input a string.
 
 ```
-ui.tabs(function()
-    ui.tab('Tab 1', function()
-        ui.text('This text is in tab 1!')
-    end)
-    ui.tab('Tab 1', function()
-        ui.text('This text is in tab 2!')
-    end)
-end)
+newValue = ui.textInput(labelText, value, props)
 ```
 
-### Text
+Arguments:
 
-#### [Heading](https://v2.grommet.io/heading)
+- `labelText` (*string*, required): The label
+- `value` (*string*, required): The current value
+- `props` (*table*, optional): The table of props:
+    - `disabled` (*boolean*): Whether the input should be disabled
+    - `placeholder` (*string*): Text to show when the input is empty. It disappears when the user begins entering data and should not contain crucial information. It does not affect the actual value returned.
+    - `hideLabel` (*boolean*): Whether to hide the label
+    - `invalid` (*boolean*): Whether the value is currently invalid
+    - `invalidText` (*string*): An error message to display when the value is invalid
+    - `helperText` (*string*): Text that is used alongside the label for additional help
+    - `charCount` (*boolean*): Whether to show the character count
+    - `maxLength` (*number*): The maximum allowed value length
+    - `onChange` (*function*): A function to call with the new value whenever the input is updated. You can use this instead of using the return value directly if you prefer callbacks.
 
-```
-ui.heading(text)
-ui.heading(props)
-ui.heading(text, props)
-```
+Returns:
 
-#### [Markdown](https://v2.grommet.io/markdown)
-
-```
-ui.markdown(text)
-ui.markdown(props)
-ui.markdown(text, props)
-```
-
-Putting a 'castle://' link in markdown creates a link to a game!
-
-#### [Paragraph](https://v2.grommet.io/paragraph)
-
-```
-ui.paragraph(text)
-ui.paragraph(props)
-ui.paragraph(text, props)
-```
-
-#### [Text](https://v2.grommet.io/text)
-
-```
-ui.text(text)
-ui.text(props)
-ui.text(text, props)
-```
-
-### Buttons
-
-#### [Button](https://v2.grommet.io/button)
-
-```
-clicked = ui.button(label)
-clicked = ui.button(label, props)
-```
-
-### Input
-
-#### [CheckBox](https://v2.grommet.io/checkbox)
-
-```
-newChecked = ui.checkBox(label, checked, props)
-newChecked = ui.checkBox(checked, props)
-newChecked = ui.checkBox(label, checked)
-newChecked = ui.checkBox(props) -- Known bug: this variant always returns `nil`, will fix
-```
-
-#### [MaskedInput](https://v2.grommet.io/maskedinput)
-
-```
-newValue = ui.maskedInput(id, value, props)
-newValue = ui.maskedInput(value, props)
-newValue = ui.maskedInput(id, value)
-newValue = ui.maskedInput(props) -- Known bug: this variant always returns `nil`, will fix
-```
-
-#### [RadioButtonGroup](https://v2.grommet.io/radiobuttongroup)
-
-```
-newValue = ui.radioButtonGroup(id, value, options)
-newValue = ui.radioButtonGroup(id, value, options, props)
-newValue = ui.radioButtonGroup(props) -- Known bug: this variant always returns `nil`, will fix
-```
-
-#### [RangeInput](https://v2.grommet.io/rangeinput)
-
-```
-newValue = ui.rangeInput(id, value, min, max, step)
-newValue = ui.rangeInput(id, value, min, max, step, props)
-newValue = ui.rangeInput(props) -- Known bug: this variant always returns `nil`, will fix
-```
-
-#### [Select](https://v2.grommet.io/select)
-
-```
-newValue = ui.select(id, value, options)
-newValue = ui.select(id, value, options, props)
-newValue = ui.select(props) -- Known bug: this variant always returns `nil`, will fix
-```
-
-#### [TextInput](https://v2.grommet.io/textinput)
-
-```
-newValue = ui.textInput(id, value, props)
-newValue = ui.textInput(value, props)
-newValue = ui.textInput(id, value)
-newValue = ui.textInput(value)
-newValue = ui.textInput(props) -- Known bug: this variant always returns `nil`, will fix
-```
-
-#### [TextArea](https://v2.grommet.io/textarea)
-
-```
-newValue = ui.textArea(id, value, props)
-newValue = ui.textArea(value, props)
-newValue = ui.textArea(id, value)
-newValue = ui.textArea(value)
-newValue = ui.textArea(props) -- Known bug: this variant always returns `nil`, will fix
-```
-
-#### ColorPicker
-
-Coming soon... 😎
+- `newValue` (*string*): The new value input by the user. Is equal to `value` if no change occured in this update.
