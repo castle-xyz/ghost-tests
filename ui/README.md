@@ -109,9 +109,9 @@ See the [code for the 'Circles' demo](./circles.lua) for an example of showing U
 
 ## Reference
 
-All parameters other than `props` are required. `props` is always optional and defaults to `{}`.
+All functions take some required parameters, and one `props` parameter for additional configuration. All keys in `props` are optional. `props` itself is always optional and defaults to `{}`.
 
-Input components generally have required `labelText` and `value` parameters. The label is a string to show next to the input to describe its function, and is also used by the system to distinguish the inputs from each other. The `value` provides the current value of the input. Input components generally return the new value (which may be equal to `value` if no changes occured).
+Input components generally have required `labelText` and `value` parameters. `labelText` is a string to show next to the input to describe its function, and is also used by the system to distinguish the inputs from each other. The `value` provides the current value of the input. Input components generally return the new value (which may be equal to `value` if no changes occured).
 
 ### Button
 
