@@ -111,7 +111,7 @@ See the [code for the 'Circles' demo](./circles.lua) for an example of showing U
 
 All functions take some required parameters, and one `props` parameter for additional configuration. All keys in `props` are optional. `props` itself is always optional and defaults to `{}`.
 
-Input components generally have required `labelText` and `value` parameters. `labelText` is a string to show next to the input to describe its function, and is also used by the system to distinguish the inputs from each other. The `value` provides the current value of the input. Input components generally return the new value (which may be equal to `value` if no changes occured).
+Input components generally have required label and value parameters. Labels are strings shown next to inputs to describe their function, and are also used by the system to distinguish the inputs from each other. Value parameters provide the current value of the input. Input components generally return the new values (which may be equal to the values passed in if no changes were made by the user).
 
 ### Button
 
@@ -136,7 +136,7 @@ Returns:
 
 ### Checkbox
 
-Allows the user to toggle a boolean value. Prefer toggle switches instead if the resulting action immediately affects something in your game -- checkboxes generally represent one input in a larger flow with a final confirmation step (eg. choosing among many settings then clicking a button to apply perform an action with those settings).
+Allows the user to toggle a boolean value. Checkboxes generally represent one input in a larger flow with a final confirmation step (eg. choosing among many settings then clicking a button to perform an action with those settings). Prefer toggle switches instead if the resulting action immediately affects something in your game without another step.
 
 ```
 newChecked = ui.checkbox(labelText, checked, props)
@@ -145,7 +145,7 @@ newChecked = ui.checkbox(labelText, checked, props)
 Arguments:
 
 - `labelText` (*string*, required): The label
-- `checked` (*string*, required): The current value
+- `checked` (*string*, required): Whether currentl checked
 - `props` (*table*, optional): The table of props:
     - `indeterminate` (*boolean*): Whether the checkbox is in an 'indeterminate' state between checked and unchecked. This useful when you want to express that the checkbox has a sublist of selections, some selected and some unselected.
     - `disabled` (*boolean*): Whether the input should be disabled
@@ -154,7 +154,8 @@ Arguments:
 
 Returns:
 
-- `newValue` (*string*): The new value input by the user. Is equal to `value` if no change occured in this update.
+- `newChecked` (*string*): The new checked state. Is equal to `checked` if no change occured in this update.
+
 ### Text input
 
 Allows the user to input a string.
@@ -177,6 +178,26 @@ Arguments:
     - `charCount` (*boolean*): Whether to show the character count
     - `maxLength` (*number*): The maximum allowed value length
     - `onChange` (*function*): A function to call with the new value whenever the input is updated. You can use this instead of using the return value directly if you prefer callbacks. If your function returns a value, that value is used as the new value instead.
+
+Returns:
+
+- `newValue` (*string*): The new value input by the user. Is equal to `value` if no change occured in this update.
+
+### Toggle
+
+Allows the user to toggle a boolean state. Toggle switches are generally used if the resulting action immediately affects something in your game without another step. Use a checkbox instead if the input just represents one value in a larger flow that includes a later confirmation step.
+
+```
+newToggled = ui.toggle(labelA, labelB, toggled, props)
+```
+
+Arguments:
+
+- `labelA` (*string*, required): The label when in on state
+- `labelB` (*string*, required): The label when in off state
+- `toggled` (*string*, required): Whether currently on
+- `props` (*table*, optional): The table of props:
+    - `onToggle` (*function*): A function to call with the new value whenever the input is updated. You can use this instead of using the return value directly if you prefer callbacks. If your function returns a value, that value is used as the new value instead.
 
 Returns:
 
