@@ -156,6 +156,33 @@ Returns:
 
 - `newChecked` (*string*): The new checked state. Is equal to `checked` if no change occured in this update.
 
+### Number input
+
+Allows the user to input a number. Contains controls to increase or decrease the number incrementally.
+
+```
+newValue = ui.numberInput(label, value, props)
+```
+
+Arguments:
+
+- `label` (*string*, required): The label
+- `value` (*string*, required): The current value
+- `props` (*table*, optional): The table of props:
+    - `disabled` (*boolean*): Whether the input should be disabled
+    - `hideLabel` (*boolean*): Whether to hide the label
+    - `max` (*number*): The maximum value
+    - `max` (*number*): The minimum value
+    - `step` (*number*): How much the value should increase or decrease when clicking the up or down button
+    - `invalid` (*boolean*): Whether the value is currently invalid
+    - `invalidText` (*string*): An error message to display when the value is invalid
+    - `helperText` (*string*): Text that is used alongside the label for additional help
+    - `onChange` (*function*): A function to call with the new value whenever the input is updated. You can use this instead of using the return value directly if you prefer callbacks. If your function returns a value, that value is used as the new value instead.
+
+Returns:
+
+- `newValue` (*string*): The new value input by the user. Is equal to `value` if no change occured in this update.
+
 ### Text input
 
 Allows the user to input a string.
