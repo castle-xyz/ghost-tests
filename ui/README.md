@@ -167,16 +167,44 @@ newValue = ui.numberInput(label, value, props)
 **Arguments**
 
 - `label` (*string*, required): The label
-- `value` (*string*, required): The current value
+- `value` (*number*, required): The current value
 - `props` (*table*, optional): The table of props:
     - `disabled` (*boolean*): Whether the input should be disabled
     - `hideLabel` (*boolean*): Whether to hide the label
+    - `min` (*number*): The minimum value
     - `max` (*number*): The maximum value
-    - `max` (*number*): The minimum value
     - `step` (*number*): How much the value should increase or decrease when clicking the up or down button
     - `invalid` (*boolean*): Whether the value is currently invalid
     - `invalidText` (*string*): An error message to display when the value is invalid
     - `helperText` (*string*): Text that is used alongside the label for additional help
+    - `onChange` (*function*): A function to call with the new value whenever the input is updated. You can use this instead of using the return value directly if you prefer callbacks. If your function returns a value, that value is used as the new value instead.
+
+**Returns**
+
+- `newValue` (*string*): The new value input by the user. Is equal to `value` if no change occured in this update.
+
+### Slider
+
+Indicates a number visually and allows the user to adjust it by dragging a handle along a horizontal track.
+
+```
+newValue = ui.slider(label, value, min, max, props)
+```
+
+**Arguments**
+
+- `label` (*string*, required): The label
+- `value` (*number*, required): The current value
+- `min` (*number*, required): The minimum value
+- `max` (*number*, required): The maximum value
+- `props` (*table*, optional): The table of props:
+    - `disabled` (*boolean*): Whether the input should be disabled
+    - `hideTextInput` (*boolean*): Whether to hide the number input box that appears next to the slider allowing direct entry
+    - `hideLabel` (*boolean*): Whether to hide the label
+    - `minLabel` (*string*): The label associated with the minimum value
+    - `maxLabel` (*string*): The label associated with the maximum value
+    - `step` (*number*): How much the value should increase or decrease when sliding the handle by mouse
+    - `stepMultiplier` (*number*): How much the value should increase or decrease when using shift + arrow keys (the actual step will be `(max - min) / stepMultiplier`)
     - `onChange` (*function*): A function to call with the new value whenever the input is updated. You can use this instead of using the return value directly if you prefer callbacks. If your function returns a value, that value is used as the new value instead.
 
 **Returns**
