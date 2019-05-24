@@ -134,6 +134,27 @@ Returns:
 
 - `clicked` (*boolean*): Whether the button was clicked in this update.
 
+### Checkbox
+
+Allows the user to toggle a boolean value. Prefer toggle switches instead if the resulting action immediately affects something in your game -- checkboxes generally represent one input in a larger flow with a final confirmation step (eg. choosing among many settings then clicking a button to apply perform an action with those settings).
+
+```
+newChecked = ui.checkbox(labelText, checked, props)
+```
+
+Arguments:
+
+- `labelText` (*string*, required): The label
+- `checked` (*string*, required): The current value
+- `props` (*table*, optional): The table of props:
+    - `indeterminate` (*boolean*): Whether the checkbox is in an 'indeterminate' state between checked and unchecked. This useful when you want to express that the checkbox has a sublist of selections, some selected and some unselected.
+    - `disabled` (*boolean*): Whether the input should be disabled
+    - `hideLabel` (*boolean*): Whether to hide the label
+    - `onChange` (*function*): A function to call with the new value whenever the input is updated. You can use this instead of using the return value directly if you prefer callbacks. If your function returns a value, that value is used as the new value instead.
+
+Returns:
+
+- `newValue` (*string*): The new value input by the user. Is equal to `value` if no change occured in this update.
 ### Text input
 
 Allows the user to input a string.
@@ -155,7 +176,7 @@ Arguments:
     - `helperText` (*string*): Text that is used alongside the label for additional help
     - `charCount` (*boolean*): Whether to show the character count
     - `maxLength` (*number*): The maximum allowed value length
-    - `onChange` (*function*): A function to call with the new value whenever the input is updated. You can use this instead of using the return value directly if you prefer callbacks.
+    - `onChange` (*function*): A function to call with the new value whenever the input is updated. You can use this instead of using the return value directly if you prefer callbacks. If your function returns a value, that value is used as the new value instead.
 
 Returns:
 
