@@ -118,12 +118,12 @@ Input components generally have required label and value parameters. Labels are 
 Allow the user to perform an action by clicking.
 
 ```
-clicked = ui.button(labelText, props)
+clicked = ui.button(label, props)
 ```
 
 Arguments:
 
-- `labelText` (*string*, required): The label
+- `label` (*string*, required): The label
 - `props` (*table*, optional): The table of props:
     - `disabled` (*boolean*): Whether the button should be disabled
     - `big` (*function*): Whether the button should be a bigger variant.
@@ -139,13 +139,13 @@ Returns:
 Allows the user to toggle a boolean value. Checkboxes generally represent one input in a larger flow with a final confirmation step (eg. choosing among many settings then clicking a button to perform an action with those settings). Prefer toggle switches instead if the resulting action immediately affects something in your game without another step.
 
 ```
-newChecked = ui.checkbox(labelText, checked, props)
+newChecked = ui.checkbox(label, checked, props)
 ```
 
 Arguments:
 
-- `labelText` (*string*, required): The label
-- `checked` (*string*, required): Whether currentl checked
+- `label` (*string*, required): The label
+- `checked` (*string*, required): Whether currently checked
 - `props` (*table*, optional): The table of props:
     - `indeterminate` (*boolean*): Whether the checkbox is in an 'indeterminate' state between checked and unchecked. This useful when you want to express that the checkbox has a sublist of selections, some selected and some unselected.
     - `disabled` (*boolean*): Whether the input should be disabled
@@ -188,12 +188,12 @@ Returns:
 Allows the user to input a string.
 
 ```
-newValue = ui.textInput(labelText, value, props)
+newValue = ui.textInput(label, value, props)
 ```
 
 Arguments:
 
-- `labelText` (*string*, required): The label
+- `label` (*string*, required): The label
 - `value` (*string*, required): The current value
 - `props` (*table*, optional): The table of props:
     - `disabled` (*boolean*): Whether the input should be disabled
