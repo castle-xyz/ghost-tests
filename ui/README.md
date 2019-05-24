@@ -115,13 +115,13 @@ Input components generally have required label and value parameters. Labels are 
 
 ### Button
 
-Allow the user to perform an action by clicking.
+Allows the user to perform an action by clicking.
 
 ```
 clicked = ui.button(label, props)
 ```
 
-Arguments:
+**Arguments**
 
 - `label` (*string*, required): The label
 - `props` (*table*, optional): The table of props:
@@ -130,7 +130,7 @@ Arguments:
     - `kind` (*string*): One of `'primary'`, `'secondary'`, `'danger'` or `'ghost'`. Is `'secondary'` by default. A 'primary' button is highlighted and meant for important actions. A 'danger' button is meant for dangerous actions (such as deleting something). A 'ghost' button has even less visual dominance than a secondary button.
     - `onClick` (*function*): A function to call when the button is clicked. You can use this instead of using the return value directly if you prefer callbacks.
 
-Returns:
+**Returns**
 
 - `clicked` (*boolean*): Whether the button was clicked in this update.
 
@@ -142,7 +142,7 @@ Allows the user to toggle a boolean value. Checkboxes generally represent one in
 newChecked = ui.checkbox(label, checked, props)
 ```
 
-Arguments:
+**Arguments**
 
 - `label` (*string*, required): The label
 - `checked` (*string*, required): Whether currently checked
@@ -152,7 +152,7 @@ Arguments:
     - `hideLabel` (*boolean*): Whether to hide the label
     - `onChange` (*function*): A function to call with the new value whenever the input is updated. You can use this instead of using the return value directly if you prefer callbacks. If your function returns a value, that value is used as the new value instead.
 
-Returns:
+**Returns**
 
 - `newChecked` (*string*): The new checked state. Is equal to `checked` if no change occured in this update.
 
@@ -164,7 +164,7 @@ Allows the user to input a number. Contains controls to increase or decrease the
 newValue = ui.numberInput(label, value, props)
 ```
 
-Arguments:
+**Arguments**
 
 - `label` (*string*, required): The label
 - `value` (*string*, required): The current value
@@ -179,7 +179,7 @@ Arguments:
     - `helperText` (*string*): Text that is used alongside the label for additional help
     - `onChange` (*function*): A function to call with the new value whenever the input is updated. You can use this instead of using the return value directly if you prefer callbacks. If your function returns a value, that value is used as the new value instead.
 
-Returns:
+**Returns**
 
 - `newValue` (*string*): The new value input by the user. Is equal to `value` if no change occured in this update.
 
@@ -191,7 +191,7 @@ Allows the user to input a string.
 newValue = ui.textInput(label, value, props)
 ```
 
-Arguments:
+**Arguments**
 
 - `label` (*string*, required): The label
 - `value` (*string*, required): The current value
@@ -206,7 +206,7 @@ Arguments:
     - `maxLength` (*number*): The maximum allowed value length
     - `onChange` (*function*): A function to call with the new value whenever the input is updated. You can use this instead of using the return value directly if you prefer callbacks. If your function returns a value, that value is used as the new value instead.
 
-Returns:
+**Returns**
 
 - `newValue` (*string*): The new value input by the user. Is equal to `value` if no change occured in this update.
 
@@ -218,7 +218,7 @@ Allows the user to toggle a boolean state. Toggle switches are generally used if
 newToggled = ui.toggle(labelA, labelB, toggled, props)
 ```
 
-Arguments:
+**Arguments**
 
 - `labelA` (*string*, required): The label when in on state
 - `labelB` (*string*, required): The label when in off state
@@ -226,6 +226,6 @@ Arguments:
 - `props` (*table*, optional): The table of props:
     - `onToggle` (*function*): A function to call with the new value whenever the input is updated. You can use this instead of using the return value directly if you prefer callbacks. If your function returns a value, that value is used as the new value instead.
 
-Returns:
+**Returns**
 
 - `newValue` (*string*): The new value input by the user. Is equal to `value` if no change occured in this update.
