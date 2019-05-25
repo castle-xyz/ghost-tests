@@ -33,16 +33,18 @@ end
 
 local labelFont = love.graphics.newFont(28)
 
+love.graphics.setBackgroundColor(0.494, 0.388, 0.494)
+
 function love.draw()
     love.graphics.push('all')
     for i, circle in ipairs(circles) do
         -- Draw the circle
         if circle.color == 'red' then
-            love.graphics.setColor(1, 0, 0)
+            love.graphics.setColor(1, 0.443, 0.443)
         elseif circle.color == 'green' then
-            love.graphics.setColor(0, 1, 0)
+            love.graphics.setColor(0.612, 1, 0.612)
         elseif circle.color == 'blue' then
-            love.graphics.setColor(0, 0, 1)
+            love.graphics.setColor(0.29, 0.643, 1)
         end
         love.graphics.circle('fill', circle.x, circle.y, circle.radius)
 
