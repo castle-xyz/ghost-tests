@@ -168,7 +168,7 @@ newValue = ui.dropdown(label, value, items, props)
 
 - `label` (*string*, required): The label
 - `value` (*string*, required): The current value. Must be one of the values in `items`, or `nil` to indicate that nothing has been selected. When nothing is selected, the control displays `props.placeholder`, which defaults to `'Select an option...'`.
-- `label` (*table*, required): A table containing strings that are possible values for the user to select from. The table is expected to be in the form of a Lua array, eg. `{ 'option1', 'option2', 'option3' }`.
+- `items` (*table*, required): A table containing strings that are possible values for the user to select from. The table is expected to be in the form of a Lua array, eg. `{ 'option1', 'option2', 'option3' }`.
 - `props` (*table*, optional): The table of props:
     - `disabled` (*boolean*): Whether the input should be disabled
     - `placeholder` (*string*): Text to show when no item is selected (i.e., `value` is `nil`). Defaults to `'Select an option...'`.
