@@ -6,35 +6,26 @@ local circles = {}
 -- All the UI-related code is just in this function. Everything below it is normal game code!
 
 function castle.uiupdate()
-    ui.box({ gap = 'small' }, function()
-        -- Button for adding circles
-        if ui.button('add circle') then
-            table.insert(circles, {
-                x = love.graphics.getWidth() * math.random(),
-                y = love.graphics.getHeight() * math.random(),
-                radius = 30 + 100 * math.random(),
-                color = ({ 'red', 'blue', 'green' })[math.floor(3 * math.random()) + 1]
-            })
-        end
+    -- Button for adding circles
+    if ui.button('add circle') then
+        table.insert(circles, {
+            x = love.graphics.getWidth() * math.random(),
+            y = love.graphics.getHeight() * math.random(),
+            radius = math.random(30, 105),
+            color = ({ 'red', 'blue', 'green' })[math.floor(3 * math.random()) + 1]
+        })
+    end
 
-        -- Section per circle
-        for i, circle in ipairs(circles) do
-            ui.section('circle ' .. i, function()
-                -- ids of inputs (such as 'color', 'x', etc.) need to be unique only within each section
-
-                circle.color = ui.radioButtonGroup('color', circle.color, { 'red', 'blue', 'green' })
-
-                ui.text('x')
-                circle.x = ui.rangeInput('x', circle.x, 0, love.graphics.getWidth(), 1)
-
-                ui.text('y')
-                circle.y = ui.rangeInput('y', circle.y, 0, love.graphics.getHeight(), 1)
-
-                ui.text('radius')
-                circle.radius = ui.rangeInput('radius', circle.radius, 30, 105, 1)
-            end)
-        end
-    end)
+    -- Section per circle
+    for i, circle in ipairs(circles) do
+        ui.section('circle ' .. i, function()
+            -- Labels of inputs (such as 'color', 'x', etc.) need to be unique only within each section
+            circle.color = ui.radioButtonGroup('color', circle.color, { 'red', 'blue', 'green' })
+            circle.x = ui.slider('x', circle.x, 0, love.graphics.getWidth())
+            circle.y = ui.slider('y', circle.y, 0, love.graphics.getHeight())
+            circle.radius = ui.slider('radius', circle.radius, 30, 105)
+        end)
+    end
 end
 
 
