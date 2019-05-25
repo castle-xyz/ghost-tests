@@ -209,6 +209,29 @@ newValue = ui.numberInput(label, value, props)
 
 - `newValue` (*string*): The new value input by the user. Is equal to `value` if no change occured in this update.
 
+### Radio button group
+
+For selecting from a list of two or more options that are mutually exclusive (only one can be selected).
+
+```
+newValue = ui.radioButtonGroup(label, value, items, props)
+```
+
+**Arguments**
+
+- `label` (*string*, required): The label
+- `value` (*string*, required): The current value. Must be one of the values in `items`.
+- `items` (*table*, required): A table containing strings that are possible values for the user to select from. The table is expected to be in the form of a Lua array, eg. `{ 'option1', 'option2', 'option3' }`.
+- `props` (*table*, optional): The table of props:
+    - `disabled` (*boolean*): Whether the input should be disabled
+    - `hideLabel` (*boolean*): Whether to hide the label
+    - `helperText` (*string*): Text that is used alongside the label for additional help
+    - `onChange` (*function*): A function to call with the new value whenever the input is updated. You can use this instead of using the return value directly if you prefer callbacks. If your function returns a value, that value is used as the new value instead.
+
+**Returns**
+
+- `newValue` (*string*): The new value input by the user. Is equal to `value` if no change occured in this update.
+
 ### Slider
 
 Indicates a number visually and allows the user to adjust it by dragging a handle along a horizontal track.

@@ -6,6 +6,7 @@ local boolean2 = true
 local number = 50
 local number2 = 50
 local drop = nil
+local radio = 'alpha'
 
 function castle.uiupdate()
     string = ui.textInput('string', string, { helperText = 'Enter a string here!' })
@@ -20,6 +21,9 @@ function castle.uiupdate()
         helperText = 'Choose a thing!',
         invalid = drop == 'delta',
         invalidText = "I don't like this value... :(",
+    })
+    radio = ui.radioButtonGroup('radio', radio, { 'alpha', 'beta', 'gamma' }, {
+        hideLabel = true,
     })
 
     if ui.button('Woah!') then
@@ -36,6 +40,7 @@ function love.draw()
     love.graphics.print('\n\n\n\n\nnumber: ' .. tostring(number), 20, 20)
     love.graphics.print('\n\n\n\n\n\nnumber2: ' .. tostring(number2), 20, 20)
     love.graphics.print('\n\n\n\n\n\n\ndrop: ' .. tostring(drop), 20, 20)
+    love.graphics.print('\n\n\n\n\n\n\n\nradio: ' .. tostring(radio), 20, 20)
 end
 
 function love.keypressed(key)
@@ -46,5 +51,6 @@ function love.keypressed(key)
         number = math.random(0, 100)
         number2 = math.random(0, 100)
         drop = ({ 'alpha', 'beta', 'gamma', 'delta', 'epsilon', 'zeta' })[math.random(1, 6)]
+        radio = ({ 'alpha', 'beta', 'gamma' })[math.random(1, 3)]
     end
 end
