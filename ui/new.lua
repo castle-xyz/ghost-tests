@@ -7,8 +7,17 @@ local number = 50
 local number2 = 50
 local drop = nil
 local radio = 'alpha'
+local sectionOpen = true
 
 function castle.uiupdate()
+    sectionOpen = ui.section('A section', { open = sectionOpen }, function()
+        ui.textInput('stuff inside section', string)
+    end)
+
+    ui.section('Another section', function()
+        ui.textInput('stuff inside other section', '')
+    end)
+
     string = ui.textInput('string', string, { helperText = 'Enter a string here!' })
     boolean = ui.checkbox('boolean', boolean)
     boolean2 = ui.toggle('boolean2 on', 'boolean2 off', boolean2)
@@ -22,9 +31,7 @@ function castle.uiupdate()
         invalid = drop == 'delta',
         invalidText = "I don't like this value... :(",
     })
-    radio = ui.radioButtonGroup('radio', radio, { 'alpha', 'beta', 'gamma' }, {
-        hideLabel = true,
-    })
+    radio = ui.radioButtonGroup('radio', radio, { 'alpha', 'beta', 'gamma' })
 
     if ui.button('Woah!') then
         print('Whoah!')
@@ -41,6 +48,7 @@ function love.draw()
     love.graphics.print('\n\n\n\n\n\nnumber2: ' .. tostring(number2), 20, 20)
     love.graphics.print('\n\n\n\n\n\n\ndrop: ' .. tostring(drop), 20, 20)
     love.graphics.print('\n\n\n\n\n\n\n\nradio: ' .. tostring(radio), 20, 20)
+    love.graphics.print('\n\n\n\n\n\n\n\n\nsectionOpen: ' .. tostring(sectionOpen), 20, 20)
 end
 
 function love.keypressed(key)

@@ -111,6 +111,8 @@ See the [code for the 'Circles' demo](./circles.lua) for an example of showing U
 
 All functions take some required parameters, and one `props` parameter for additional configuration. All keys in `props` are optional. `props` itself is always optional and defaults to `{}`.
 
+Parent components (components that have more components inside) take an `inside` parameter. The `inside` parameter should be a function that makes more UI calls -- the components created by these calls then become children of the parent component.
+
 Input components generally have required label and value parameters. Labels are strings shown next to inputs to describe their function, and are also used by the system to distinguish the inputs from each other. Value parameters provide the current value of the input. Input components generally return the new values (which may be equal to the values passed in if no changes were made by the user).
 
 ### Button
@@ -231,6 +233,25 @@ newValue = ui.radioButtonGroup(label, value, items, props)
 **Returns**
 
 - `newValue` (*string*): The new value input by the user. Is equal to `value` if no change occured in this update.
+
+### Section
+
+An expandable section with a label, containing more UI elements inside. Helps with grouping and reducing clutter.
+
+```
+newOpen = ui.section(label, props, inner)
+newOpen = ui.section(label, inner)
+```
+
+**Arguments**
+
+- `label` (*string*, required): The section title
+- `props` (*table*, optional): The table of props:
+    - `open` (*boolean*): Whether the section should be currently open. If you leave this out, the section has normal open / close toggling behavior. If you provide this value, the section always reflects this value. The return value of the function will be `true` if the user clicked on the section to open it, but if you pass `false` for this parameter, it will still not open. Thus, you can override the default behavior.
+
+**Returns**
+
+- `newOpen` (*boolean*): Whether the section is open.
 
 ### Slider
 
