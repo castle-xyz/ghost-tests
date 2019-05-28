@@ -8,6 +8,11 @@ local number2 = 50
 local drop = nil
 local radio = 'alpha'
 local sectionOpen = true
+local string2 = [[
+This is a longer piece of text! Have fun editing this one. :)
+
+Oh and this is a new paragraph!
+]]
 
 function castle.uiupdate()
     sectionOpen = ui.section('A section', { open = sectionOpen }, function()
@@ -32,6 +37,7 @@ function castle.uiupdate()
         invalidText = "I don't like this value... :(",
     })
     radio = ui.radioButtonGroup('radio', radio, { 'alpha', 'beta', 'gamma' })
+    string2 = ui.textArea('string2', string2)
 
     if ui.button('Woah!') then
         print('Whoah!')
@@ -49,6 +55,7 @@ function love.draw()
     love.graphics.print('\n\n\n\n\n\n\ndrop: ' .. tostring(drop), 20, 20)
     love.graphics.print('\n\n\n\n\n\n\n\nradio: ' .. tostring(radio), 20, 20)
     love.graphics.print('\n\n\n\n\n\n\n\n\nsectionOpen: ' .. tostring(sectionOpen), 20, 20)
+    love.graphics.print('\n\n\n\n\n\n\n\n\n\nstring2: ' .. tostring(string2), 20, 20)
 end
 
 function love.keypressed(key)
@@ -60,5 +67,7 @@ function love.keypressed(key)
         number2 = math.random(0, 100)
         drop = ({ 'alpha', 'beta', 'gamma', 'delta', 'epsilon', 'zeta' })[math.random(1, 6)]
         radio = ({ 'alpha', 'beta', 'gamma' })[math.random(1, 3)]
+        sectionOpen = math.random(1, 2) == 1
+        string2 = string.gsub('............', '.', function() return string.char(math.random(65, 122)) end)
     end
 end
