@@ -4,7 +4,9 @@
 
 The Castle UI API allows you to add user interface elements that allow interaction with your game. Castle manages the laying out of your UI relative to the rest of Castle's UI. Uses can range from simple debug tools while developing games to user-facing level editors or text-based adventure games etc.
 
-## Tutorial
+## Tutorial (OUT OF DATE)
+
+**WARNING: The tutorial is currently out of date, and will be updated soon! The [Reference](#reference) section below is up-to-date though!**
 
 To use the UI API, simply define the `castle.uiupdate` function and put your UI calls in it:
 
