@@ -140,7 +140,7 @@ clicked = ui.button(label, props)
 
 ### Checkbox
 
-Allows the user to toggle a boolean value. Checkboxes generally represent one input in a larger flow with a final confirmation step (eg. choosing among many settings then clicking a button to perform an action with those settings). Prefer toggle switches instead if the resulting action immediately affects something in your game without another step.
+Allows the user to toggle a boolean value. Checkboxes generally represent one input in a larger flow with a final confirmation step (eg. choosing among many settings then clicking a button to perform an action with those settings). Prefer [toggle switches](#toggle) instead if the resulting action immediately affects something in your game without another step.
 
 ```
 newChecked = ui.checkbox(label, checked, props)
@@ -283,9 +283,33 @@ newValue = ui.slider(label, value, min, max, props)
 
 - `newValue` (*string*): The new value input by the user. Is equal to `value` if no change occured in this update.
 
+### Text area
+
+Allows the user to input a string. The display for the field is multi-line, so if you expect only short single-line strings to be input prefer using a [text input](#text-input) instead.
+
+```
+newValue = ui.textArea(label, value, props)
+```
+
+**Arguments**
+
+- `label` (*string*, required): The label
+- `value` (*string*, required): The current value
+- `props` (*table*, optional): The table of props:
+    - `disabled` (*boolean*): Whether the input should be disabled
+    - `placeholder` (*string*): Text to show when the input is empty. It disappears when the user begins entering data and should not contain crucial information. It does not affect the actual value returned.
+    - `rows` (*string*): The initial height of the text area in number of rows of text.
+    - `hideLabel` (*boolean*): Whether to hide the label
+    - `invalid` (*boolean*): Whether the value is currently invalid
+    - `invalidText` (*string*): An error message to display when the value is invalid
+    - `helperText` (*string*): Text that is used alongside the label for additional help
+    - `charCount` (*boolean*): Whether to show the character count
+    - `maxLength` (*number*): The maximum allowed value length
+    - `onChange` (*function*): A function to call with the new value whenever the input is updated. You can use this instead of using the return value directly if you prefer callbacks. If your function returns a value, that value is used as the new value instead.
+
 ### Text input
 
-Allows the user to input a string.
+Allows the user to input a string. The display for the field is just a single line, so if you expect multi-line strings to be input prefer using a [text area](#text-area) instead.
 
 ```
 newValue = ui.textInput(label, value, props)

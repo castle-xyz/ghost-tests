@@ -37,7 +37,7 @@ function castle.uiupdate()
         invalidText = "I don't like this value... :(",
     })
     radio = ui.radioButtonGroup('radio', radio, { 'alpha', 'beta', 'gamma' })
-    string2 = ui.textArea('string2', string2)
+    string2 = ui.textArea('string2', string2, { rows = 10 })
 
     if ui.button('Woah!') then
         print('Whoah!')
