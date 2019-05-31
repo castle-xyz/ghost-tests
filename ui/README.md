@@ -328,7 +328,7 @@ newOpen = ui.tab(label, inner)
 
 - `label` (*string*, required): The section title
 - `props` (*table*, optional): The table of props:
-    - *Currently `ui.tabs` doesn't have any props, some may be added later**
+    - *Currently `ui.tabs` doesn't have any props, some may be added later*
 - `inner` (*function*, required): A function that makes UI calls defining contents of this tab.
 
 **Returns**
