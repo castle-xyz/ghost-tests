@@ -250,6 +250,7 @@ newOpen = ui.section(label, inner)
 - `label` (*string*, required): The section title
 - `props` (*table*, optional): The table of props:
     - `open` (*boolean*): Whether the section should be currently open. If you leave this out, the section has normal open / close toggling behavior. If you provide this value, the section always reflects this value. The return value of the function will be `true` if the user clicked on the section to open it, but if you pass `false` for this parameter, it will still not open. Thus, you can override the default behavior.
+- `inner` (*function*, required): A function that makes UI calls defining contents of this section.
 
 **Returns**
 
@@ -282,6 +283,57 @@ newValue = ui.slider(label, value, min, max, props)
 **Returns**
 
 - `newValue` (*string*): The new value input by the user. Is equal to `value` if no change occured in this update.
+
+### Tabs
+
+For choosing between multiple views in the same context. There are two functions involved: one is `ui.tabs` which is a parent in which you put a group of tabs, and the other is `ui.tab` which represents each tab in the group and contains the components that should be visible in that tab inside it. So, an example layout of these calls could be:
+
+```lua
+ui.tabs('tab group 1', function()
+    ui.tab('Tab 1', function()
+        -- Content of tab 1
+    end)
+    ui.tab('Tab 2', function()
+        -- Content of tab 2
+    end)
+end)
+```
+
+#### `ui.tabs`
+
+```
+ui.tabs(id, props, inner)
+ui.tabs(id, inner)
+```
+
+**Arguments**
+
+- `id` (*string*, required): An identifying string for this tab group. Needs to be unique within the parent of the tab group. This id isn't displayed anywhere and is just used internally to distinguish tab groups from each other.
+- `props` (*table*, optional): The table of props:
+    - `selected` (*number*): The index of the currently selected tab. Use this if you want to control which tab is selected.
+- `inner` (*function*, required): A function that makes `ui.tab` calls defining each tab in this group. Any non-`ui.tab` calls are ignored.
+
+**Returns**
+
+This function doesn't return anything
+
+#### `ui.tab`
+
+```
+newOpen = ui.tab(label, props, inner)
+newOpen = ui.tab(label, inner)
+```
+
+**Arguments**
+
+- `label` (*string*, required): The section title
+- `props` (*table*, optional): The table of props:
+    - *Currently `ui.tabs` doesn't have any props, some may be added later**
+- `inner` (*function*, required): A function that makes UI calls defining contents of this tab.
+
+**Returns**
+
+- `newOpen` (*boolean*): Whether this tab is open.
 
 ### Text area
 

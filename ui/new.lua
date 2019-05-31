@@ -13,6 +13,8 @@ This is a longer piece of text! Have fun editing this one. :)
 
 Oh and this is a new paragraph!
 ]]
+local tab1Active = false
+local tab2Active = false
 
 function castle.uiupdate()
     sectionOpen = ui.section('A section', { open = sectionOpen }, function()
@@ -21,6 +23,15 @@ function castle.uiupdate()
 
     ui.section('Another section', function()
         ui.textInput('stuff inside other section', '')
+    end)
+
+    ui.tabs('tabs1', function()
+        tab1Active = ui.tab('Tab 1', function()
+            ui.textInput('stuff inside tab 1', string)
+        end)
+        tab2Active = ui.tab('Tab 2', function()
+            ui.textInput('stuff inside tab 2', string)
+        end)
     end)
 
     string = ui.textInput('string', string, { helperText = 'Enter a string here!' })
@@ -55,7 +66,9 @@ function love.draw()
     love.graphics.print('\n\n\n\n\n\n\ndrop: ' .. tostring(drop), 20, 20)
     love.graphics.print('\n\n\n\n\n\n\n\nradio: ' .. tostring(radio), 20, 20)
     love.graphics.print('\n\n\n\n\n\n\n\n\nsectionOpen: ' .. tostring(sectionOpen), 20, 20)
-    love.graphics.print('\n\n\n\n\n\n\n\n\n\nstring2: ' .. tostring(string2), 20, 20)
+    love.graphics.print('\n\n\n\n\n\n\n\n\n\ntab1Active: ' .. tostring(tab1Active), 20, 20)
+    love.graphics.print('\n\n\n\n\n\n\n\n\n\n\ntab2Active: ' .. tostring(tab2Active), 20, 20)
+    love.graphics.print('\n\n\n\n\n\n\n\n\n\n\n\nstring2: ' .. tostring(string2), 20, 20)
 end
 
 function love.keypressed(key)
