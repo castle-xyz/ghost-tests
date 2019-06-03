@@ -36,7 +36,7 @@ function castle.uiupdate()
 
     string = ui.textInput('string', string, { helperText = 'Enter a string here!' })
     boolean = ui.checkbox('boolean', boolean)
-    boolean2 = ui.toggle('boolean2 on', 'boolean2 off', boolean2)
+    boolean2 = ui.toggle('boolean2 off', 'boolean2 on', boolean2)
     number = ui.numberInput('number', number, {
         invalid = number > 50,
         invalidText = "Just kidding, you actually can't go above 50!",
