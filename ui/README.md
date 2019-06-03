@@ -190,7 +190,25 @@ newValue = ui.dropdown(label, value, items, props)
 
 Displays formatted text based on Markdown source. [react-markdown](https://github.com/rexxars/react-markdown) is used to render the Markdown, so this component supports all of the Markdown syntax supported by it.
 
-Note that since Markdown is indentation-sensitive (code blocks are defined by indent), multi-line Lua strings should be defined without indent for expected behavior. So in the following example, all the contents are rendered as code (due to the indent):
+Markdown rendering just involves one simple function:
+
+```
+ui.markdown(source, props)
+```
+
+**Arguments**
+
+- `source` (*string*, required): The Markdown source to render
+- `props` (*table*, optional): The table of props:
+    - *Currently `ui.markdown` doesn't have any props, some may be added later*
+
+**Returns**
+
+This function doesn't return anything.
+
+**Notes**
+
+Since Markdown is indentation-sensitive (code blocks are defined by indent), multi-line Lua strings should be defined without indent for expected behavior. So in the following example, all the contents are rendered as code (due to the indent):
 
 ```
     ui.markdown([[
@@ -209,22 +227,6 @@ While in this one, there is a heading and some text:
 Some text.
     ]])
 ```
-
-Markdown rendering just involves one simple function:
-
-```
-ui.markdown(source, props)
-```
-
-**Arguments**
-
-- `source` (*string*, required): The Markdown source to render
-- `props` (*table*, optional): The table of props:
-    - *Currently `ui.markdown` doesn't have any props, some may be added later*
-
-**Returns**
-
-This function doesn't return anything.
 
 ### Number input
 
