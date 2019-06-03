@@ -396,8 +396,8 @@ newToggled = ui.toggle(labelA, labelB, toggled, props)
 
 **Arguments**
 
-- `labelA` (*string*, required): The label when in on state
-- `labelB` (*string*, required): The label when in off state
+- `labelA` (*string*, required): The label when in off state
+- `labelB` (*string*, required): The label when in on state
 - `toggled` (*string*, required): Whether currently on
 - `props` (*table*, optional): The table of props:
     - `onToggle` (*function*): A function to call with the new value whenever the input is updated. You can use this instead of using the return value directly if you prefer callbacks. If your function returns a value, that value is used as the new value instead.
