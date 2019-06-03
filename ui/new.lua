@@ -16,7 +16,19 @@ Oh and this is a new paragraph!
 local tab1Active = false
 local tab2Active = false
 
+local randomNumber = math.floor(math.random(1000))
+
 function castle.uiupdate()
+    ui.markdown([[
+### Welcome
+
+Welcome to the UI demo! Feel free to click around and try stuff out! Here's
+a [link](https://www.google.com).
+
+Random number is: ]] .. tostring(randomNumber) .. [[. Press R to generate a
+new one!
+    ]])
+
     sectionOpen = ui.section('A section', { open = sectionOpen }, function()
         ui.textInput('stuff inside section', string)
     end)
@@ -82,5 +94,9 @@ function love.keypressed(key)
         radio = ({ 'alpha', 'beta', 'gamma' })[math.random(1, 3)]
         sectionOpen = math.random(1, 2) == 1
         string2 = string.gsub('............', '.', function() return string.char(math.random(65, 122)) end)
+    end
+
+    if key == 'r' then
+        randomNumber = math.floor(math.random(1000))
     end
 end
