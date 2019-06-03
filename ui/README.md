@@ -190,8 +190,6 @@ newValue = ui.dropdown(label, value, items, props)
 
 Displays formatted text based on Markdown source. [react-markdown](https://github.com/rexxars/react-markdown) is used to render the Markdown, so this component supports all of the Markdown syntax supported by it.
 
-Markdown rendering just involves one simple function:
-
 ```
 ui.markdown(source, props)
 ```
