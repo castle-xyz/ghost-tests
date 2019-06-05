@@ -15,6 +15,7 @@ Oh and this is a new paragraph!
 ]]
 local tab1Active = false
 local tab2Active = false
+local color = { r = 1, g = 0, b = 1, a = 1 }
 
 local randomNumber = math.floor(math.random(1000))
 
@@ -126,6 +127,7 @@ This is stuff in section 2! :)
         invalidText = "Just kidding, you actually can't go above 50!",
     })
     number2 = ui.slider('number2', number2, 0, 100)
+    color = ui.colorPicker('color', color)
     drop = ui.dropdown('drop', drop, { 'alpha', 'beta', 'gamma', 'delta', 'epsilon', 'zeta' }, {
         helperText = 'Choose a thing!',
         invalid = drop == 'delta',
@@ -147,12 +149,16 @@ function love.draw()
     love.graphics.print('\n\n\n\nboolean2: ' .. tostring(boolean2), 20, 20)
     love.graphics.print('\n\n\n\n\nnumber: ' .. tostring(number), 20, 20)
     love.graphics.print('\n\n\n\n\n\nnumber2: ' .. tostring(number2), 20, 20)
-    love.graphics.print('\n\n\n\n\n\n\ndrop: ' .. tostring(drop), 20, 20)
-    love.graphics.print('\n\n\n\n\n\n\n\nradio: ' .. tostring(radio), 20, 20)
-    love.graphics.print('\n\n\n\n\n\n\n\n\nsectionOpen: ' .. tostring(sectionOpen), 20, 20)
-    love.graphics.print('\n\n\n\n\n\n\n\n\n\ntab1Active: ' .. tostring(tab1Active), 20, 20)
-    love.graphics.print('\n\n\n\n\n\n\n\n\n\n\ntab2Active: ' .. tostring(tab2Active), 20, 20)
-    love.graphics.print('\n\n\n\n\n\n\n\n\n\n\n\nstring2: ' .. tostring(string2), 20, 20)
+    love.graphics.push('all')
+    love.graphics.setColor(color.r, color.g, color.b, color.a)
+    love.graphics.print('\n\n\n\n\n\n\ncolor: ' .. color.r .. ', ' .. color.g .. ', ' .. color.b .. ', ' .. color.a, 20, 20)
+    love.graphics.pop()
+    love.graphics.print('\n\n\n\n\n\n\n\ndrop: ' .. tostring(drop), 20, 20)
+    love.graphics.print('\n\n\n\n\n\n\n\n\nradio: ' .. tostring(radio), 20, 20)
+    love.graphics.print('\n\n\n\n\n\n\n\n\n\nsectionOpen: ' .. tostring(sectionOpen), 20, 20)
+    love.graphics.print('\n\n\n\n\n\n\n\n\n\n\ntab1Active: ' .. tostring(tab1Active), 20, 20)
+    love.graphics.print('\n\n\n\n\n\n\n\n\n\n\n\ntab2Active: ' .. tostring(tab2Active), 20, 20)
+    love.graphics.print('\n\n\n\n\n\n\n\n\n\n\n\n\nstring2: ' .. tostring(string2), 20, 20)
 end
 
 function love.keypressed(key)

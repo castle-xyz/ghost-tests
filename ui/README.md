@@ -130,28 +130,28 @@ ui.box(id, inner)
 
 - `id` (*string*, required): An identifying string for this box. Needs to be unique within the parent of the box. This id isn't displayed anywhere and is just used internally to distinguish boxes from each other.
 - `props` (*table*, optional): The table of props:
-    - `margin` or `m` (*number* or *string*, optional): Sets `margin` in CSS.
-    - `marginTop` or `mt` (*number* or *string*, optional): Sets `margin-top` in CSS.
-    - `marginRight` or `mr` (*number* or *string*, optional): Sets `margin-right` in CSS.
-    - `marginBottom` or `mb` (*number* or *string*, optional): Sets `margin-bottom` in CSS.
-    - `marginLeft` or `ml` (*number* or *string*, optional): Sets `margin-left` in CSS.
-    - `marginX` or `mx` (*number* or *string*, optional): Sets both `marginLeft` and `marginRight`.
-    - `marginY` or `my` (*number* or *string*, optional): Sets both `marginTop` and `marginBottom`.
-    - `padding` or `p` (*number* or *string*, optional): Sets `padding` in CSS.
-    - `paddingTop` or `pt` (*number* or *string*, optional): Sets `padding-top` in CSS.
-    - `paddingRight` or `pr` (*number* or *string*, optional): Sets `padding-right` in CSS.
-    - `paddingBottom` or `pb` (*number* or *string*, optional): Sets `padding-bottom` in CSS.
-    - `paddingLeft` or `pl` (*number* or *string*, optional): Sets `padding-left` in CSS.
-    - `paddingX` or `px` (*number* or *string*, optional): Sets both `paddingLeft` and `paddingRight`.
-    - `paddingY` or `py` (*number* or *string*, optional): Sets both `paddingTop` and `paddingBottom`.
-    - `color` (*string*, optional): Sets the text color. Must be a CSS color such as `'#ff0000'` or `'green'`.
-    - `backgroundColor` or `bg` (*string*, optional): Sets the background color. Must be a CSS color such as `'#ff0000'` or `'green'`.
-    - `width`, `height`, `minWidth`, `minHeight`, `maxWidth`, `maxHeight` (*number* or *string*, optional): Each of these sets the respective CSS property. Numbers from 0-1 are converted to percentages. Numbers greater than 1 are converted to pixel values. Strings are passed as raw CSS (eg. `'2em'`).
-    - `border`, `borderTop`, `borderRight`, `borderBottom`, `borderLeft` (*string*, optional): Each of these sets the respective CSS border property. Strings are directly passed to CSS, so an example string is `'1px solid white'`.
-    - `borderStyle` (*string*, optional): Sets the CSS `border-style` property.
-    - `borderColor` (*string*, optional): Sets the CSS `border-color` property.
-    - `borderRadius` (*number* or *string*, optional): Sets the CSS `border-radius` property. Numbers are converted to pixel values. Strings are passed directly to CSS (eg. `'50%'`).
-    - `alignItems`, `alignContent`, `justifyItems`, `justifyContent`, `flexWrap`, `flexDirection`, `flex`, `flexGrow`, `flexShrink`, `flexBasis`, `justifySelf`, `alignSelf`, `order` (*string*, optional): Each of these sets the respective CSS [Flexbox](https://www.w3schools.com/css/css3_flexbox.asp) property.
+    - `margin` or `m` (*number* or *string*): Sets `margin` in CSS.
+    - `marginTop` or `mt` (*number* or *string*): Sets `margin-top` in CSS.
+    - `marginRight` or `mr` (*number* or *string*): Sets `margin-right` in CSS.
+    - `marginBottom` or `mb` (*number* or *string*): Sets `margin-bottom` in CSS.
+    - `marginLeft` or `ml` (*number* or *string*): Sets `margin-left` in CSS.
+    - `marginX` or `mx` (*number* or *string*): Sets both `marginLeft` and `marginRight`.
+    - `marginY` or `my` (*number* or *string*): Sets both `marginTop` and `marginBottom`.
+    - `padding` or `p` (*number* or *string*): Sets `padding` in CSS.
+    - `paddingTop` or `pt` (*number* or *string*): Sets `padding-top` in CSS.
+    - `paddingRight` or `pr` (*number* or *string*): Sets `padding-right` in CSS.
+    - `paddingBottom` or `pb` (*number* or *string*): Sets `padding-bottom` in CSS.
+    - `paddingLeft` or `pl` (*number* or *string*): Sets `padding-left` in CSS.
+    - `paddingX` or `px` (*number* or *string*): Sets both `paddingLeft` and `paddingRight`.
+    - `paddingY` or `py` (*number* or *string*): Sets both `paddingTop` and `paddingBottom`.
+    - `color` (*string*): Sets the text color. Must be a CSS color such as `'#ff0000'` or `'green'`.
+    - `backgroundColor` or `bg` (*string*): Sets the background color. Must be a CSS color such as `'#ff0000'` or `'green'`.
+    - `width`, `height`, `minWidth`, `minHeight`, `maxWidth`, `maxHeight` (*number* or *string*): Each of these sets the respective CSS property. Numbers from 0-1 are converted to percentages. Numbers greater than 1 are converted to pixel values. Strings are passed as raw CSS (eg. `'2em'`).
+    - `border`, `borderTop`, `borderRight`, `borderBottom`, `borderLeft` (*string*): Each of these sets the respective CSS border property. Strings are directly passed to CSS, so an example string is `'1px solid white'`.
+    - `borderStyle` (*string*): Sets the CSS `border-style` property.
+    - `borderColor` (*string*): Sets the CSS `border-color` property.
+    - `borderRadius` (*number* or *string*): Sets the CSS `border-radius` property. Numbers are converted to pixel values. Strings are passed directly to CSS (eg. `'50%'`).
+    - `alignItems`, `alignContent`, `justifyItems`, `justifyContent`, `flexWrap`, `flexDirection`, `flex`, `flexGrow`, `flexShrink`, `flexBasis`, `justifySelf`, `alignSelf`, `order` (*string*): Each of these sets the respective CSS [Flexbox](https://www.w3schools.com/css/css3_flexbox.asp) property.
 - `inner` (*function*, required): A function that makes UI calls defining contents of this box. Children are laid out in the direction specified by the `flexDirection` prop. By default the direction is `'column'`.
 
 **Returns**
@@ -200,6 +200,27 @@ newChecked = ui.checkbox(label, checked, props)
 **Returns**
 
 - `newChecked` (*string*): The new checked state. Is equal to `checked` if no change occured in this update.
+
+### Color picker
+
+Allows the user to select a color using a visual input.
+
+```
+newValue = ui.colorPicker(label, value, props)
+```
+
+**Arguments**
+
+- `label` (*string*, required): The label
+- `value` (*table*, required): The current value. Must be a table with keys `r`, `g`, `b` for the red, green and blue components of the color in the 0-1 range. Optionally can also include an `a` key for the alpha in the 0-1 range (defaults to 1).
+- `props` (*table*, optional): The table of props:
+    - `enableAlpha` (*boolean*): Whether to show an alpha slider
+    - `mode` (*string*): Format of color components for numeric input. Can be `'RGB'`, `'HSB'` or `'HSL'`. An input in hex format is always shown to alongside this.
+    - `onChange` (*function*): A function to call with the new value whenever the input is updated. You can use this instead of using the return value directly if you prefer callbacks. If your function returns a value, that value is used as the new value instead.
+
+**Returns**
+
+- `newValue` (*table*): The new value input by the user. This is  table with `r`, `g`, `b` and `a` keys in the 0-1 range for the red, green, blue and alpha components of the color respectively.
 
 ### Dropdown
 
@@ -292,7 +313,7 @@ newValue = ui.numberInput(label, value, props)
 
 **Returns**
 
-- `newValue` (*string*): The new value input by the user. Is equal to `value` if no change occured in this update.
+- `newValue` (*number*): The new value input by the user. Is equal to `value` if no change occured in this update.
 
 ### Radio button group
 
@@ -382,7 +403,7 @@ newValue = ui.slider(label, value, min, max, props)
 
 **Returns**
 
-- `newValue` (*string*): The new value input by the user. Is equal to `value` if no change occured in this update.
+- `newValue` (*number*): The new value input by the user. Is equal to `value` if no change occured in this update.
 
 ### Tabs
 
