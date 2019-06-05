@@ -206,21 +206,27 @@ newChecked = ui.checkbox(label, checked, props)
 Allows the user to select a color using a visual input.
 
 ```
-newValue = ui.colorPicker(label, value, props)
+newR, newG, newB, newA = ui.colorPicker(label, r, g, b, a, props)
 ```
 
 **Arguments**
 
 - `label` (*string*, required): The label
-- `value` (*table*, required): The current value. Must be a table with keys `r`, `g`, `b` for the red, green and blue components of the color in the 0-1 range. Optionally can also include an `a` key for the alpha in the 0-1 range (defaults to 1).
+- `r` (*number*, required): The red component of the current color, in the 0-1 range.
+- `g` (*number*, required): The green component of the current color, in the 0-1 range.
+- `b` (*number*, required): The blue component of the current color, in the 0-1 range.
+- `a` (*number*, required): The alpha component of the current color, in the 0-1 range. If you want to skip the alpha component, just pass `1` here and pass `false` for `enableAlpha` in `props`.
 - `props` (*table*, optional): The table of props:
-    - `enableAlpha` (*boolean*): Whether to show an alpha slider
+    - `enableAlpha` (*boolean*): Whether to show a slider for editing the alpha component. By default this is `true`.
     - `mode` (*string*): Format of color components for numeric input. Can be `'RGB'`, `'HSB'` or `'HSL'`. An input in hex format is always shown to alongside this.
     - `onChange` (*function*): A function to call with the new value whenever the input is updated. You can use this instead of using the return value directly if you prefer callbacks. If your function returns a value, that value is used as the new value instead.
 
 **Returns**
 
-- `newValue` (*table*): The new value input by the user. This is  table with `r`, `g`, `b` and `a` keys in the 0-1 range for the red, green, blue and alpha components of the color respectively.
+- `newR` (*number*): The red component of the new value input by the user, in the 0-1 range.
+- `newG` (*number*): The green component of the new value input by the user, in the 0-1 range.
+- `newB` (*number*): The blue component of the new value input by the user, in the 0-1 range.
+- `newA` (*number*): The alpha component of the new value input by the user, in the 0-1 range. If `enableAlpha` was `false` in `props`, this is equal to the given `a` value.
 
 ### Dropdown
 

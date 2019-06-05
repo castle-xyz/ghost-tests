@@ -127,7 +127,7 @@ This is stuff in section 2! :)
         invalidText = "Just kidding, you actually can't go above 50!",
     })
     number2 = ui.slider('number2', number2, 0, 100)
-    color = ui.colorPicker('color', color)
+    color.r, color.g, color.b, color.a = ui.colorPicker('color', color.r, color.g, color.b, color.a)
     drop = ui.dropdown('drop', drop, { 'alpha', 'beta', 'gamma', 'delta', 'epsilon', 'zeta' }, {
         helperText = 'Choose a thing!',
         invalid = drop == 'delta',
