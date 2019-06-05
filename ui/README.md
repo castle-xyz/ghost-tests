@@ -146,7 +146,7 @@ ui.box(id, inner)
     - `paddingY` or `py` (*number* or *string*, optional): Sets both `paddingTop` and `paddingBottom`.
     - `color` (*string*, optional): Sets the text color. Must be a CSS color such as `'#ff0000'` or `'green'`.
     - `backgroundColor` or `bg` (*string*, optional): Sets the background color. Must be a CSS color such as `'#ff0000'` or `'green'`.
-    - `width`, `height`, `minWidth`, `minHeight`, `maxWidth`, `maxHeight` (*number* or *string*, optional): Each of these sets the CSS `width`, `height`, `min-width`, `min-height`, `max-width` and `max-height` respectively. Numbers from 0-1 are converted to percentages. Numbers greater than 1 are converted to pixel values. Strings are passed as raw CSS (eg. `'2em'`).
+    - `width`, `height`, `minWidth`, `minHeight`, `maxWidth`, `maxHeight` (*number* or *string*, optional): Each of these sets the respective CSS property. Numbers from 0-1 are converted to percentages. Numbers greater than 1 are converted to pixel values. Strings are passed as raw CSS (eg. `'2em'`).
     - `border`, `borderTop`, `borderRight`, `borderBottom`, `borderLeft` (*string*, optional): Each of these sets the respective CSS border property. Strings are directly passed to CSS, so an example string is `'1px solid white'`.
     - `borderStyle` (*string*, optional): Sets the CSS `border-style` property.
     - `borderColor` (*string*, optional): Sets the CSS `border-color` property.
