@@ -30,11 +30,70 @@ new one!
     ]])
 
     sectionOpen = ui.section('A section', { open = sectionOpen }, function()
-        ui.textInput('stuff inside section', string)
+        ui.markdown([[
+### Yooo
+
+This is stuff in section 1!
+        ]])
     end)
 
     ui.section('Another section', function()
-        ui.textInput('stuff inside other section', '')
+        ui.markdown([[
+### Woah
+
+This is stuff in section 2! :)
+        ]])
+    end)
+
+    ui.box('box1', {
+        width = 1,
+        flexDirection = 'row',
+        border = '1px solid white',
+        borderRadius = 6,
+    }, function()
+        ui.box('left', {
+            padding = 2,
+            flex = 1,
+            justifyContent = 'center',
+            alignItems = 'center',
+            bg = '#a2005e',
+        }, function()
+            ui.markdown('Left')
+        end)
+        ui.box('right', {
+            padding = 2,
+            flex = 1,
+            justifyContent = 'center',
+            alignItems = 'center',
+            bg = '#4e8600',
+        }, function()
+            ui.markdown('Right')
+        end)
+    end)
+
+    ui.box('box1', {
+        width = 1,
+        my = 1,
+        flexDirection = 'row',
+    }, function()
+        ui.box('left', {
+            flex = 1,
+            justifyContent = 'center',
+            alignItems = 'center',
+        }, function()
+            if ui.button('Whoo!') then
+                print('Whoo!')
+            end
+        end)
+        ui.box('right', {
+            flex = 1,
+            justifyContent = 'center',
+            alignItems = 'center',
+        }, function()
+            if ui.button('Whee!') then
+                print('Whee!')
+            end
+        end)
     end)
 
     ui.tabs('tabs1', function()

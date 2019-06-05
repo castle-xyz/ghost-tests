@@ -117,6 +117,47 @@ Parent components (components that have more components inside) take an `inside`
 
 Input components generally have required label and value parameters. Labels are strings shown next to inputs to describe their function, and are also used by the system to distinguish the inputs from each other. Value parameters provide the current value of the input. Input components generally return the new values (which may be equal to the values passed in if no changes were made by the user).
 
+### Box
+
+A container to allow custom layouts for components. Children can be laid out horizontally or vertically and the parent can have configurable background color, border, width and height.
+
+```
+ui.box(id, props, inner)
+ui.box(id, inner)
+```
+
+**Arguments**
+
+- `id` (*string*, required): An identifying string for this box. Needs to be unique within the parent of the box. This id isn't displayed anywhere and is just used internally to distinguish boxes from each other.
+- `props` (*table*, optional): The table of props:
+    - `margin` or `m` (*number* or *string*, optional): Sets `margin` in CSS.
+    - `marginTop` or `mt` (*number* or *string*, optional): Sets `margin-top` in CSS.
+    - `marginRight` or `mr` (*number* or *string*, optional): Sets `margin-right` in CSS.
+    - `marginBottom` or `mb` (*number* or *string*, optional): Sets `margin-bottom` in CSS.
+    - `marginLeft` or `ml` (*number* or *string*, optional): Sets `margin-left` in CSS.
+    - `marginX` or `mx` (*number* or *string*, optional): Sets both `marginLeft` and `marginRight`.
+    - `marginY` or `my` (*number* or *string*, optional): Sets both `marginTop` and `marginBottom`.
+    - `padding` or `p` (*number* or *string*, optional): Sets `padding` in CSS.
+    - `paddingTop` or `pt` (*number* or *string*, optional): Sets `padding-top` in CSS.
+    - `paddingRight` or `pr` (*number* or *string*, optional): Sets `padding-right` in CSS.
+    - `paddingBottom` or `pb` (*number* or *string*, optional): Sets `padding-bottom` in CSS.
+    - `paddingLeft` or `pl` (*number* or *string*, optional): Sets `padding-left` in CSS.
+    - `paddingX` or `px` (*number* or *string*, optional): Sets both `paddingLeft` and `paddingRight`.
+    - `paddingY` or `py` (*number* or *string*, optional): Sets both `paddingTop` and `paddingBottom`.
+    - `color` (*string*, optional): Sets the text color. Must be a CSS color such as `'#ff0000'` or `'green'`.
+    - `backgroundColor` or `bg` (*string*, optional): Sets the background color. Must be a CSS color such as `'#ff0000'` or `'green'`.
+    - `width`, `height`, `minWidth`, `minHeight`, `maxWidth`, `maxHeight` (*number* or *string*, optional): Each of these sets the CSS `width`, `height`, `min-width`, `min-height`, `max-width` and `max-height` respectively. Numbers from 0-1 are converted to percentages. Numbers greater than 1 are converted to pixel values. Strings are passed as raw CSS (eg. `'2em'`).
+    - `border`, `borderTop`, `borderRight`, `borderBottom`, `borderLeft` (*string*, optional): Each of these sets the respective CSS border property. Strings are directly passed to CSS, so an example string is `'1px solid white'`.
+    - `borderStyle` (*string*, optional): Sets the CSS `border-style` property.
+    - `borderColor` (*string*, optional): Sets the CSS `border-color` property.
+    - `borderRadius` (*number* or *string*, optional): Sets the CSS `border-radius` property. Numbers are converted to pixel values. Strings are passed directly to CSS (eg. `'50%'`).
+    - `alignItems`, `alignContent`, `justifyItems`, `justifyContent`, `flexWrap`, `flexDirection`, `flex`, `flexGrow`, `flexShrink`, `flexBasis`, `justifySelf`, `alignSelf`, `order` (*string*, optional): Each of these sets the respective CSS [Flexbox](https://www.w3schools.com/css/css3_flexbox.asp) property.
+- `inner` (*function*, required): A function that makes `ui.tab` calls defining each tab in this group. Any non-`ui.tab` calls are ignored.
+
+**Returns**
+
+This function doesn't return anything
+
 ### Button
 
 Allows the user to perform an action by clicking.
