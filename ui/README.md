@@ -152,7 +152,7 @@ ui.box(id, inner)
     - `borderColor` (*string*, optional): Sets the CSS `border-color` property.
     - `borderRadius` (*number* or *string*, optional): Sets the CSS `border-radius` property. Numbers are converted to pixel values. Strings are passed directly to CSS (eg. `'50%'`).
     - `alignItems`, `alignContent`, `justifyItems`, `justifyContent`, `flexWrap`, `flexDirection`, `flex`, `flexGrow`, `flexShrink`, `flexBasis`, `justifySelf`, `alignSelf`, `order` (*string*, optional): Each of these sets the respective CSS [Flexbox](https://www.w3schools.com/css/css3_flexbox.asp) property.
-- `inner` (*function*, required): A function that makes `ui.tab` calls defining each tab in this group. Any non-`ui.tab` calls are ignored.
+- `inner` (*function*, required): A function that makes UI calls defining contents of this box. Children are laid out in the direction specified by the `flexDirection` prop.
 
 **Returns**
 
