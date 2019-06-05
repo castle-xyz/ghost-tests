@@ -71,7 +71,7 @@ This is stuff in section 2! :)
         end)
     end)
 
-    ui.box('box1', {
+    ui.box('box2', {
         width = 1,
         my = 1,
         flexDirection = 'row',
@@ -94,6 +94,19 @@ This is stuff in section 2! :)
                 print('Whee!')
             end
         end)
+    end)
+
+    ui.scrollBox('scrollBox1', {
+        height = 150,
+        border = '1px solid white',
+        padding = 2,
+    }, function()
+        for i = 1, 50 do
+            ui.markdown('Row ' .. i)
+            if ui.button('Button ' .. i) then
+                print('Button ' .. i .. ' pressed!')
+            end
+        end
     end)
 
     ui.tabs('tabs1', function()

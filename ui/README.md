@@ -152,7 +152,7 @@ ui.box(id, inner)
     - `borderColor` (*string*, optional): Sets the CSS `border-color` property.
     - `borderRadius` (*number* or *string*, optional): Sets the CSS `border-radius` property. Numbers are converted to pixel values. Strings are passed directly to CSS (eg. `'50%'`).
     - `alignItems`, `alignContent`, `justifyItems`, `justifyContent`, `flexWrap`, `flexDirection`, `flex`, `flexGrow`, `flexShrink`, `flexBasis`, `justifySelf`, `alignSelf`, `order` (*string*, optional): Each of these sets the respective CSS [Flexbox](https://www.w3schools.com/css/css3_flexbox.asp) property.
-- `inner` (*function*, required): A function that makes UI calls defining contents of this box. Children are laid out in the direction specified by the `flexDirection` prop.
+- `inner` (*function*, required): A function that makes UI calls defining contents of this box. Children are laid out in the direction specified by the `flexDirection` prop. By default the direction is `'column'`.
 
 **Returns**
 
@@ -316,6 +316,25 @@ newValue = ui.radioButtonGroup(label, value, items, props)
 **Returns**
 
 - `newValue` (*string*): The new value input by the user. Is equal to `value` if no change occured in this update.
+
+### Scroll box
+
+Like [box](#box), but when the contents to overflow its size it displays a scroll bar and allows scrolling with the mouse.
+
+```
+ui.scrollBox(id, props, inner)
+ui.scrollBox(id, inner)
+```
+
+**Arguments**
+
+- `id` (*string*, required): An identifying string for this scroll box. Needs to be unique within the parent of the scroll box. This id isn't displayed anywhere and is just used internally to distinguish scroll boxes from each other.
+- `props` (*table*, optional): Same as the props for [box](#box).
+- `inner` (*function*, required): A function that makes UI calls defining contents of this scroll box. Children are laid out in the direction specified by the `flexDirection` prop. By default the direction is `'column'`.
+
+**Returns**
+
+This function doesn't return anything
 
 ### Section
 
