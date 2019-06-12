@@ -46,6 +46,8 @@ This is stuff in section 2! :)
         ]])
     end)
 
+    ui.image('avatar.png')
+
     ui.box('box1', {
         width = 1,
         flexDirection = 'row',

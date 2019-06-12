@@ -146,7 +146,7 @@ ui.box(id, inner)
     - `paddingY` or `py` (*number* or *string*): Sets both `paddingTop` and `paddingBottom`.
     - `color` (*string*): Sets the text color. Must be a CSS color such as `'#ff0000'` or `'green'`.
     - `backgroundColor` or `bg` (*string*): Sets the background color. Must be a CSS color such as `'#ff0000'` or `'green'`.
-    - `width`, `height`, `minWidth`, `minHeight`, `maxWidth`, `maxHeight` (*number* or *string*): Each of these sets the respective CSS property. Numbers from 0-1 are converted to percentages. Numbers greater than 1 are converted to pixel values. Strings are passed as raw CSS (eg. `'2em'`).
+    - `width`, `height`, `minWidth`, `minHeight`, `maxWidth`, `maxHeight` (*number* or *string*): Each of these sets the respective CSS property. Numbers from 0-1 are converted to percentages. Numbers greater than 1 are converted to pixel values. Strings are passed as raw CSS (eg. `'100%'`, `'2em'`).
     - `border`, `borderTop`, `borderRight`, `borderBottom`, `borderLeft` (*string*): Each of these sets the respective CSS border property. Strings are directly passed to CSS, so an example string is `'1px solid white'`.
     - `borderStyle` (*string*): Sets the CSS `border-style` property.
     - `borderColor` (*string*): Sets the CSS `border-color` property.
@@ -253,6 +253,23 @@ newValue = ui.dropdown(label, value, items, props)
 **Returns**
 
 - `newValue` (*string*): The new value input by the user. Is equal to `value` if no change occured in this update.
+
+### Image
+
+Displays an image.
+
+```
+ui.image(path, props)
+```
+
+**Arguments**
+
+- `path` (*string*, required): The path to the image file to display. Can be a path relative to the main Lua file for the game, or can be an absolute URL of an image on the web.
+- `props` (*table*, optional): Same as the props for [box](#box).
+
+**Returns**
+
+This function doesn't return anything.
 
 ### Markdown
 
