@@ -2,8 +2,14 @@ local ui = castle.ui
 
 function castle.uiupdate()
     ui.markdown([[
-## Images with relative URIs
+### Images with relative URIs
 
-Making sure that you can use relative URIs to images.
+Absolute URI:
+
+![](https://github.com/castle-games/ghost-tests/raw/master/ui/avatar.png)
+
+Relative URI:
+
+![](avatar.png)
 ]])
 end
