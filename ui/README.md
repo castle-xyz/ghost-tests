@@ -275,6 +275,8 @@ This function doesn't return anything.
 
 Displays formatted text based on Markdown source. [react-markdown](https://github.com/rexxars/react-markdown) is used to render the Markdown, so this component supports all of the Markdown syntax supported by it.
 
+Image URLs in the source can be relative to the main Lua file (eg. if you have an image file named 'logo.png' next to your main Lua file, you can use `![](logo.png)` in the Markdown source to display it). Absolute URLs to images on the web are also supported.
+
 ```
 ui.markdown(source, props)
 ```
