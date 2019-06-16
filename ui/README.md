@@ -1,10 +1,8 @@
-# Castle UI API
-
 ![Castle UI API](gif.gif)
 
 The Castle UI API allows you to add user interface elements that allow interaction with your game. Castle manages the laying out of your UI relative to the rest of Castle's UI. Uses can range from simple debug tools while developing games to user-facing level editors or text-based adventure games etc.
 
-## Contents
+# Contents
 
 * [Tutorial](#tutorial)
 * [Reference](#reference)
@@ -28,7 +26,7 @@ The Castle UI API allows you to add user interface elements that allow interacti
   + [Text input](#text-input)
   + [Toggle](#toggle)
 
-## Tutorial
+# Tutorial
 
 To use the UI API, simply define the `castle.uiupdate` function and put your UI calls in it:
 
@@ -90,7 +88,7 @@ end
 
 See the [code for the 'Circles' demo](./circles.lua) for an example of showing UI for many game entities.
 
-## Reference
+# Reference
 
 All functions take some required parameters, and one `props` parameter for additional configuration. All keys in `props` are optional. `props` itself is always optional and defaults to `{}`.
 
@@ -98,7 +96,7 @@ Parent components (components that have more components inside) take an `inside`
 
 Input components generally have required label and value parameters. Labels are strings shown next to inputs to describe their function, and are also used by the system to distinguish the inputs from each other. Value parameters provide the current value of the input. Input components generally return the new values (which may be equal to the values passed in if no changes were made by the user).
 
-### Box
+## Box
 
 A container to allow custom layouts for components. Children can be laid out horizontally or vertically and the parent can have configurable background color, border, width and height.
 
@@ -139,7 +137,7 @@ ui.box(id, inner)
 
 This function doesn't return anything
 
-### Button
+## Button
 
 Allows the user to perform an action by clicking.
 
@@ -160,7 +158,7 @@ clicked = ui.button(label, props)
 
 - `clicked` (*boolean*): Whether the button was clicked in this update.
 
-### Checkbox
+## Checkbox
 
 Allows the user to toggle a boolean value. Checkboxes generally represent one input in a larger flow with a final confirmation step (eg. choosing among many settings then clicking a button to perform an action with those settings). Prefer [toggle switches](#toggle) instead if the resulting action immediately affects something in your game without another step.
 
@@ -182,7 +180,7 @@ newChecked = ui.checkbox(label, checked, props)
 
 - `newChecked` (*string*): The new checked state. Is equal to `checked` if no change occured in this update.
 
-### Color picker
+## Color picker
 
 Allows the user to select a color using a visual input.
 
@@ -209,7 +207,7 @@ newR, newG, newB, newA = ui.colorPicker(label, r, g, b, a, props)
 - `newB` (*number*): The blue component of the new value input by the user, in the 0-1 range.
 - `newA` (*number*): The alpha component of the new value input by the user, in the 0-1 range. If `enableAlpha` was `false` in `props`, this is equal to the given `a` value.
 
-### Dropdown
+## Dropdown
 
 Allows the user to select from list of values.
 
@@ -235,7 +233,7 @@ newValue = ui.dropdown(label, value, items, props)
 
 - `newValue` (*string*): The new value input by the user. Is equal to `value` if no change occured in this update.
 
-### File picker
+## File picker
 
 Allows the user to pick a file. The user can either browse for files with the system file dialog or drag and drop files onto the control. The file is uploaded to Castle's servers and a URI is returned. The URI can then be immediately used to display the image. It can also be put in [storage](https://castle.games/documentation/storage-api-reference) or used with multiplayer APIs to display in any instance of the game on any computer.
 
@@ -275,7 +273,7 @@ imageUrl = ui.filePicker('Image', imageUrl, {
 })
 ```
 
-### Image
+## Image
 
 Displays an image.
 
@@ -292,7 +290,7 @@ ui.image(path, props)
 
 This function doesn't return anything.
 
-### Markdown
+## Markdown
 
 Displays formatted text based on Markdown source. [react-markdown](https://github.com/rexxars/react-markdown) is used to render the Markdown, so this component supports all of the Markdown syntax supported by it.
 
@@ -334,7 +332,7 @@ Some text.
     ]])
 ```
 
-### Number input
+## Number input
 
 Allows the user to input a number. Contains controls to increase or decrease the number incrementally.
 
@@ -361,7 +359,7 @@ newValue = ui.numberInput(label, value, props)
 
 - `newValue` (*number*): The new value input by the user. Is equal to `value` if no change occured in this update.
 
-### Radio button group
+## Radio button group
 
 For selecting from a list of two or more options that are mutually exclusive (only one can be selected).
 
@@ -384,7 +382,7 @@ newValue = ui.radioButtonGroup(label, value, items, props)
 
 - `newValue` (*string*): The new value input by the user. Is equal to `value` if no change occured in this update.
 
-### Scroll box
+## Scroll box
 
 Like [box](#box), but when the contents to overflow its size it displays a scroll bar and allows scrolling with the mouse.
 
@@ -403,7 +401,7 @@ ui.scrollBox(id, inner)
 
 This function doesn't return anything
 
-### Section
+## Section
 
 An expandable section with a label, containing more UI elements inside. Helps with grouping and reducing clutter.
 
@@ -423,7 +421,7 @@ newOpen = ui.section(label, inner)
 
 - `newOpen` (*boolean*): Whether the section is open.
 
-### Slider
+## Slider
 
 Indicates a number visually and allows the user to adjust it by dragging a handle along a horizontal track.
 
@@ -451,7 +449,7 @@ newValue = ui.slider(label, value, min, max, props)
 
 - `newValue` (*number*): The new value input by the user. Is equal to `value` if no change occured in this update.
 
-### Tabs
+## Tabs
 
 For choosing between multiple views in the same context. There are two functions involved: one is `ui.tabs` which is a parent in which you put a group of tabs, and the other is `ui.tab` which represents each tab in the group and contains the components that should be visible in that tab inside it. So, an example layout of these calls could be:
 
@@ -466,7 +464,7 @@ ui.tabs('tab group 1', function()
 end)
 ```
 
-#### `ui.tabs`
+### `ui.tabs`
 
 ```
 ui.tabs(id, props, inner)
@@ -484,7 +482,7 @@ ui.tabs(id, inner)
 
 This function doesn't return anything
 
-#### `ui.tab`
+### `ui.tab`
 
 ```
 newOpen = ui.tab(label, props, inner)
@@ -502,7 +500,7 @@ newOpen = ui.tab(label, inner)
 
 - `newOpen` (*boolean*): Whether this tab is open.
 
-### Text area
+## Text area
 
 Allows the user to input a string. The display for the field is multi-line, so if you expect only short single-line strings to be input prefer using a [text input](#text-input) instead.
 
@@ -526,7 +524,7 @@ newValue = ui.textArea(label, value, props)
     - `maxLength` (*number*): The maximum allowed value length
     - `onChange` (*function*): A function to call with the new value whenever the input is updated. You can use this instead of using the return value directly if you prefer callbacks. If your function returns a value, that value is used as the new value instead.
 
-### Text input
+## Text input
 
 Allows the user to input a string. The display for the field is just a single line, so if you expect multi-line strings to be input prefer using a [text area](#text-area) instead.
 
@@ -553,7 +551,7 @@ newValue = ui.textInput(label, value, props)
 
 - `newValue` (*string*): The new value input by the user. Is equal to `value` if no change occured in this update.
 
-### Toggle
+## Toggle
 
 Allows the user to toggle a boolean state. Toggle switches are generally used if the resulting action immediately affects something in your game without another step. Use a checkbox instead if the input just represents one value in a larger flow that includes a later confirmation step.
 
