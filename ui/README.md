@@ -4,15 +4,41 @@
 
 The Castle UI API allows you to add user interface elements that allow interaction with your game. Castle manages the laying out of your UI relative to the rest of Castle's UI. Uses can range from simple debug tools while developing games to user-facing level editors or text-based adventure games etc.
 
-## Tutorial (OUT OF DATE)
+## Contents
 
-**WARNING: The tutorial is currently out of date, and will be updated soon! The [Reference](#reference) section below is up-to-date though!**
+* [Tutorial](#tutorial)
+* [Reference](#reference)
+  + [Box](#box)
+  + [Button](#button)
+  + [Checkbox](#checkbox)
+  + [Color picker](#color-picker)
+  + [Dropdown](#dropdown)
+  + [File picker](#file-picker)
+  + [Image](#image)
+  + [Markdown](#markdown)
+  + [Number input](#number-input)
+  + [Radio button group](#radio-button-group)
+  + [Scroll box](#scroll-box)
+  + [Section](#section)
+  + [Slider](#slider)
+  + [Tabs](#tabs)
+    - [`ui.tabs`](#-uitabs-)
+    - [`ui.tab`](#-uitab-)
+  + [Text area](#text-area)
+  + [Text input](#text-input)
+  + [Toggle](#toggle)
+
+## Tutorial
 
 To use the UI API, simply define the `castle.uiupdate` function and put your UI calls in it:
 
 ```lua
 function castle.uiupdate()
-    castle.ui.text('Hello, world!')
+    castle.ui.markdown([[
+## Hello world!
+
+Welcome to UI.
+    ]])
 end
 ```
 
@@ -22,11 +48,15 @@ Since using UI elements usually involves a lot of calls to functions in the `cas
 local ui = castle.ui
 
 function castle.uiupdate()
-    ui.text('Hello, world!')
+    ui.markdown([[
+## Hello world!
+
+Welcome to UI.
+    ]])
 end
 ```
 
-Elements that work as inputs usually take an id string (to keep track of which element refers to which value) and the current value, then return the new value:
+Elements that work as inputs usually take a label and the current value, then return the new value:
 
 ```lua
 local ui = castle.ui
@@ -34,34 +64,11 @@ local ui = castle.ui
 local myString = 'Edit me!'
 
 function castle.uiupdate()
-    ui.text('Set myString:')
     myString = ui.textArea('myString', myString)
 end
 
 function love.draw()
     love.graphics.print('myString:\n' .. myString, 20, 20)
-end
-```
-
-A 'range input' (shown as a slider) takes the minimum and maximum of the range along with a 'step' to slide the value by when dragging:
-
-```lua
-local ui = castle.ui
-
-local myNumber = 20
-local myString = 'Edit me!'
-
-function castle.uiupdate()
-    ui.text('Set myNumber:')
-    myNumber = ui.rangeInput('myNumber', myNumber, 0, 40, 1)
-
-    ui.text('Set myString:')
-    myString = ui.textArea('myString', myString)
-end
-
-function love.draw()
-    love.graphics.print('myNumber: ' .. myNumber, 20, 20)
-    love.graphics.print('\n\nmyString:\n' .. myString, 20, 20)
 end
 ```
 
@@ -73,37 +80,11 @@ local ui = castle.ui
 local shouldShowText = true
 
 function castle.uiupdate()
-    shouldShowText = ui.checkBox('Show text', shouldShowText)
+    shouldShowText = ui.checkbox('Show text', shouldShowText)
     
     if shouldShowText then
-        ui.text('The display of this text is toggled by the above checkbox!')
+        ui.markdown('The display of this text is toggled by the above checkbox!')
     end
-end
-```
-
-`inner` arguments are for nesting components -- you just pass a function that makes more UI calls. ids only need to be unique within the parent component. You can also use callbacks for certain events (more docs coming soon!):
-
-```lua
-local ui = castle.ui
-
-function castle.uiupdate()
-    ui.box({
-        pad = 'small',
-        gap = 'small',
-        border = { color = 'yellow', size = 'large' }
-    }, function()
-        ui.text('This is some text inside a box!')
-
-        if ui.button('Button 1') then
-            print('Button 1 pressed!')
-        end
-
-        ui.button('Button 2', {
-            onClick = function()
-                print('Button 2 pressed!')
-            end
-        })
-    end)
 end
 ```
 
