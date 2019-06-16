@@ -254,6 +254,46 @@ newValue = ui.dropdown(label, value, items, props)
 
 - `newValue` (*string*): The new value input by the user. Is equal to `value` if no change occured in this update.
 
+### File picker
+
+Allows the user to pick a file. The user can either browse for files with the system file dialog or drag and drop files onto the control. The file is uploaded to Castle's servers and a URI is returned. The URI can then be immediately used to display the image. It can also be put in [storage](https://castle.games/documentation/storage-api-reference) or used with multiplayer APIs to display in any instance of the game on any computer.
+
+```
+newValue = ui.filePicker(label, value, props)
+```
+
+**Arguments**
+
+- `label` (*string*, required): The label
+- `value` (*string*, required): The current value. Must be a URI to an existing file.
+- `props` (*table*, optional): The table of props:
+    - `type` (*string*): A string specifying what the file type should be. Currently suppors `'image'` to specify that the file should be of any image type. In this case a preview of the currently selected image is shown in the UI, and the user can only browse for image files.
+    - `onChange` (*function*): A function to call with the new value whenever the input is updated. You can use this instead of using the return value directly if you prefer callbacks. If your function returns a value, that value is used as the new value instead.
+
+**Returns**
+
+- `newValue` (*string*): The URI for the new file picked by the user. Is equal to `value` if no change occured in this update.
+
+**Notes**
+
+Since the result is a URI, you need to use `love.graphics.newImage` (or a similar asset-loading function for the relevant asset type) to create a LÖVE resource out of it. So, to load the resulting file as an image:
+
+```lua
+-- `imageUrl` stores the URL for the image, `image` will store the image itself
+imageUrl = ui.filePicker('Image', imageUrl, {
+    type = 'image',
+    onChange = function(newImageUrl)
+        if newImageUrl == nil then
+            image = nil
+        else
+            network.async(function()
+                image = love.graphics.newImage(newImageUrl)
+            end)
+        end
+    end,
+})
+```
+
 ### Image
 
 Displays an image.
@@ -295,7 +335,7 @@ This function doesn't return anything.
 
 Since Markdown is indentation-sensitive (code blocks are defined by indent), multi-line Lua strings should be defined without indent for expected behavior. So in the following example, all the contents are rendered as code (due to the indent):
 
-```
+```lua
     ui.markdown([[
         # A heading!
 
@@ -305,7 +345,7 @@ Since Markdown is indentation-sensitive (code blocks are defined by indent), mul
 
 While in this one, there is a heading and some text:
 
-```
+```lua
     ui.markdown([[
 # A heading!
 
