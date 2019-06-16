@@ -235,7 +235,7 @@ newValue = ui.dropdown(label, value, items, props)
 
 ## File picker
 
-Allows the user to pick a file. The user can either browse for files with the system file dialog or drag and drop files onto the control. The file is uploaded to Castle's servers and a URI is returned. The URI can then be immediately used to display the image. It can also be put in [storage](https://castle.games/documentation/storage-api-reference) or used with multiplayer APIs to display in any instance of the game on any computer.
+Allows the user to pick a file. The user can either browse for files with the system file dialog or drag and drop files onto the control. The file is uploaded to Castle's servers and a URI is returned. This URI can then be used with LÖVE resource-loading functions.
 
 ```
 newValue = ui.filePicker(label, value, props)
