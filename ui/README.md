@@ -9,6 +9,7 @@ The Castle UI API allows you to add user interface elements that allow interacti
   + [Box](#box)
   + [Button](#button)
   + [Checkbox](#checkbox)
+  + [Code input](#code-input)
   + [Color picker](#color-picker)
   + [Dropdown](#dropdown)
   + [File picker](#file-picker)
@@ -179,6 +180,26 @@ newChecked = ui.checkbox(label, checked, props)
 **Returns**
 
 - `newChecked` (*string*): The new checked state. Is equal to `checked` if no change occured in this update.
+
+## Code editor
+
+Display a text editor specifically designed for code (has syntax highlighting, monospace fonts, etc.). The `value` represents the contents of the editor as a string. You can use, for example, the [`load`](https://www.lua.org/manual/5.2/manual.html#pdf-load) function to compile the string if it's meant to be Lua code.
+
+```
+newValue = ui.codeEditor(label, value, props)
+```
+
+**Arguments**
+
+- `label` (*string*, required): The label
+- `value` (*string*, required): The current value
+- `props` (*table*, optional): The table of props:
+    - `onChange` (*function*): A function to call with the new value whenever the input is updated. You can use this instead of using the return value directly if you prefer callbacks. If your function returns a value, that value is used as the new value instead.
+    - *More code editor props will be added soon!*
+
+**Returns**
+
+- `newValue` (*string*): The new value input by the user. Is equal to `value` if no change occured in this update.
 
 ## Color picker
 
