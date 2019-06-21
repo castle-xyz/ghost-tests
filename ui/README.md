@@ -444,6 +444,7 @@ newOpen = ui.section(label, inner)
 
 - `label` (*string*, required): The section title
 - `props` (*table*, optional): The table of props:
+    - `defaultOpen` (*boolean*): Whether the section should be open when first displayed. Sections are closed initially by default.
     - `open` (*boolean*): Whether the section should be currently open. If you leave this out, the section has normal open / close toggling behavior. If you provide this value, the section always reflects this value. The return value of the function will be `true` if the user clicked on the section to open it, but if you pass `false` for this parameter, it will still not open. Thus, you can override the default behavior.
 - `inner` (*function*, required): A function that makes UI calls defining contents of this section.
 
