@@ -194,6 +194,9 @@ newValue = ui.codeEditor(label, value, props)
 - `label` (*string*, required): The label
 - `value` (*string*, required): The current value
 - `props` (*table*, optional): The table of props:
+    - `disabled` (*boolean*): Whether the input should be disabled
+    - `hideLabel` (*boolean*): Whether to hide the label
+    - `helperText` (*string*): Text that is used alongside the label for additional help
     - `onChange` (*function*): A function to call with the new value whenever the input is updated. You can use this instead of using the return value directly if you prefer callbacks. If your function returns a value, that value is used as the new value instead.
     - *More code editor props will be added soon!*
 
@@ -219,6 +222,9 @@ newR, newG, newB, newA = ui.colorPicker(label, r, g, b, a, props)
 - `props` (*table*, optional): The table of props:
     - `enableAlpha` (*boolean*): Whether to show a slider for editing the alpha component. By default this is `true`.
     - `mode` (*string*): Format of color components for numeric input. Can be `'RGB'`, `'HSB'` or `'HSL'`. An input in hex format is always shown to alongside this.
+    - `disabled` (*boolean*): Whether the input should be disabled
+    - `hideLabel` (*boolean*): Whether to hide the label
+    - `helperText` (*string*): Text that is used alongside the label for additional help
     - `onChange` (*function*): A function to call with the new value whenever the input is updated. You can use this instead of using the return value directly if you prefer callbacks. If your function returns a value, that value is used as the new value instead.
 
 **Returns**
@@ -268,6 +274,9 @@ newValue = ui.filePicker(label, value, props)
 - `value` (*string*, required): The current value. Must be a URI to an existing file.
 - `props` (*table*, optional): The table of props:
     - `type` (*string*): A string specifying what the file type should be. Currently suppors `'image'` to specify that the file should be of any image type. In this case a preview of the currently selected image is shown in the UI, and the user can only browse for image files.
+    - `disabled` (*boolean*): Whether the input should be disabled
+    - `hideLabel` (*boolean*): Whether to hide the label
+    - `helperText` (*string*): Text that is used alongside the label for additional help
     - `onChange` (*function*): A function to call with the new value whenever the input is updated. You can use this instead of using the return value directly if you prefer callbacks. If your function returns a value, that value is used as the new value instead.
 
 **Returns**
