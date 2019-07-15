@@ -1,5 +1,6 @@
 local cs = require 'https://raw.githubusercontent.com/castle-games/share.lua/34cc93e9e35231de2ed37933d82eb7c74edfffde/cs.lua'
 
+
 local isRemoteServer = castle.system.isRemoteServer()
 
 local lastReportTime = love.timer.getTime()
@@ -12,7 +13,11 @@ local function update(dt)
     end
 end
 
+
 local server, client = cs.server, cs.client
 
 cs.server.update = update
 cs.client.update = update
+
+server.useCastleConfig()
+client.useCastleConfig()
