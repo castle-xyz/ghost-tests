@@ -34,6 +34,9 @@ local function update(dt)
         print((isRemoteServer and 'server: ' or 'client: ') .. love.timer.getFPS())
         lastReportTime = currTime
     end
+
+    -- Simulate gameplay code
+    love.timer.sleep(0.001 + 0.01 * math.random())
 end
 
 
