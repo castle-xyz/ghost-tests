@@ -5,7 +5,19 @@ local isRemoteServer = not not CASTLE_SERVER
 
 local lastReportTime = love.timer.getTime()
 
+local lastUpdateTime
+
 local function update(dt)
+    if isRemoteServer then
+        if lastUpdateTime then
+            local sleepTime = lastUpdateTime + 0.016 - love.timer.getTime()
+            if sleepTime > 0.001 then
+                love.timer.sleep(sleepTime)
+            end
+        end
+        lastUpdateTime = love.timer.getTime()
+    end
+
     local currTime = love.timer.getTime()
     if currTime - lastReportTime >= 1.5 then
         print((isRemoteServer and 'server: ' or 'client: ') .. love.timer.getFPS())
