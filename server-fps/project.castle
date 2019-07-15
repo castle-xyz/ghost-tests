@@ -1,0 +1,5 @@
+main: main.lua
+title: Server FPS Test
+owner: nikki
+multiplayer:
+    - enabled: true
