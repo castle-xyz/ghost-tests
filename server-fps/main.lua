@@ -9,14 +9,21 @@ local isRemoteServer = not not CASTLE_SERVER
 local lastReportTime = love.timer.getTime()
 
 local lastUpdateTime
+local lastSleepError
 
 local function update(dt)
     if OWN_THROTTLING and isRemoteServer then
         if lastUpdateTime then
-            local sleepTime = lastUpdateTime + 0.016 - love.timer.getTime()
+            local sleepTime = lastUpdateTime + 0.016 - (lastSleepError or 0) - love.timer.getTime()
             if sleepTime > 0.001 then
                 love.timer.sleep(sleepTime)
             end
+        end
+        local sleepError = love.timer.getTime() - (lastUpdateTime + 0.016 - (lastSleepError or 0))
+        if lastSleepError then
+            lastSleepError = 0.5 * lastSleepError + 0.5 * sleepError
+        else
+            lastSleepError = sleepError
         end
         lastUpdateTime = love.timer.getTime()
     end
