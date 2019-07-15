@@ -14,7 +14,7 @@ local lastSleepError
 local function update(dt)
     if OWN_THROTTLING and isRemoteServer then
         if lastUpdateTime then
-            local sleepTarget = lastUpdateTime + 0.016 - (lastSleepError or 0)
+            local sleepTarget = lastUpdateTime + (1 / 60) - (lastSleepError or 0)
             local sleepDuration = sleepTarget - love.timer.getTime()
             if sleepDuration > 0.001 then
                 love.timer.sleep(sleepDuration)
