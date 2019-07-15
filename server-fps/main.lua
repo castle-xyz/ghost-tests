@@ -1,3 +1,6 @@
+local OWN_THROTTLING = true
+
+
 local cs = require 'https://raw.githubusercontent.com/castle-games/share.lua/34cc93e9e35231de2ed37933d82eb7c74edfffde/cs.lua'
 
 
@@ -8,7 +11,7 @@ local lastReportTime = love.timer.getTime()
 local lastUpdateTime
 
 local function update(dt)
-    if isRemoteServer then
+    if OWN_THROTTLING and isRemoteServer then
         if lastUpdateTime then
             local sleepTime = lastUpdateTime + 0.016 - love.timer.getTime()
             if sleepTime > 0.001 then
