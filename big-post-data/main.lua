@@ -1,4 +1,4 @@
-local DATA_LENGTH = 80000
+local DATA_LENGTH = 4 * 1024 * 1024
 
 function love.draw()
     love.graphics.print('press P to make a post with huge data!', 20, 20)
@@ -12,6 +12,7 @@ function love.keypressed(key)
         end
         local data = table.concat(chars)
         network.async(function()
+            print('`data` is ' .. #data .. ' characters long')
             castle.post.create({
                 message = 'Testing a post with huge data!',
                 data = data,
