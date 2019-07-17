@@ -6,6 +6,7 @@ end
 
 function love.keypressed(key)
     if key == 'p' then
+        print('making post...')
         local chars = {}
         for i = 1, DATA_LENGTH do
             chars[i] = tostring(math.random(0, 9))
@@ -17,6 +18,7 @@ function love.keypressed(key)
                 message = 'Testing a post with huge data!',
                 data = data,
             })
+            print('posted!')
         end)
     end
 end
