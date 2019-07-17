@@ -1,4 +1,4 @@
-local DATA_LENGTH = 4 * 1024 * 1024
+local DATA_LENGTH = 1 * 1024 * 1024
 
 function love.draw()
     love.graphics.print('press P to make a post with huge data!', 20, 20)
