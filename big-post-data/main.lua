@@ -1,4 +1,4 @@
-local DATA_LENGTH = 20
+local DATA_LENGTH = 80000
 
 function love.draw()
     love.graphics.print('press P to make a post with huge data!', 20, 20)
@@ -8,7 +8,7 @@ function love.keypressed(key)
     if key == 'p' then
         local chars = {}
         for i = 1, DATA_LENGTH do
-            chars[i] = tostring(math.random())
+            chars[i] = tostring(math.random(0, 9))
         end
         local data = table.concat(chars)
         network.async(function()
