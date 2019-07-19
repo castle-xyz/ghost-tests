@@ -1,0 +1,5 @@
+title: Draft test (Draft version)
+owner: nikki
+draft: true
+main: main.lua
+description: Testing if the 'draft' flag works
