@@ -25,7 +25,9 @@ reset()
 local function compile()
     local compiled, err = load(code, 'code', 't', namespace)
     if compiled then
-        compiled()
+        network.async(function()
+            compiled()
+        end)
     else
         reset()
         error(err)
