@@ -49,33 +49,39 @@ local function safeCall(foo)
 end
 
 function castle.uiupdate()
-    safeCall(namespace.uiupdate)
+    ui.box('inner', function()
+        safeCall(namespace.uiupdate)
+    end)
 
-    local newCode = ui.codeEditor('code', code, {
-        onChange = function(newCode)
-            code = newCode
-            lastChangeTime = love.timer.getTime()
-        end,
-        onChangeCursorPosition = function(position)
-            line = position.line
-            column = position.column
-            offset = position.offset
-            word = position.word
-        end,
-    })
+    ui.box('code', function()
+        local newCode = ui.codeEditor('code', code, {
+            onChange = function(newCode)
+                code = newCode
+                lastChangeTime = love.timer.getTime()
+            end,
+            onChangeCursorPosition = function(position)
+                line = position.line
+                column = position.column
+                offset = position.offset
+                word = position.word
+            end,
+        })
 
-    if line then
-        ui.markdown('line: ' .. line)
-    end
-    if column then
-        ui.markdown('column: ' .. column)
-    end
-    if offset then
-        ui.markdown('offset: ' .. offset)
-    end
-    if word then
-        ui.markdown('word: ' .. word)
-    end
+        ui.box('cursor', function()
+            if line then
+                ui.markdown('line: ' .. line)
+            end
+            if column then
+                ui.markdown('column: ' .. column)
+            end
+            if offset then
+                ui.markdown('offset: ' .. offset)
+            end
+            if word then
+                ui.markdown('word: ' .. word)
+            end
+        end)
+    end)
 end
 
 function love.update()
