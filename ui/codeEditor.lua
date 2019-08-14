@@ -1,5 +1,7 @@
 ui = castle.ui
 
+local line, column, offset, word
+
 local code = [[
 local radius = 40
 
@@ -49,17 +51,37 @@ end
 function castle.uiupdate()
     safeCall(namespace.uiupdate)
 
-    local newCode = ui.codeEditor('code', code)
-    if newCode ~= code then
-        code = newCode
-        lastChangeTime = love.timer.getTime()
+    local newCode = ui.codeEditor('code', code, {
+        onChange = function(newCode)
+            code = newCode
+            lastChangeTime = love.timer.getTime()
+        end,
+        onChangeCursorPosition = function(position)
+            line = position.line
+            column = position.column
+            offset = position.offset
+            word = position.word
+        end,
+    })
+
+    if line then
+        ui.markdown('line: ' .. line)
+    end
+    if column then
+        ui.markdown('column: ' .. column)
+    end
+    if offset then
+        ui.markdown('offset: ' .. offset)
+    end
+    if word then
+        ui.markdown('word: ' .. word)
     end
 end
 
 function love.update()
     if lastChangeTime ~= nil and love.timer.getTime() - lastChangeTime > 0.8 then
-        compile()
         lastChangeTime = nil
+        compile()
     end
 end
 
