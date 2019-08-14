@@ -198,6 +198,11 @@ newValue = ui.codeEditor(label, value, props)
     - `hideLabel` (*boolean*): Whether to hide the label
     - `helperText` (*string*): Text that is used alongside the label for additional help
     - `onChange` (*function*): A function to call with the new value whenever the input is updated. You can use this instead of using the return value directly if you prefer callbacks. If your function returns a value, that value is used as the new value instead.
+    - `onChangeCursorPosition` (*function*): A function to call when the user moves the cursor in the text editor. The function is called with one parameter, `position`, which is a table with the following keys:
+        - `line` (*number*): The line number that the cursor is on. The first line is numbered 1.
+        - `column` (*number*): The column that the cursor is on. The first column is numbered 1.
+        - `offset` (*number*): The offset of the cursor in the `value` string. Starts at 0.
+        - `word` (*string*): The word in `value` that is at the current cursor position, or `nil` if there is no word.
     - *More code editor props will be added soon!*
 
 **Returns**
