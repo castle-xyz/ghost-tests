@@ -54,17 +54,33 @@ function castle.uiupdate()
     end)
 
     ui.box('code', function()
-        local newCode = ui.codeEditor('code', code, {
+        ui.codeEditor('code', code, {
             onChange = function(newCode)
                 code = newCode
                 lastChangeTime = love.timer.getTime()
             end,
+
             onChangeCursorPosition = function(position)
                 line = position.line
                 column = position.column
                 offset = position.offset
                 word = position.word
             end,
+
+            enableCompletions = true,
+            completions = {
+                {
+                    label = 'apple' .. (line or ''), -- Quick hacky way to change completions based on cursor position
+                    documentation = 'Apples yay!',
+                    kind = 'Function',
+                },
+                {
+                    label = 'banana' .. (line or ''),
+                    documentation = 'Bananas yay!',
+                    kind = 'Function',
+                    preselect = true,
+                },
+            },
         })
 
         ui.box('cursor', function()
