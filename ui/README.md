@@ -1,11 +1,14 @@
 ![Castle UI API](gif.gif)
 
-The Castle UI API allows you to add user interface elements that allow interaction with your game. Castle manages the laying out of your UI relative to the rest of Castle's UI. Uses can range from simple debug tools while developing games to user-facing level editors or text-based adventure games etc.
+The Castle UI API allows you to add user interface components that allow interaction with your game. Castle manages the laying out of your UI relative to the rest of Castle's UI. Uses can range from simple debug tools while developing games to user-facing level editors or text-based adventure games etc.
 
 # Contents
 
 - [Tutorial](#tutorial)
-- [Reference](#reference)
+- [Top-level](#top-level)
+    - [`ui.setVisible`](#uisetvisible)
+    - [`ui.getVisible`](#uigetvisible)
+- [Components](#components)
     - [Box](#box)
     - [Button](#button)
     - [Checkbox](#checkbox)
@@ -41,7 +44,7 @@ Welcome to UI.
 end
 ```
 
-Since using UI elements usually involves a lot of calls to functions in the `castle.ui` module, it helps to make a local variable referencing it:
+Since using UI components usually involves a lot of calls to functions in the `castle.ui` module, it helps to make a local variable referencing it:
 
 ```lua
 local ui = castle.ui
@@ -55,7 +58,7 @@ Welcome to UI.
 end
 ```
 
-Elements that work as inputs usually take a label and the current value, then return the new value:
+Components that work as inputs usually take a label and the current value, then return the new value:
 
 ```lua
 local ui = castle.ui
@@ -71,7 +74,7 @@ function love.draw()
 end
 ```
 
-`castle.uiupdate`, like `love.draw`, is called repeatedly at a certain frequency. For the UI this is currently 20 times a second, which seems to make for reasonable responsiveness. On each update, you just need to describe the UI for the current state of your game, and don't have to worry about removing or updating the state of 'old' UI elements. Simply don't make a call to have something not be displayed. In this sense, UI calls are like LÖVE draw calls.
+`castle.uiupdate`, like `love.draw`, is called repeatedly at a certain frequency. For the UI this is currently 20 times a second, which seems to make for reasonable responsiveness. On each update, you just need to describe the UI for the current state of your game, and don't have to worry about removing or updating the state of 'old' UI components. Simply don't make a call to have something not be displayed. In this sense, UI calls are like LÖVE draw calls.
 
 ```lua
 local ui = castle.ui
@@ -89,9 +92,47 @@ end
 
 See the [code for the 'Circles' demo](./circles.lua) for an example of showing UI for many game entities.
 
-# Reference
+# Top-level
 
-All functions take some required parameters, and one `props` parameter for additional configuration. All keys in `props` are optional. `props` itself is always optional and defaults to `{}`.
+These functions affect top-level properties of the UI as a whole and aren't related to any particular UI component.
+
+## `ui.setVisible`
+
+```
+ui.setVisible(visible)
+```
+
+Set whether the UI panel is visible. This function can be called outside `ui.update`.
+
+**Arguments**
+
+- `visible` (*boolean*, required): Whether the UI should be visible.
+
+**Returns**
+
+This function doesn't return anything
+
+## `ui.getVisible`
+
+```
+visible = ui.getVisible()
+```
+
+Get whether the UI panel is visible. This function can be called outside `ui.update`.
+
+**Arguments**
+
+This function doesn't have any arguments.
+
+**Returns**
+
+- `visible` (*boolean*): Whether the UI is visible.
+
+# Components
+
+Each of these functions corresponds to one type of UI component, and must be called inside `ui.update`.
+
+All component functions take some required parameters, and one `props` parameter for additional configuration. All keys in `props` are optional. `props` itself is always optional and defaults to `{}`.
 
 Parent components (components that have more components inside) take an `inside` parameter. The `inside` parameter should be a function that makes more UI calls -- the components created by these calls then become children of the parent component.
 
@@ -445,7 +486,7 @@ This function doesn't return anything
 
 ## Section
 
-An expandable section with a label, containing more UI elements inside. Helps with grouping and reducing clutter.
+An expandable section with a label, containing more UI components inside. Helps with grouping and reducing clutter.
 
 ```
 newOpen = ui.section(label, props, inner)
