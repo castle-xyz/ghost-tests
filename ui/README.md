@@ -203,6 +203,12 @@ newValue = ui.codeEditor(label, value, props)
         - `column` (*number*): The column that the cursor is on. The first column is numbered 1.
         - `offset` (*number*): The offset of the cursor in the `value` string. Starts at 0.
         - `word` (*string*): The word in `value` that is at the current cursor position, or `nil` if there is no word.
+    - `completions` (*table*): A table containing auto-completion suggestions to display. The editor will automatically filter these suggestions based on what the user is typing. The table is expected to be in the form of a Lua array, where each element represents a suggestion. Each suggestion must itself be a table with the following keys:
+        - `label` (*string*, required): The text to display for this item in the completion menu.
+        - `insertText` (*string*, optional): The actual text to insert when this item is selected. Is equal to `label` by default. This is useful if you want to use a shorter label than the entire code that is inserted, eg. a `label` "Entity template" that has the entire template code for an entity as its `insertText`.
+        - `documentation` (*string*, optional): Documentation to show for this item. Markdown is allowed for formatting. The user can see the documentation by pressing Ctrl + Space when an item is highlighted or by pressing the info icon.
+        - `preselect` (*boolean*, optional): Whether to prioritize this item for selection. The editor will still select the best match based on what the user has typed in.
+        - `sortText` (*string*, optional): A string to use when comparing this item to other items for sorting. `label` is used by default.
     - *More code editor props will be added soon!*
 
 **Returns**
