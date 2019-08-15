@@ -5,8 +5,6 @@ The Castle UI API allows you to add user interface elements that allow interacti
 # Contents
 
 - [Tutorial](#tutorial)
-    - [Hello world!](#hello-world)
-    - [Hello world!](#hello-world)
 - [Reference](#reference)
     - [Box](#box)
     - [Button](#button)
