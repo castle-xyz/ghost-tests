@@ -179,4 +179,8 @@ function love.keypressed(key)
     if key == 'r' then
         randomNumber = math.floor(math.random(1000))
     end
+
+    if key == 'v' then
+        ui.setVisible(not ui.getVisible())
+    end
 end
