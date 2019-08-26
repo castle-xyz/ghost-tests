@@ -194,6 +194,8 @@ clicked = ui.button(label, props)
     - `disabled` (*boolean*): Whether the button should be disabled
     - `big` (*function*): Whether the button should be a bigger variant.
     - `kind` (*string*): One of `'primary'`, `'secondary'`, `'danger'` or `'ghost'`. Is `'secondary'` by default. A 'primary' button is highlighted and meant for important actions. A 'danger' button is meant for dangerous actions (such as deleting something). A 'ghost' button has even less visual dominance than a secondary button.
+    - `icon` (*string*): The path to an image file to use as an icon. Can be a path relative to the main Lua file for the game, or can be an absolute URL of an image on the web.
+    - `iconOnly` (*string*): Whether to only show the icon and hide the label text.
     - `onClick` (*function*): A function to call when the button is clicked. You can use this instead of using the return value directly if you prefer callbacks.
 
 **Returns**
