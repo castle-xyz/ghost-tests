@@ -1,0 +1,4 @@
+main: main.lua
+name: "Current game" API test
+owner: nikki
+description: Testing `castle.game.` APIs.
