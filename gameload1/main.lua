@@ -7,7 +7,7 @@ local referrerTitle = referrer and referrer.title or '<no referrer>'
 function love.draw()
     love.graphics.print([[
     game 1
-    press L to load other game
+    press L or touch to load other game
 
     msg we got was: ]] .. msg .. [[
 
@@ -22,4 +22,8 @@ function love.keypressed(key)
             castle.game.load('66', { msg = 'from game 1' })
         end)
     end
+end
+
+function love.mousepressed()
+    love.keypressed('l')
 end

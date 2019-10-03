@@ -27,3 +27,7 @@ function love.keypressed(key)
         end)
     end
 end
+
+function love.mousepressed()
+    love.keypressed('l')
+end
