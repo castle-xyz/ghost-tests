@@ -4,9 +4,11 @@ local initialPost = castle.post.getInitialPost()
 
 local canvas = love.graphics.newCanvas(300, 300)
 canvas:renderTo(function()
+    love.graphics.push('all')
     love.graphics.clear(1, 0, 0)
     love.graphics.setColor(0, 1, 0)
     love.graphics.circle('fill', 150, 150, 40)
+    love.graphics.pop()
 end)
 
 function castle.postopened(post)
@@ -24,6 +26,8 @@ function love.draw()
     creator was: ]] .. (creator and creator.username or 'no one') .. [[
     initial post had text: ]] .. (initialPost and initialPost.data.text or 'jk nothing') .. [[
     ]], 20, 20)
+
+    love.graphics.draw(canvas, 20, 400)
 end
 
 function love.keypressed(key)
