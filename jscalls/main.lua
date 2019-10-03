@@ -1,4 +1,4 @@
-local jsCalls = require '__ghost__.jsCalls'
+local bridge = require '__ghost__.bridge'
 
 function love.draw()
     love.graphics.print('press any key other than SPACE to trigger a JS call for that key', 20, 20)
@@ -8,11 +8,11 @@ end
 function love.keypressed(key)
     if key ~= 'space' then
         network.async(function()
-            print(key .. ': ' .. jsCalls.sayHello { name = key })
+            print(key .. ': ' .. bridge.js.sayHello { name = key })
         end)
     else
         network.async(function()
-            print(key .. ': ' .. jsCalls.noSuchMethod { name = key })
+            print(key .. ': ' .. bridge.js.noSuchMethod { name = key })
         end)
     end
 end
