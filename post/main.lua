@@ -41,7 +41,7 @@ function love.keypressed(key)
     end
 
     if key == 'i' then
-        local imagedata = canvas:newImageData()
+        local imageData = canvas:newImageData()
         network.async(function()
             castle.post.create {
                 message = 'woah an `ImageData`!',
