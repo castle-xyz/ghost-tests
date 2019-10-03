@@ -1,4 +1,4 @@
-local jsCalls = require 'jsCalls'
+local jsCalls = require '__ghost__.jsCalls'
 
 function love.draw()
     love.graphics.print('press any key other than SPACE to trigger a JS call for that key', 20, 20)
