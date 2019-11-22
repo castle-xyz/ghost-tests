@@ -5,6 +5,7 @@ spriteSheet:setFilter('nearest', 'nearest')
 
 function love.draw()
     local w, h = love.graphics.getDimensions()
+    local origW, origH = getmetatable(love.graphics).__index.getDimensions()
 
     love.graphics.push('all')
     love.graphics.setColor(0.5, 0.5, 0.5)
@@ -32,6 +33,7 @@ function love.draw()
     love.graphics.push('all')
     love.graphics.setColor(0, 0, 0)
     love.graphics.print(w .. 'x' .. h, 32, 32)
+    love.graphics.print('\n' .. origW .. 'x' .. origH, 32, 32)
     love.graphics.pop()
 
     love.graphics.draw(spriteSheet, 32, 64)

@@ -1,0 +1,6 @@
+title: Screen size test (x400, scaling on)
+owner: nikki
+main: main.lua
+description: Screen size testing!
+dimensions: x400
+scaling: on
