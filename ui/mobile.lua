@@ -9,6 +9,7 @@ local numberInput1 = 50
 local checkbox1 = true
 local toggle1 = true
 local dropdown1 = 'beta'
+local color1R, color1G, color1B, color1A = 1, 0, 0, 1
 
 local font = love.graphics.newFont(24)
 
@@ -22,7 +23,10 @@ function love.draw()
     love.graphics.print('\n\n\n\n\ncheckbox1: ' .. tostring(checkbox1), 20, 20)
     love.graphics.print('\n\n\n\n\n\ntoggle1: ' .. tostring(toggle1), 20, 20)
     love.graphics.print('\n\n\n\n\n\n\ndropdown1: ' .. tostring(dropdown1), 20, 20)
-    love.graphics.print('\n\n\n\n\n\n\n\ntextArea1: ' .. tostring(textArea1), 20, 20)
+    love.graphics.setColor(color1R, color1G, color1B, color1A)
+    love.graphics.print('\n\n\n\n\n\n\n\ncolor1: ' .. color1R .. ', ' .. color1G .. ', ' .. color1B .. ', ' .. color1A, 20, 20)
+    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.print('\n\n\n\n\n\n\n\n\ntextArea1: ' .. tostring(textArea1), 20, 20)
 end
 
 function love.mousepressed()
@@ -33,10 +37,11 @@ function love.mousepressed()
     checkbox1 = math.random() < 0.5
     toggle1 = math.random() < 0.5
     dropdown1 = ({ 'alpha', 'beta', 'gamma', 'delta', 'epsilon', 'zeta' })[math.random(1, 6)]
+    color1R, color1G, color1B, color1A = math.random(), math.random(), math.random(), math.random()
 end
 
 function castle.uiupdate()
-    ui.section('Basics', { defaultOpen = true }, function()
+    ui.section('Basics', { defaultOpen = false }, function()
         textInput1 = ui.textInput('textInput1', textInput1)
 
         textArea1 = ui.textArea('textArea1', textArea1)
@@ -63,6 +68,10 @@ function castle.uiupdate()
         dropdown1 = ui.dropdown('dropdown1', dropdown1, { 'alpha', 'beta', 'gamma', 'delta', 'epsilon', 'zeta' })
     end)
 
+    ui.section('Pickers', { defaultOpen = true }, function()
+        color1R, color1G, color1B, color1A = ui.colorPicker('color', color1R, color1G, color1B, color1A)
+    end)
+
     ui.section('Tabs', function()
         ui.tabs('tabs', function()
             ui.tab('Tab 1', function()
@@ -74,11 +83,19 @@ function castle.uiupdate()
         end)
     end)
 
-    ui.section('Markdown', function()
+    ui.section('Images and markdown', function()
+        ui.image('avatar.png', { width = 50, height = 50 })
+
+        ui.image('http://castle.games/static/images/hero-2.png', { width = 150, height = 150, resizeMode = 'contain' })
+
         ui.markdown([[
 # Heading
 
 This is a paragraph! We're in [Castle](https://castle.games).
+
+![](avatar.png)
+
+The avatar image should render above this line too.
         ]])
     end)
 
