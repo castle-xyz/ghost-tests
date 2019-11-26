@@ -6,11 +6,11 @@ local code = [[
 local radius = 40
 
 function uiupdate()
-    radius = ui.slider('radius', radius, 20, 100)
+  radius = ui.slider('radius', radius, 20, 100)
 end
 
 function draw()
-    love.graphics.circle('fill', 400, 400, radius)
+  love.graphics.circle('fill', 400, 400, radius)
 end
 ]]
 
