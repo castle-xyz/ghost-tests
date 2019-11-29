@@ -11,6 +11,7 @@ local toggle1 = true
 local dropdown1 = 'beta'
 local color1R, color1G, color1B, color1A = 1, 0, 0, 1
 local bgR, bgG, bgB, bgA = 0, 0, 0, 1
+local toolSelected = 1
 
 local toolbarVisible = true
 
@@ -30,7 +31,8 @@ function love.draw()
     love.graphics.setColor(color1R, color1G, color1B, color1A)
     love.graphics.print('\n\n\n\n\n\n\n\ncolor1: ' .. color1R .. ', ' .. color1G .. ', ' .. color1B .. ', ' .. color1A, 20, 20)
     love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.print('\n\n\n\n\n\n\n\n\ntextArea1: ' .. tostring(textArea1), 20, 20)
+    love.graphics.print('\n\n\n\n\n\n\n\n\ntoolSelected: ' .. toolSelected, 20, 20)
+    love.graphics.print('\n\n\n\n\n\n\n\n\n\ntextArea1: ' .. tostring(textArea1), 20, 20)
 end
 
 function love.mousepressed()
@@ -46,11 +48,11 @@ end
 
 function castle.uiupdate()
     ui.pane('toolbar', { visible = toolbarVisible }, function()
-        if ui.button('button 1', { flex = 1 }) then
-            button1Clicks = button1Clicks + 1
+        if ui.button('tool 1', { flex = 1, selected = toolSelected == 1 }) then
+            toolSelected = 1
         end
-        if ui.button('button 2', { flex = 1 }) then
-            button2Clicks = button2Clicks + 1
+        if ui.button('tool 2', { flex = 1, selected = toolSelected == 2 }) then
+            toolSelected = 2
         end
 
         color1R, color1G, color1B, color1A = ui.colorPicker('color1', color1R, color1G, color1B, color1A)
