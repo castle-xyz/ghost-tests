@@ -10,10 +10,14 @@ local checkbox1 = true
 local toggle1 = true
 local dropdown1 = 'beta'
 local color1R, color1G, color1B, color1A = 1, 0, 0, 1
+local bgR, bgG, bgB, bgA = 0, 0, 0, 1
+
+local toolbarVisible = true
 
 local font = love.graphics.newFont(24)
 
 function love.draw()
+    love.graphics.clear(bgR, bgG, bgB)
     love.graphics.setFont(font)
     love.graphics.print('textInput1: ' .. textInput1, 20, 20)
     love.graphics.print('\nbutton1Clicks: ' .. button1Clicks, 20, 20)
@@ -41,6 +45,23 @@ function love.mousepressed()
 end
 
 function castle.uiupdate()
+    ui.pane('toolbar', { visible = toolbarVisible }, function()
+        if ui.button('button 1', { flex = 1 }) then
+            button1Clicks = button1Clicks + 1
+        end
+        if ui.button('button 2', { flex = 1 }) then
+            button2Clicks = button2Clicks + 1
+        end
+
+        color1R, color1G, color1B, color1A = ui.colorPicker('color1', color1R, color1G, color1B, color1A)
+
+        bgR, bgG, bgB, bgA = ui.colorPicker('bg', bgR, bgG, bgB, bgA)
+
+        textInput1 = ui.textInput('textInput1', textInput1)
+    end)
+
+    toolbarVisible = ui.toggle('toolbar hidden', 'toolbar visible', toolbarVisible)
+
     ui.section('Basics', { defaultOpen = false }, function()
         textInput1 = ui.textInput('textInput1', textInput1)
 
@@ -69,7 +90,7 @@ function castle.uiupdate()
     end)
 
     ui.section('Pickers', { defaultOpen = true }, function()
-        color1R, color1G, color1B, color1A = ui.colorPicker('color', color1R, color1G, color1B, color1A)
+        color1R, color1G, color1B, color1A = ui.colorPicker('color1', color1R, color1G, color1B, color1A)
     end)
 
     ui.section('Tabs', function()
