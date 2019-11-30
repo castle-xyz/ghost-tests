@@ -49,6 +49,10 @@ end
 function castle.uiupdate()
     ui.pane('toolbar', { visible = toolbarVisible }, function()
         ui.button('tool 1', {
+            icon = 'file-plus',
+            iconFamily = 'Feather',
+            hideLabel = true,
+
             selected = toolSelected == 1,
             onClick = function()
                 toolSelected = 1
@@ -64,7 +68,7 @@ function castle.uiupdate()
             end,
         })
 
-        if ui.button('tool 2', { flex = 1, selected = toolSelected == 2 }) then
+        if ui.button('tool 2', { flex = 1, selected = toolSelected == 2, icon = 'delete', iconFamily = 'MaterialIcons' }) then
             toolSelected = 2
         end
 
