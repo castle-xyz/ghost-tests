@@ -48,9 +48,22 @@ end
 
 function castle.uiupdate()
     ui.pane('toolbar', { visible = toolbarVisible }, function()
-        if ui.button('tool 1', { flex = 1, selected = toolSelected == 1 }) then
-            toolSelected = 1
-        end
+        ui.button('tool 1', {
+            selected = toolSelected == 1,
+            onClick = function()
+                toolSelected = 1
+            end,
+
+            popoverAllowed = toolSelected == 1,
+            popover = function()
+                slider1 = ui.slider('slider1', slider1, 0, 100)
+
+                textInput1 = ui.textInput('textInput1', textInput1)
+
+                dropdown1 = ui.dropdown('dropdown1', dropdown1, { 'alpha', 'beta', 'gamma', 'delta', 'epsilon', 'zeta' })
+            end,
+        })
+
         if ui.button('tool 2', { flex = 1, selected = toolSelected == 2 }) then
             toolSelected = 2
         end
