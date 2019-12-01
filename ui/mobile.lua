@@ -49,8 +49,8 @@ end
 function castle.uiupdate()
     ui.pane('toolbar', { visible = toolbarVisible }, function()
         ui.button('tool 1', {
-            icon = 'file-plus',
-            iconFamily = 'Feather',
+            icon = 'tree',
+            iconFamily = 'FontAwesome',
             hideLabel = true,
 
             selected = toolSelected == 1,
@@ -68,9 +68,27 @@ function castle.uiupdate()
             end,
         })
 
-        if ui.button('tool 2', { flex = 1, selected = toolSelected == 2, icon = 'delete', iconFamily = 'MaterialIcons' }) then
+        if ui.button('tool 2', {
+            selected = toolSelected == 2,
+
+            icon = 'avatar.png',
+        }) then
             toolSelected = 2
         end
+
+        if ui.button('tool 3', {
+            selected = toolSelected == 3,
+
+            icon = 'film',
+            iconFamily = 'FontAwesome',
+        }) then
+            toolSelected = 3
+        end
+
+        ui.button('tool 2', {
+            icon = 'http://pixelartmaker.com/art/52729392032d215.png',
+            iconFill = true,
+        })
 
         color1R, color1G, color1B, color1A = ui.colorPicker('color1', color1R, color1G, color1B, color1A)
 
