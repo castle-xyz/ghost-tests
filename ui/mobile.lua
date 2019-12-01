@@ -12,6 +12,8 @@ local dropdown1 = 'beta'
 local color1R, color1G, color1B, color1A = 1, 0, 0, 1
 local bgR, bgG, bgB, bgA = 0, 0, 0, 1
 local toolSelected = 1
+local image1Url = 'avatar.png'
+local image1 = love.graphics.newImage('avatar.png')
 
 local toolbarVisible = true
 
@@ -19,6 +21,15 @@ local font = love.graphics.newFont(24)
 
 function love.draw()
     love.graphics.clear(bgR, bgG, bgB)
+
+    if image1 then
+        love.graphics.setColor(0.5, 0.5, 0.5)
+        love.graphics.rectangle('fill', 800 - 200 - 20, 20, 200, 200)
+        love.graphics.setColor(1, 1, 1)
+        local scale = math.min(200 / image1:getWidth(), 200 / image1:getHeight())
+        love.graphics.draw(image1, 800 - 200 - 20, 20, 0, scale)
+    end
+
     love.graphics.setFont(font)
     love.graphics.print('textInput1: ' .. textInput1, 20, 20)
     love.graphics.print('\nbutton1Clicks: ' .. button1Clicks, 20, 20)
@@ -32,7 +43,8 @@ function love.draw()
     love.graphics.print('\n\n\n\n\n\n\n\ncolor1: ' .. color1R .. ', ' .. color1G .. ', ' .. color1B .. ', ' .. color1A, 20, 20)
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.print('\n\n\n\n\n\n\n\n\ntoolSelected: ' .. toolSelected, 20, 20)
-    love.graphics.print('\n\n\n\n\n\n\n\n\n\ntextArea1: ' .. tostring(textArea1), 20, 20)
+    love.graphics.print('\n\n\n\n\n\n\n\n\n\nimage1Url: ' .. tostring(image1Url), 20, 20)
+    love.graphics.print('\n\n\n\n\n\n\n\n\n\n\ntextArea1: ' .. tostring(textArea1), 20, 20)
 end
 
 function love.mousepressed()
@@ -128,6 +140,19 @@ function castle.uiupdate()
 
     ui.section('Pickers', { defaultOpen = true }, function()
         color1R, color1G, color1B, color1A = ui.colorPicker('color1', color1R, color1G, color1B, color1A)
+
+        image1Url = ui.filePicker('image1', image1Url, {
+            type = 'image',
+            onChange = function(newImageUrl)
+                if newImageUrl == nil then
+                    image1 = nil
+                else
+                    network.async(function()
+                        image1 = love.graphics.newImage(newImageUrl)
+                    end)
+                end
+            end,
+        })
     end)
 
     ui.section('Tabs', function()
