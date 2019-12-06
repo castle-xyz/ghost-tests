@@ -25,7 +25,7 @@ function love.update()
 end
 
 function love.keypressed(k)
-    if k == 'm' then
+    if k == 'm' or k == 'z' then
         manyLogsOn = not manyLogsOn
     end
     if k == 'up' then
