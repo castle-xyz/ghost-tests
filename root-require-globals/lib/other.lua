@@ -1,0 +1,1 @@
+THE_GLOBAL = 42
