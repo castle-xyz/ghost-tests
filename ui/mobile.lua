@@ -147,6 +147,7 @@ function castle.uiupdate()
                 if newImageUrl == nil then
                     image1 = nil
                 else
+                    print('image1Url', newImageUrl)
                     network.async(function()
                         image1 = love.graphics.newImage(newImageUrl)
                     end)
