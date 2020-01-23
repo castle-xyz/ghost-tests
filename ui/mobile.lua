@@ -6,6 +6,7 @@ local button1Clicks = 0
 local button2Clicks = 0
 local slider1 = 50
 local numberInput1 = 50
+local numberInput2 = 3.1415926535
 local checkbox1 = true
 local toggle1 = true
 local dropdown1 = 'beta'
@@ -36,15 +37,16 @@ function love.draw()
     love.graphics.print('\n\nbutton2Clicks: ' .. button2Clicks, 20, 20)
     love.graphics.print('\n\n\nslider1: ' .. slider1, 20, 20)
     love.graphics.print('\n\n\n\nnumberInput1: ' .. numberInput1, 20, 20)
-    love.graphics.print('\n\n\n\n\ncheckbox1: ' .. tostring(checkbox1), 20, 20)
-    love.graphics.print('\n\n\n\n\n\ntoggle1: ' .. tostring(toggle1), 20, 20)
-    love.graphics.print('\n\n\n\n\n\n\ndropdown1: ' .. tostring(dropdown1), 20, 20)
+    love.graphics.print('\n\n\n\n\nnumberInput2: ' .. numberInput2, 20, 20)
+    love.graphics.print('\n\n\n\n\n\ncheckbox1: ' .. tostring(checkbox1), 20, 20)
+    love.graphics.print('\n\n\n\n\n\n\ntoggle1: ' .. tostring(toggle1), 20, 20)
+    love.graphics.print('\n\n\n\n\n\n\n\ndropdown1: ' .. tostring(dropdown1), 20, 20)
     love.graphics.setColor(color1R, color1G, color1B, color1A)
-    love.graphics.print('\n\n\n\n\n\n\n\ncolor1: ' .. color1R .. ', ' .. color1G .. ', ' .. color1B .. ', ' .. color1A, 20, 20)
+    love.graphics.print('\n\n\n\n\n\n\n\n\ncolor1: ' .. color1R .. ', ' .. color1G .. ', ' .. color1B .. ', ' .. color1A, 20, 20)
     love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.print('\n\n\n\n\n\n\n\n\ntoolSelected: ' .. toolSelected, 20, 20)
-    love.graphics.print('\n\n\n\n\n\n\n\n\n\nimage1Url: ' .. tostring(image1Url), 20, 20)
-    love.graphics.print('\n\n\n\n\n\n\n\n\n\n\ntextArea1: ' .. tostring(textArea1), 20, 20)
+    love.graphics.print('\n\n\n\n\n\n\n\n\n\ntoolSelected: ' .. toolSelected, 20, 20)
+    love.graphics.print('\n\n\n\n\n\n\n\n\n\n\nimage1Url: ' .. tostring(image1Url), 20, 20)
+    love.graphics.print('\n\n\n\n\n\n\n\n\n\n\n\ntextArea1: ' .. tostring(textArea1), 20, 20)
 end
 
 function love.mousepressed()
@@ -111,7 +113,7 @@ function castle.uiupdate()
 
     toolbarVisible = ui.toggle('toolbar hidden', 'toolbar visible', toolbarVisible)
 
-    ui.section('Basics', { defaultOpen = false }, function()
+    ui.section('Basics', { defaultOpen = true }, function()
         textInput1 = ui.textInput('textInput1', textInput1)
 
         textArea1 = ui.textArea('textArea1', textArea1)
@@ -130,6 +132,8 @@ function castle.uiupdate()
         slider1 = ui.slider('slider1', slider1, 0, 100)
 
         numberInput1 = ui.numberInput('numberInput1', numberInput1, { min = 0, max = 100, step = 5 })
+
+        numberInput2 = ui.numberInput('numberInput2', numberInput2, { step = 0.01 })
 
         checkbox1 = ui.checkbox('checkbox1', checkbox1)
 
@@ -156,7 +160,36 @@ function castle.uiupdate()
         })
     end)
 
-    ui.section('Tabs', function()
+    ui.section('Tabs', {
+        defaultOpen = true,
+        header = function()
+            ui.button('help', {
+                margin = 0,
+                marginLeft = 8,
+                icon = 'question',
+                iconFamily = 'FontAwesome5',
+                hideLabel = true,
+                popoverAllowed = true,
+                popover = function()
+                    ui.markdown('# Hey there!\nThis is a help message.')
+                end
+            })
+            ui.button('copy', {
+                margin = 0,
+                marginLeft = 8,
+                icon = 'copy',
+                iconFamily = 'FontAwesome5',
+                hideLabel = true,
+            })
+            ui.button('delete', {
+                margin = 0,
+                marginLeft = 8,
+                icon = 'trash-alt',
+                iconFamily = 'FontAwesome5',
+                hideLabel = true,
+            })
+        end,
+    }, function()
         ui.tabs('tabs', function()
             ui.tab('Tab 1', function()
                 ui.markdown('This is tab 1!')
@@ -167,7 +200,7 @@ function castle.uiupdate()
         end)
     end)
 
-    ui.section('Images and markdown', function()
+    ui.section('Images and markdown', { defaultOpen = true }, function()
         ui.image('avatar.png', { width = 50, height = 50 })
 
         ui.image('http://castle.games/static/images/hero-2.png', { width = 150, height = 150, resizeMode = 'contain' })
@@ -183,7 +216,7 @@ The avatar image should render above this line too.
         ]])
     end)
 
-    ui.section('Nested sections', function()
+    ui.section('Nested sections', { defaultOpen = true }, function()
         ui.markdown('Below are some sections inside this section!')
 
         ui.section('Child section 1', function()
@@ -193,5 +226,25 @@ The avatar image should render above this line too.
         ui.section('Child section 2', function()
             ui.markdown("You're in child section 2!")
         end)
+    end)
+
+    ui.section('Alerts', { defaultOpen = true }, function()
+        if ui.button('simple') then
+            castle.system.alert('Hey there!', 'This is an alert!')
+        end
+        if ui.button('with cancel') then
+            castle.system.alert({
+                title = 'Should we do it?',
+                message = 'What do you think?',
+                okLabel = 'Yes',
+                onOk = function()
+                    print('You said yes!')
+                end,
+                cancelLabel = 'No',
+                onCancel = function()
+                    print('You said no!')
+                end,
+            })
+        end
     end)
 end
