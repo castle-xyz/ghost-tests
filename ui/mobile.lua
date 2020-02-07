@@ -205,6 +205,8 @@ function castle.uiupdate()
 
         ui.image('http://castle.games/static/images/hero-2.png', { width = 150, height = 150, resizeMode = 'contain' })
 
+        ui.image('https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg', { width = 150, height = 150 })
+
         ui.markdown([[
 # Heading
 
