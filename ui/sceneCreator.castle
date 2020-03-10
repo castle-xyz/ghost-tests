@@ -1,0 +1,5 @@
+main: sceneCreator.lua
+name: Scene creator UI test
+owner: nikki
+description: Testing UI API for SceneCreator UI
+dimensions: 800
