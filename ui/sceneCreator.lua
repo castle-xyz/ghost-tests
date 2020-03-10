@@ -5,9 +5,10 @@ end
 local ui = castle.ui
 
 local blueprintsOpen = true
+local inspectorOpen = false
 
 function castle.uiupdate()
-    ui.pane('sceneCreatorActions', function()
+    ui.pane('sceneCreatorGlobalActions', function()
         ui.button('back', {
             icon = 'arrow-left',
             iconFamily = 'FontAwesome5',
@@ -18,6 +19,9 @@ function castle.uiupdate()
         ui.button('play', {
             icon = 'play',
             iconFamily = 'FontAwesome5',
+            onClick = function()
+                blueprintsOpen = not blueprintsOpen
+            end,
         })
 
         ui.button('undo', {
@@ -34,7 +38,7 @@ function castle.uiupdate()
             icon = 'sliders-h',
             iconFamily = 'FontAwesome5',
             onClick = function()
-                blueprintsOpen = not blueprintsOpen
+                inspectorOpen = not inspectorOpen
             end,
         })
 
@@ -49,6 +53,34 @@ function castle.uiupdate()
     ui.pane('sceneCreatorBlueprints', {
         open = blueprintsOpen,
     }, function()
-        ui.markdown('hello, world!')
+        ui.markdown('<blueprints go here>')
+    end)
+
+    ui.pane('sceneCreatorInspectorActions', function()
+        ui.button('pencil-alt', {
+            icon = 'pencil-alt',
+            iconFamily = 'FontAwesome5',
+        })
+
+        ui.button('layer-group', {
+            icon = 'layer-group',
+            iconFamily = 'FontAwesome5',
+        })
+
+        ui.button('copy', {
+            icon = 'copy',
+            iconFamily = 'FontAwesome5',
+        })
+
+        ui.button('trash', {
+            icon = 'trash',
+            iconFamily = 'FontAwesome5',
+        })
+    end)
+
+    ui.pane('sceneCreatorInspector', {
+        open = inspectorOpen,
+    }, function()
+        ui.markdown('<properties go here>')
     end)
 end
