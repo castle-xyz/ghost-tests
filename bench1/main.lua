@@ -6,7 +6,7 @@ local function fib(n)
     end
 end
 
-local N = 30000
+local N = 40000
 
 local rects
 
@@ -26,9 +26,9 @@ function love.load()
             r = math.random(),
             g = math.random(),
             b = math.random(),
-            speed = 400 * math.random(),
-            w = 120 * math.random(),
-            h = 120 * math.random(),
+            speed = 0.5 * love.graphics.getWidth() * math.random(),
+            w = love.graphics.getWidth() * math.random() / 16,
+            h = love.graphics.getWidth() * math.random() / 16,
             phase = 2 * math.pi * math.random(),
         }
     end
